@@ -44,7 +44,15 @@ You will only need to do this once since each time you do this, the extension wi
 Nice work! Your customers will now be able to check out with bitcoin on your WordPress site.
  
 == Changelog ==
- 
+
+= 2.2.13
+Fixed
+* wrong function call resulting in undefined wc_reduce_stock_levels() (#84)
+* syntax error in class-wc-gateway-bitpay.php (#80)
+* Price must be formatted as a float (#78)
+Added
+* Redirect page displays 'payment successful' even for unpaid invoices (#81)
+
 = 2.2.12 =
 Fixed
 * Removed non-working option to disable BitPay from the BitPay plugin config page
