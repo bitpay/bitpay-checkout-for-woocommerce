@@ -1442,7 +1442,7 @@ function woocommerce_bitpay_activate()
             }
         }
 
-        update_option('woocommerce_bitpay_version', '2.2.12');
+        update_option('woocommerce_bitpay_version', '2.2.13');
 
     } else {
         // Requirements not met, return an error message
