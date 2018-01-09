@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.13] - 2018-01-09
+### Fixed
+- wrong function call resulting in undefined wc_reduce_stock_levels() (#84)
+- syntax error in class-wc-gateway-bitpay.php (#80)
+- Price must be formatted as a float (#78)
+
+### Added
+- Redirect page displays 'payment successful' even for unpaid invoices (#81)
+
 ## [2.2.12] - 2017-09-29
 ### Fixed
 - Removed non-working option to disable BitPay from the BitPay plugin config page
