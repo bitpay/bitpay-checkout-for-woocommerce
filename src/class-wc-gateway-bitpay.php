@@ -7,7 +7,7 @@
     Text Domain: bitpay
     Author URI:  https://bitpay.com
 
-    Version:           2.2.13
+    Version:           2.2.14
     License:           Copyright 2011-2018 BitPay Inc., MIT License
     License URI:       https://github.com/bitpay/woocommerce-plugin/blob/master/LICENSE
     GitHub Plugin URI: https://github.com/bitpay/woocommerce-plugin
@@ -674,7 +674,9 @@ function woocommerce_bitpay_init()
             }
             // Add buyer's email to the invoice
             $buyer = new \Bitpay\Buyer();
-            $buyer->setEmail($order->get_billing_email());
+            $billing_email      = ( version_compare( WC_VERSION, '2.7', '<' ) ) ? $order->billing_email : $order->get_billing_email(); 
+
+            $buyer->setEmail($billing_email);
             $invoice->setBuyer($buyer);
             $invoice->setItem($item);
 
@@ -1442,7 +1444,7 @@ function woocommerce_bitpay_activate()
             }
         }
 
-        update_option('woocommerce_bitpay_version', '2.2.13');
+        update_option('woocommerce_bitpay_version', '2.2.14');
 
     } else {
         // Requirements not met, return an error message

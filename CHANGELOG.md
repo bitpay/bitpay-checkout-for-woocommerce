@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.14] - 2018-01-15
+### Fixed
+- (fixed via PHP package update) Price must be formatted as a float (#78)
+- get_billing_email() Method creates fatal Error (#83)
+
 ## [2.2.13] - 2018-01-09
 ### Fixed
 - wrong function call resulting in undefined wc_reduce_stock_levels() (#84)
