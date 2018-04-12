@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.15] - 2018-04-12
+### Fixed
+- Compatibility with BitPay's upcoming API changes (May 1st 2018)
+
+
 ## [2.2.14] - 2018-01-15
 ### Fixed
 - (fixed via PHP package update) Price must be formatted as a float (#78)

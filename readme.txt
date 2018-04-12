@@ -3,9 +3,9 @@
 Contributors: bitpay
 Tags: bitcoin, payments, bitpay, cryptocurrency, payment
 Requires at least: 4.3.1
-Tested up to: 4.9.2
+Tested up to: 4.9.5
 Requires PHP: 5.5
-Stable tag: 2.2.14
+Stable tag: 2.2.15
 License: MIT License (MIT)
 License URI: https://opensource.org/licenses/MIT
  
