@@ -702,7 +702,7 @@ function woocommerce_bitpay_init()
 
                 return array(
                     'result'    => 'success',
-                    'messages'  => 'Sorry, but Bitcoin checkout with BitPay does not appear to be working.'
+                    'messages'  => $e->getMessage()
                 );
             }
 
