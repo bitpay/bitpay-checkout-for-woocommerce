@@ -654,6 +654,7 @@ function woocommerce_bitpay_init()
             $invoice->setOrderId((string)$order_number);
             $invoice->setCurrency($currency);
             $invoice->setFullNotifications(true);
+            $invoice->setExtendedNotifications(true);
 
             // Add a priced item to the invoice
             $item = new \Bitpay\Item();
@@ -745,6 +746,10 @@ function woocommerce_bitpay_init()
             }
 
             $json = json_decode($post, true);
+            if(isset($json['data']))
+            {
+                $json = $json['data'];
+            }
 
             if (true === empty($json)) {
                 $this->log('    [Error] Invalid JSON payload sent to IPN handler: ' . $post);
@@ -997,7 +1002,14 @@ function woocommerce_bitpay_init()
                     $error_string = 'Unhandled invoice status: ' . $invoice->getStatus();
                     $this->log("    [Warning] $error_string");
             }
-
+            
+            if($json['status'] == 'expired')
+            {
+                $order->update_status('cancelled');
+                $order->add_order_note('BitPay invoice payment expired. Order has been cancelled.');
+                $this->log("[Info] BitPay invoice payment expired. Order has been cancelled.");
+            }
+            
             $this->log('    [Info] Leaving ipn_callback()...');
         }
 
