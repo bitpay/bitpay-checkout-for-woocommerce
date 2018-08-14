@@ -1081,8 +1081,17 @@ function woocommerce_bitpay_init()
                 if (false === isset($fingerprint) || true === empty($fingerprint)) {
                     throw new \Exception('The Bitpay payment plugin was called to decrypt data but could not generate a fingerprint parameter!');
                 }
-
-                $decrypted = base64_decode($openssl_ext->decrypt($encrypted, $fingerprint, '1234567890123456'));
+                
+                try {
+                    
+                     $decrypted = base64_decode($openssl_ext->decrypt($encrypted, $fingerprint, '1234567890123456'));
+                     
+                } catch (\Exception $e) {
+                    
+                    add_action( 'admin_notices', 'my_bitpay_notice' );
+                    $this->log($e->getMessage());
+                    
+                }
 
                 // Strict base64 char check
                 if (false === base64_decode($decrypted, true)) {
@@ -1105,6 +1114,14 @@ function woocommerce_bitpay_init()
       
     }
 }
+
+    function my_bitpay_notice() {
+        ?>
+        <div class="update-nag notice">
+            <p><?php _e( 'This version of the plugin has changed the encryption method, you have to enter the Token API again.', 'my_bitpay_notice' ); ?></p>
+        </div>
+        <?php
+      }
     /**
     * Add BitPay Payment Gateway to WooCommerce
     **/
