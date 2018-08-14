@@ -7,7 +7,7 @@
     Text Domain: bitpay
     Author URI:  https://bitpay.com
 
-    Version:           2.2.15
+    Version:           2.2.16
     License:           Copyright 2011-2018 BitPay Inc., MIT License
     License URI:       https://github.com/bitpay/woocommerce-plugin/blob/master/LICENSE
     GitHub Plugin URI: https://github.com/bitpay/woocommerce-plugin
@@ -257,18 +257,7 @@ function woocommerce_bitpay_init()
                ),
                 'api_token' => array(
                     'type'        => 'api_token'
-               ),
-                'transaction_speed' => array(
-                    'title'       => __('Risk/Speed', 'bitpay'),
-                    'type'        => 'select',
-                    'description' => 'Choose a transaction speed.  For details, see the API documentation at bitpay.com',
-                    'options'     => array(
-                        'high'    => 'High',
-                        'medium'  => 'Medium',
-                        'low'     => 'Low',
-                    ),
-                    'default' => 'high',
-                    'desc_tip'    => true,
+               )
                ),
                 'order_states' => array(
                     'type' => 'order_states'
@@ -684,7 +673,7 @@ function woocommerce_bitpay_init()
             // Add the Redirect and Notification URLs
             $invoice->setRedirectUrl($redirect_url);
             $invoice->setNotificationUrl($notification_url);
-            $invoice->setTransactionSpeed($this->transaction_speed);
+            $invoice->setTransactionSpeed('medium');
             
             try {
                 $this->log('    [Info] Attempting to generate invoice for ' . $order->get_order_number() . '...');
@@ -705,16 +694,6 @@ function woocommerce_bitpay_init()
                     'result'    => 'success',
                     'messages'  => $e->getMessage()
                 );
-            }
-
-            // Reduce stock levels
-            if (function_exists('wc_reduce_stock_levels'))
-            {
-            wc_reduce_stock_levels($order_id);
-            }
-            else
-            {
-                $order->reduce_order_stock();
             }
 
             // Remove cart
@@ -910,6 +889,16 @@ function woocommerce_bitpay_init()
                 case 'paid':
 
                     $this->log('    [Info] IPN response is a "paid" message.');
+                    $this->log('    [Info] Reducing stock levels.');
+                    // Reduce stock levels
+                    if (function_exists('wc_reduce_stock_levels'))
+                    {
+                        wc_reduce_stock_levels($order_id); 
+                    }
+                    else
+                    {
+                        $order->reduce_order_stock();
+                    }
 
                     if ($current_status == $complete_status       ||
                         'wc_'.$current_status == $complete_status ||
@@ -993,6 +982,11 @@ function woocommerce_bitpay_init()
                     }
 
                     break;
+                case 'expired':
+                    $order->update_status('cancelled');
+                    $order->add_order_note('BitPay invoice payment expired. Order has been cancelled.');
+                    $this->log("[Info] BitPay invoice payment expired. Order has been cancelled.");
+                    break;
 
                 // There was an unknown message received.
                 default:
@@ -1002,14 +996,7 @@ function woocommerce_bitpay_init()
                     $error_string = 'Unhandled invoice status: ' . $invoice->getStatus();
                     $this->log("    [Warning] $error_string");
             }
-            
-            if($json['status'] == 'expired')
-            {
-                $order->update_status('cancelled');
-                $order->add_order_note('BitPay invoice payment expired. Order has been cancelled.');
-                $this->log("[Info] BitPay invoice payment expired. Order has been cancelled.");
-            }
-            
+                        
             $this->log('    [Info] Leaving ipn_callback()...');
         }
 
@@ -1375,23 +1362,23 @@ function woocommerce_bitpay_init()
         switch ($status)
         {
             case 'on-hold':
-                $status_desctiption = _x('Waiting for payment', 'woocommerce_bitpay');
+                $status_description = _x('Waiting for payment', 'woocommerce_bitpay');
                 break;
             case 'processing':
-                $status_desctiption = _x('Payment processing', 'woocommerce_bitpay');
+                $status_description = _x('Payment processing', 'woocommerce_bitpay');
                 break;
             case 'completed':
-                $status_desctiption = _x('Payment completed', 'woocommerce_bitpay');
+                $status_description = _x('Payment completed', 'woocommerce_bitpay');
                 break;
             case 'failed':
-                $status_desctiption = _x('Payment failed', 'woocommerce_bitpay');
+                $status_description = _x('Payment failed', 'woocommerce_bitpay');
                 break;
             default:
-                $status_desctiption = _x(ucfirst($status), 'woocommerce_bitpay');
+                $status_description = _x(ucfirst($status), 'woocommerce_bitpay');
                 break;
         }
 
-        echo str_replace('{$paymentStatus}', $status_desctiption, $payment_status);
+        echo str_replace('{$paymentStatus}', $status_description, $payment_status);
     }
     add_action("woocommerce_thankyou_bitpay", 'action_woocommerce_thankyou_bitpay', 10, 1);
 }
@@ -1462,18 +1449,7 @@ function woocommerce_bitpay_activate()
             }
         }
 
-        // Fix transaction_speed from older versions
-        $settings = get_option('woocommerce_bitpay');
-        if (true === isset($settings) && true === is_string($settings)) {
-            $settings_array = @unserialize($settings);
-            if (false !== $settings_array && true === isset($settings_array['transactionSpeed'])) {
-                $settings_array['transaction_speed'] = $settings_array['transactionSpeed'];
-                unset($settings_array['transactionSpeed']);
-                update_option('woocommerce_bitpay', serialize($settings));
-            }
-        }
-
-        update_option('woocommerce_bitpay_version', '2.2.15');
+        update_option('woocommerce_bitpay_version', '2.2.16');
 
     } else {
         // Requirements not met, return an error message
