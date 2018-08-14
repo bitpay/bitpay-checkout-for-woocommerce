@@ -178,7 +178,7 @@ function woocommerce_bitpay_init()
                 $this->log('    [Error] The API Token was NOT an instance of Token!  Instead, it appears to be a ' . gettype($this->api_token) . ' value.');
             }
 
-            $this->transaction_speed  = $this->get_option('transaction_speed');
+            $this->transaction_speed  = 'medium';
             $this->log('    [Info] Transaction speed is now set to: ' . $this->transaction_speed);
 
             // Actions
@@ -1105,7 +1105,7 @@ function woocommerce_bitpay_init()
     function my_bitpay_notice() {
         ?>
         <div class="update-nag notice">
-            <p><?php _e( 'This version of the plugin has changed the encryption method, you have to enter the Token API again.', 'my_bitpay_notice' ); ?></p>
+            <p><?php _e( 'This version of the BitPay plugin has changed the encryption method. Please remove the API Token from your BitPay plugin and enter a new API token.', 'my_bitpay_notice' ); ?></p>
         </div>
         <?php
       }
