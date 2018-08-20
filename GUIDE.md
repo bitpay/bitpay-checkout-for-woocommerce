@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-* Last Version Tested: Wordpress 4.9.5 WooCommerce 3.3.5
+* Last Version Tested: Wordpress 4.9.8 WooCommerce 3.4.4
 
 You must have a BitPay merchant account to use this plugin.  It's free to [sign-up for a BitPay merchant account](https://bitpay.com/start).
 
@@ -14,19 +14,9 @@ You must have a BitPay merchant account to use this plugin.  It's free to [sign-
 * [GMP](http://php.net/manual/en/book.gmp.php) or [BCMath](http://php.net/manual/en/book.bc.php) You may have to install GMP as most servers do not come with it, but generally BCMath is already included.
 * [OpenSSL](http://us2.php.net/openssl) Must be compiled with PHP
 * [PHP5 Curl](http://php.net/manual/en/curl.installation.php) Must be compiled with PHP
-* PHP >= 5.5 (we tested this on 5.5)
-* Be sure to restart apache after the installation:
-
-```bash
-sudo apachectl restart
-```
+* PHP >= 5.5 (we tested this on 7.1)
 
 ## Installation
-
-### When Upgrading From Version 1.x to 2.x
-
-**Please Note:** Merchants who have a previous version of the WooCommerce BitPay Payment Gateway will need to remove it.
-This can be done by going to the Wordpress's Adminstration Panels > Plugins.  Deactivate the old plugin, then delete it.
 
 ### When Installing From the Downloadable Archive
 
@@ -40,11 +30,8 @@ Visit the [Releases](https://github.com/bitpay/woocommerce-plugin/releases) page
 
 Configuration can be done using the Administrator section of Wordpress.
 Once Logged in, you will find the configuration settings under **WooCommerce > Settings > Checkout > BitPay**.
-Alternatively, you can also get to the configuration settings via Plugins and clicking the Settings link for this plugin.
 
-![BitPay Settings](https://raw.githubusercontent.com/bitpay/woocommerce-plugin/master/docs/img/admin.png "BitPay Settings")
-
-Here your will need to create a [pairing code](https://bitpay.com/api-tokens) using
+Here your will need to create a 7 character [pairing code](https://bitpay.com/api-tokens) using
 your BitPay merchant account. Once you have a Pairing Code, put the code in the
 Pairing Code field:
 ![Pairing Code field](https://raw.githubusercontent.com/bitpay/woocommerce-plugin/master/docs/img/pairingcode.png "Pairing Code field")
@@ -68,11 +55,11 @@ Save your changes and you're good to go!
 
 ## Usage
 
-Once enabled, your customers will be given the option to pay with Bitcoins. Once
-they checkout they are redirected to a full screen BitPay invoice to pay for
+Once enabled, your customers will be given the option to pay with Bitcoins. On
+the checkout they are redirected to a full screen BitPay invoice to pay for
 the order.
 
-As a merchant, the orders in your WooCommerce store can be treated as any other
+As a merchant the orders in your WooCommerce store can be treated as any other
 order. You may need to adjust the Invoice Settings depending on your order
 fulfillment.
 

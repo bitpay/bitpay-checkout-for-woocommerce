@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.16] - 2018-08-20
+### Fixed
+- Expired (unpaid) invoices should not decrease the stock (#88)
+- The Bitpay payment plugin was called to process an IPN message but could not retrieve the order details for order_id (#87)
+- Unclear error message when doing payments below BitPay minimum (#85)
+- After installation of the BitPay Woocommerce plugin v2.2.12, an openssl_decrypt error pops up (#82)
+
+### Modified
+- Set transactionSpeed to medium for all invoices. This simplifies the plugin configuration.
+
 ## [2.2.15] - 2018-04-12
 ### Fixed
 - Compatibility with BitPay's upcoming API changes (May 1st 2018)

@@ -1,15 +1,15 @@
 
 === bitpay-for-woocommerce ===
 Contributors: bitpay
-Tags: bitcoin, payments, bitpay, cryptocurrency, payment
+Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment
 Requires at least: 4.3.1
-Tested up to: 4.9.5
+Tested up to: 4.9.8
 Requires PHP: 5.5
-Stable tag: 2.2.15
+Stable tag: 2.2.16
 License: MIT License (MIT)
 License URI: https://opensource.org/licenses/MIT
  
-BitPay allows you to accept bitcoin payments on your WooCommerce store.
+BitPay allows you to accept bitcoin and bitcoin cash payments on your WooCommerce store.
  
 == Description ==
 
@@ -17,20 +17,17 @@ Use BitPay's plugin to accept Bitcoin payments from customers anywhere on earth.
 
 Key features:
 
-* Support all bitcoin wallets that support payment protocol
-* Price in your local currency, let customers pay with bitcoin
-* Have an overview of all your bitcoin payments in your BitPay merchant dashboard at https://bitpay.com
-* Refund your customers in bitcoin in your BitPay merchant dashboard at https://bitpay.com
+* Support all bitcoin and bitcoin cash wallets that support payment protocol
+* Price in your local currency, let customers pay with bitcoin and bitcoin cash
+* Have an overview of all your bitcoin and bitcoin cash payments in your BitPay merchant dashboard at https://bitpay.com
+* Refund your customers in bitcoin or bitcoin cash in your BitPay merchant dashboard at https://bitpay.com
  
 = Installation =
 This plugin requires Woocommerce. Please make sure you have Woocommerce installed.
 
 1. Get started by signing up for a [BitPay merchant account.](https://bitpay.com/dashboard/signup)
-1. Download the latest version of the BitPay plugin from the [Wordpress site.](https://downloads.wordpress.org/plugin/bitpay-for-woocommerce.2.2.14.zip)
-1. Install the latest version of the BitPay plugin for Woocommerce:
-	* Navigate to your WordPress Admin Panel and select Plugins > Add New > Upload Plugin.
-	* Select the downloaded plugin and click "Install Now".
-	* Select "Activate Plugin" to complete installation. 
+1. Search for the BitPay plugin: Plugins -> Add New -> Search plugins and type `BitPay`
+1. Select `bitpay-for-woocommerce` and click on 'Install Now' and then on `Activate Plugin`
 
 = Connecting BitPay and Woocommerce =
 After you have installed the BitPay plugin, you can configure the plugin:
@@ -76,6 +73,17 @@ You can email your issue report to support@bitpay.com
 
 
 == Changelog ==
+
+= [2.2.16] - 2018-08-20 =
+* Fixed expired (unpaid) invoices should not decrease the stock (#88)
+* Fixed the Bitpay payment plugin was called to process an IPN message but could not retrieve the order details for order_id (#87)
+* Fixed unclear error message when doing payments below BitPay minimum (#85)
+* Fixed after installation of the BitPay Woocommerce plugin v2.2.12, an openssl_decrypt error pops up (#82)
+* Set transactionSpeed to medium for all invoices. This simplifies the plugin configuration.
+
+= [2.2.15] - 2018-04-12 = 
+* Fixed Compatibility with BitPay's upcoming API changes (May 1st 2018)
+
 = 2.2.14 =
 * (fixed via PHP package update) Price must be formatted as a float (#78)
 * Fixed WC 2.5 compatibility, with get_billing_email() error (#83)
