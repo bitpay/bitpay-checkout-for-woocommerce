@@ -171,7 +171,7 @@ function no_token_set()
    
     <div class="error notice">
         <p>
-            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  BitPay Checkout will not function if this is not set.');?>
+            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  <b>BitPay Checkout</b> will not function if this is not set.');?>
         </p>
     </div>
 <?php 
