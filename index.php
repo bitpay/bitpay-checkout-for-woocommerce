@@ -85,7 +85,7 @@ function wc_bitpay_gateway_init()
                     'title' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
                     'label' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
                     'type' => 'text',
-                    'description' => 'Your <b>development</b> merchant token.  <a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> require authentication',
+                    'description' => 'Your <b>development</b> merchant token.  <a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
                     'default' => '',
 
                 ),
@@ -93,7 +93,7 @@ function wc_bitpay_gateway_init()
                     'title' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
                     'label' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
                     'type' => 'text',
-                    'description' => 'Your <b>production</b> merchant token.  <a href = "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> require authentication',
+                    'description' => 'Your <b>production</b> merchant token.  <a href = "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
                     'default' => '',
 
                 ),
