@@ -17,7 +17,7 @@ This version requires the following
 	* When setting up your token, **uncheck** the *Require Authentication button*
 * WooCommerce
 
-#Plugin Fields
+# Plugin Fields
 
 After the plugin is activated, BitPay will appear in the WooCommerce->Payments section.
 
