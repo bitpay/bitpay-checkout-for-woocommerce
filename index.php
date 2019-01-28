@@ -85,7 +85,7 @@ function wc_bitpay_gateway_init()
                     'title' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
                     'label' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
                     'type' => 'text',
-                    'description' => 'Your <b>development</b> merchant token.',
+                    'description' => 'Your <b>development</b> merchant token.  <a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> require authentication',
                     'default' => '',
 
                 ),
@@ -93,7 +93,7 @@ function wc_bitpay_gateway_init()
                     'title' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
                     'label' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
                     'type' => 'text',
-                    'description' => 'Your <b>production</b> merchant token.',
+                    'description' => 'Your <b>production</b> merchant token.  <a href = "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> require authentication',
                     'default' => '',
 
                 ),
@@ -174,8 +174,23 @@ function no_token_set()
             <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  BitPay Checkout will not function if this is not set.');?>
         </p>
     </div>
+<?php 
+##check and see if the token is valid
+else: 
+    if($_POST && !empty($bitpay_token) && !empty($bitpay_endpoint)){
+         if(!checkToken($bitpay_token,$bitpay_endpoint)):?>
+        <div class="error notice">
+        <p>
+            <?php _e('The token for <b>'.strtoupper($bitpay_endpoint).'</b> is invalid.  Please verify your settings.');?>
+        </p>
+    </div>
+         <?php endif;
+    } 
+   
+?>    
 <?php endif;
 }
+
 
 //http://bp.local.wpbase.com/wp-json/bitpay/ipn/status
 add_action('rest_api_init', function () {
@@ -393,6 +408,35 @@ function getToken($endpoint)
             break;
     }
 
+}
+
+function checkToken($bitpay_token,$bitpay_endpoint){
+   
+    require 'classes/Config.php';
+    require 'classes/Client.php';
+    require 'classes/Item.php';
+    require 'classes/Invoice.php';
+    
+    #we're going to see if we can create an invoice
+    $config = new Configuration($bitpay_token, $bitpay_endpoint); 
+    //sample values to create an item, should be passed as an object'
+    $params = new stdClass();
+    $params->price = '.50';
+    $params->currency = 'USD'; //set as needed
+
+    $item = new Item($config, $params);
+    $invoice = new Invoice($item);
+
+    //this creates the invoice with all of the config params from the item
+    $invoice->createInvoice();
+    $invoiceData = json_decode($invoice->getInvoiceData());
+    //now we have to append the invoice transaction id for the callback verification
+    $invoiceID = $invoiceData->data->id;
+    if(empty($invoiceID)):
+       return false;
+    else:
+       return true;
+    endif;   
 }
 
 //hook into the order recieved page and re-add to cart of modal canceled
