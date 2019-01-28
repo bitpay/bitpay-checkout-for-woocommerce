@@ -35,6 +35,8 @@ After the plugin is activated, BitPay will appear in the WooCommerce->Payments s
 
 This plugin also includes an IPN endpoint that will update  your WooCommerce order status.
 
+An order note will automatically be added with a link to the invoice *(will open in a new window)*
+
 * Initially your order will be in a **Pending Payment/On-Hold** status when it is intially created
 * After the invoice is paid by the user, it will change to a **Processing** status
 * When BitPay finalizes the transaction, it will change to a **Completed** status, and your order will be safe to ship, allow access to downloadable products, etc.
