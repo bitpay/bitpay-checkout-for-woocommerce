@@ -373,10 +373,10 @@ function getDashboardLink($endpoint,$invoiceID)
     switch ($endpoint) {
         case 'test':
         default:
-            return 'http://test.bitpay.com/dashboard/payments/'.$invoiceID;
+            return '//test.bitpay.com/dashboard/payments/'.$invoiceID;
             break;
         case 'production':
-        return 'https://bitpay.com/dashboard/payments/'.$invoiceID;
+        return '//bitpay.com/dashboard/payments/'.$invoiceID;
         break;
     }
 }
@@ -463,7 +463,7 @@ function bitpay_thankyou($order_id)
     if ($order->payment_method == 'bitpay_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-	<script src="https://bitpay.com/bitpay.js"></script>
+	<script src="//bitpay.com/bitpay.js"></script>
 	<script type='text/javascript'>
 	    jQuery("#primary").hide()
 	    var payment_status = null;
