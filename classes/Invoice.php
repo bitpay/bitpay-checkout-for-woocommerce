@@ -25,10 +25,16 @@ function checkInvoiceStatus($orderID){
 function createInvoice(){
    #setup some curl
    $post_fields = json_encode($this->item->item_params);
+
+   #set our headers
+   $pluginInfo = 'BitPay Checkout 2.0 - Wordpress';
+   $request_headers = array();
+   $request_headers[] = 'X-BitPay-Plugin-Info: '. $pluginInfo;
+   $request_headers[] = 'Content-Type: application/json';
   
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, 'https://'.$this->item->item_params->invoice_endpoint);
-   curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+   curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
    curl_setopt($ch, CURLOPT_POST, 1);
    curl_setopt($ch, CURLOPT_POSTFIELDS,$post_fields);
    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
