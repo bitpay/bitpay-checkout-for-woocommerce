@@ -230,13 +230,30 @@ function bitpay_cart_restore(WP_REST_Request $request)
 //http://bp.local.wpbase.com/wp-json/bitpay/ipn/status
 function bitpay_ipn(WP_REST_Request $request)
 {
+    global $woocommerce;
+
     $data = $request->get_body();
     $data = json_decode($data);
 
     $orderid = $data->orderId;
     $order_status = $data->status;
 
-    if ($data->status == 'confirmed'):
+    $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
+    //dev or prod token
+    $bitpay_token = getToken($bitpay_options['bitpay_endpoint']);
+    $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']);
+    $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
+
+    $params = new stdClass();
+    $params->invoiceID = $invoiceID;
+
+    $item = new Item($config, $params);
+
+    $invoice = new Invoice($item); //this creates the invoice with all of the config params
+    $orderStatus = json_decode($invoice->checkInvoiceStatus($invoiceID));
+
+    #verify the ipn matches the status of the actual invoice
+    if ($orderStatus->data->status->status == 'confirmed'):
 
         global $woocommerce;
         $order = new WC_Order($orderid);
