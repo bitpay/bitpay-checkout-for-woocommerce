@@ -245,6 +245,7 @@ function bitpay_ipn(WP_REST_Request $request)
     $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
 
     $params = new stdClass();
+    $params->extension_version = getInfo();
     $params->invoiceID = $invoiceID;
 
     $item = new Item($config, $params);
@@ -279,6 +280,7 @@ function updateOrderStatus($invoiceID, $orderid)
     $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
 
     $params = new stdClass();
+    $params->extension_version = getInfo();
     $params->invoiceID = $invoiceID;
 
     $item = new Item($config, $params);
@@ -329,6 +331,7 @@ function woo_custom_redirect_after_purchase()
             $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']); 
             //sample values to create an item, should be passed as an object'
             $params = new stdClass();
+            $params->extension_version = getInfo();
             $params->price = $order->total;
             $params->currency = $order->currency; //set as needed
             //$params->buyers_email = 'jlewis@bitpay.com'; //set as needed
@@ -383,6 +386,11 @@ function woo_custom_redirect_after_purchase()
     }
 }
 
+function getInfo(){
+    $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin Name' => 'Plugin Name'), false);
+    $plugin_version = $plugin_data['Plugin Name'].' - '.$plugin_data['Version'];
+    return $plugin_version;
+}
 //retrieves the token based on the endpoint
 
 function getDashboardLink($endpoint,$invoiceID)
@@ -438,6 +446,7 @@ function checkToken($bitpay_token,$bitpay_endpoint){
     $config = new Configuration($bitpay_token, $bitpay_endpoint); 
     //sample values to create an item, should be passed as an object'
     $params = new stdClass();
+    $params->extension_version = getInfo();
     $params->price = '.50';
     $params->currency = 'USD'; //set as needed
 

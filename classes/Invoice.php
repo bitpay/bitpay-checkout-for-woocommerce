@@ -12,7 +12,6 @@ function checkInvoiceStatus($orderID){
   
    $post_fields = ($this->item->item_params);
   
-  
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, 'https://'.$this->item->item_params->invoice_endpoint.'/'.$post_fields->invoiceID);
    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -25,13 +24,14 @@ function checkInvoiceStatus($orderID){
 function createInvoice(){
    #setup some curl
    $post_fields = json_encode($this->item->item_params);
-
-   #set our headers
-   $pluginInfo = 'BitPay Checkout 2.0 - Wordpress';
+  
+   
+   $pluginInfo = $this->item->item_params->extension_version;
    $request_headers = array();
    $request_headers[] = 'X-BitPay-Plugin-Info: '. $pluginInfo;
    $request_headers[] = 'Content-Type: application/json';
   
+   
    $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, 'https://'.$this->item->item_params->invoice_endpoint);
    curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
@@ -46,9 +46,9 @@ function createInvoice(){
    endif;
 
    #if there is a buyer provided email, update it
-   if($this->item->item_params->buyers_email):
-      #$this->updateBuyersEmail($result,$this->item->item_params->buyers_email);
-   endif;
+   #if($this->item->item_params->buyers_email):
+   #   $this->updateBuyersEmail($result,$this->item->item_params->buyers_email);
+   #endif;
 
    $this->invoiceData = $result;
 
