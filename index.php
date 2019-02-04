@@ -253,15 +253,43 @@ function updateOrderStatus($invoiceID, $orderid)
 
     $invoice = new Invoice($item); //this creates the invoice with all of the config params
     $orderStatus = json_decode($invoice->checkInvoiceStatus($invoiceID));
+    
+    switch($orderStatus->data->status){
+        case 'complete':
+        $order = new WC_Order($orderid);
+        //private order note with the invoice id
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> processing has been completed.' );
+        // Mark as on-hold (we're awaiting the cheque)
+        $order->update_status('completed', __('BitPay payment complete', 'woocommerce'));
+        break;
 
-    if ($orderStatus->data->status == 'paid'):
+        case 'confirmed':
+        case 'paid':
+        default:
+        $order = new WC_Order($orderid);
+        //private order note with the invoice id
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> is now processing.');
+        // Mark as on-hold (we're awaiting the cheque)
+        $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
+        break;
+
+        case 'invalid':
+        $order = new WC_Order($orderid);
+        //private order note with the invoice id
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> has become invalid because of network congestion.  Order will automatically update when the status changes.');
+        // Mark as on-hold (we're awaiting the cheque)
+        $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
+        break;
+        case 'expired':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
         $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a>');
         // Mark as on-hold (we're awaiting the cheque)
-        $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
-    endif;
+        $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
+        break;
+    }
 
+   
 }
 
 add_action('template_redirect', 'woo_custom_redirect_after_purchase');
