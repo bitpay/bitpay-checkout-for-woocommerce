@@ -16,11 +16,11 @@ function bitpay_install() {
 	$table_name = $wpdb->prefix . 'bitpay_transactions';
 	
 	$charset_collate = $wpdb->get_charset_collate();
-
     $sql = "CREATE TABLE IF NOT EXISTS $table_name(
         `id` int(11) NOT NULL AUTO_INCREMENT,
         `order_id` int(11) NOT NULL,
         `transaction_id` varchar(255) NOT NULL,
+        `transaction_status` varchar(50) NOT NULL DEFAULT 'new',
         `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
         ) $charset_collate;";
@@ -42,6 +42,12 @@ function insert_bitpay($order_id,$transaction_id){
             'transaction_id' => $transaction_id, 
         ) 
     );
+}
+
+function update_bitpay($order_id,$transaction_id,$transaction_status){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'bitpay_transactions';
+    $wpdb->update($table_name,array( 'transaction_status' => $transaction_status),array("order_id" => $order_id,'transaction_id'=>$transaction_id));
 }
 
 function get_bitpay($order_id,$transaction_id){
@@ -293,24 +299,31 @@ function bitpay_ipn(WP_REST_Request $request)
     $orderid = $data->orderId;
     $order_status = $data->status;
     $invoiceID = $data->id;
+        #verify the ipn matches the status of the actual invoice
 
    if(get_bitpay($orderid,$invoiceID)):
-    $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
-    //dev or prod token
-    $bitpay_token = getToken($bitpay_options['bitpay_endpoint']);
-    $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']);
-    $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
+        require 'classes/Config.php';
+        require 'classes/Client.php';
+        require 'classes/Item.php';
+        require 'classes/Invoice.php';
+    
+        $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
+        //dev or prod token
+        $bitpay_token = getToken($bitpay_options['bitpay_endpoint']);
+        $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']);
+        $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
 
-    $params = new stdClass();
-    $params->extension_version = getInfo();
-    $params->invoiceID = $invoiceID;
+        $params = new stdClass();
+        $params->extension_version = getInfo();
+        $params->invoiceID = $invoiceID;
 
-    $item = new Item($config, $params);
+        $item = new Item($config, $params);
 
-    $invoice = new Invoice($item); //this creates the invoice with all of the config params
-    $orderStatus = json_decode($invoice->checkInvoiceStatus($invoiceID));
-
-    #verify the ipn matches the status of the actual invoice
+        $invoice = new Invoice($item); //this creates the invoice with all of the config params
+        $orderStatus = json_decode($invoice->checkInvoiceStatus($invoiceID));
+        
+        #update the lookup table
+        update_bitpay($orderid,$invoiceID,$order_status);
 
     switch($orderStatus->data->status){
         case 'complete':
