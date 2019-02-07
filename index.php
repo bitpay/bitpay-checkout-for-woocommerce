@@ -46,7 +46,10 @@ function insert_bitpay($order_id,$transaction_id){
 
 function get_bitpay($order_id,$transaction_id){
     global $wpdb;
-	$table_name = $wpdb->prefix . 'bitpay_transactions';
+    $table_name = $wpdb->prefix . 'bitpay_transactions';
+    $rowcount = $wpdb->get_var( "SELECT COUNT(order_id) FROM $table_name WHERE order_id = '$order_id' 
+    AND transaction_id = '$transaction_id' LIMIT 1" );
+    return $rowcount;
     
 }
 
@@ -284,11 +287,14 @@ function bitpay_ipn(WP_REST_Request $request)
     global $woocommerce;
 
     $data = $request->get_body();
+    #print_r($data);die();
     $data = json_decode($data);
 
     $orderid = $data->orderId;
     $order_status = $data->status;
+    $invoiceID = $data->id;
 
+   if(get_bitpay($orderid,$invoiceID)):
     $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
     //dev or prod token
     $bitpay_token = getToken($bitpay_options['bitpay_endpoint']);
@@ -345,12 +351,9 @@ function bitpay_ipn(WP_REST_Request $request)
         $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
         break;
     }
-    die();
-
-
+   die();
+   endif;
 }
-
-
 
 add_action('template_redirect', 'woo_custom_redirect_after_purchase');
 function woo_custom_redirect_after_purchase()
