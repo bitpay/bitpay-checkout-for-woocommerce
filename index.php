@@ -79,14 +79,16 @@ function wc_bitpay_gateway_init()
             #print_r($bitpay_options);
 
             $this->id = 'bitpay_gateway';
-            $this->icon = getLogo($bitpay_options['bitpay_endpoint']);
+            #$this->icon = getLogo($bitpay_options['bitpay_endpoint']);
+            $this->icon = getLogo();
+            $this->class = "josh";
             $this->has_fields = true;
             $this->method_title = __('BitPay', 'wc-bitpay');
-            $this->method_label = __('ALO', 'wc-bitpay');
+            $this->method_label = __('BitPay', 'wc-bitpay');
             $this->method_description = __('Expand your payment options by accepting instant BTC and BCH payments without risk or price fluctuations.', 'wc-bitpay');
 
             if (empty($_GET['woo-bitpay-return'])) {
-                $this->order_button_text = __('Continue to payment', 'woocommerce-gateway-bitpay_gateway');
+                $this->order_button_text = __('Pay with BitPay', 'woocommerce-gateway-bitpay_gateway');
             }
 
             // Load the settings.
@@ -188,6 +190,24 @@ function wc_bitpay_gateway_init()
                         '2' => 'Redirect',
                     ),
                     'default' => '2',
+                ),
+
+                'bitpay_brand' => array(
+                    'title' => __('Branding', 'woocommerce'),
+                    'type' => 'select',
+                    'description' => __('Choose from one of our branded buttons<br>'.getBrands(), 'woocommerce'),
+                    'options' => getBrandOptions()
+                ),
+                'bitpay_ux' => array(
+                    'title' => __('Auto-Resize Buttons', 'woocommerce'),
+                    'type' => 'select',
+                    'description' => __('If <b>Yes</b>, the plugin will attempt to automatically resize the branding button on the checkout page.  If <b>No</b>, then you will need to edit your CSS file.', 'woocommerce'),
+                    'options' => array(
+                        '1' => 'Yes',
+                        '0' => 'No',
+                      
+                    ),
+                    'default' => '1',
                 ),
                 'bitpay_checkout_message' => array(
                     'title' => __('Checkout Message', 'woocommerce'),
@@ -479,17 +499,49 @@ function getDashboardLink($endpoint,$invoiceID)
     }
 }
 
-function getLogo($endpoint)
-{     //dev or prod token
-    switch ($endpoint) {
-        case 'test':
-        default:
-            return '//test.bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg';
-            break;
-        case 'production':
-        return '//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg';
-        break;
-    }
+
+function getBrandOptions(){
+    require_once 'classes/Buttons.php';
+    $buttonObj = new Buttons;
+    $buttons = $buttonObj->getButtons();
+    $output = [];
+    $x = 0;
+     foreach($buttons as $key=>$b):  
+        $output[$b] = 'BitPay Button '. ($x+1);
+        $x++;
+     endforeach;
+    return $output;
+   
+}
+#brand returned from API
+function getBrands(){
+   
+    require_once 'classes/Buttons.php';
+    $buttonObj = new Buttons;
+    $buttons = $buttonObj->getButtons();
+    $brand = '<div>';
+    foreach($buttons as $key=>$b):  
+        $brand.= '<figure style = "float:left;"><figcaption style = "text-align:center;font-style:italic">BitPay Button '.($key+1).'</figcaption><img src = "'.$b.'"  style = "width:150px;padding:5px;"></figure>';
+    endforeach;
+
+    $brand.= '</div>';
+    return $brand;
+
+}
+
+function getLogo($endpoint = null)
+{  
+    require_once 'classes/Buttons.php';
+    $buttonObj = new Buttons;
+    $buttons = $buttonObj->getButtons();
+    $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
+    $brand = $bitpay_options['bitpay_brand'];
+    if($brand == ''):
+        return  $buttons[0];
+    else:
+        return $brand;
+    endif;
+    
 }
 
 function getToken($endpoint)
@@ -602,6 +654,23 @@ function bitpay_thankyou($order_id)
 endif;
 }
 
+add_action('woocommerce_review_order_before_payment', 'bitpay_button_fix');
+function bitpay_button_fix()
+{
+    $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
+    //dev or prod token
+    $bitpay_ux = $bitpay_options['bitpay_ux'];
+    if($bitpay_ux):
+    echo '<script type "text/javascript">';
+    echo 'var img = jQuery("#payment .payment_methods li img");';
+    echo 'setTimeout(function(){ ';
+    echo 'var img = jQuery("#payment .payment_methods li img");';
+    echo 'img.css("max-height","50px");return;';
+    echo'  }, 900);';
+    echo '</script>';
+    endif;
+  
+}
 //custom info for bitpay checkout
 add_action('woocommerce_thankyou', 'bitpay_custom_message');
 function bitpay_custom_message()
