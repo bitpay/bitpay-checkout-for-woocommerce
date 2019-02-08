@@ -27,12 +27,14 @@ After the plugin is activated, BitPay will appear in the WooCommerce->Payments s
 	* A ***development*** or ***production*** token will need to be set
 * **BitPay Server Endpoint**
 	* Choose **Test** or **Production**, depending on your current setup.  Your matching API Token must be set.
-	* **Accepted Cryptocurrencies** - You can choose ***BitCoin***, ***BitCoin Cash***, or ***All***
-	* **Checkout Flow**
-		* **Redirect** - This will send the user to the BitPay invoice screen, and they will be redirected after the transaction to the Order Completed page
-		* **Modal** - This will open a popup modal on your site, and will display the order details once the transaction is completed.
-	* **Checkout Message** - Because the transaction may take time to complete, this message should let users know that their order will be on hold until BitPay finishes processing
-
+* **Accepted Cryptocurrencies** - You can choose ***BitCoin***, ***BitCoin Cash***, or ***All***
+* **Checkout Flow**
+	*  **Redirect** - This will send the user to the BitPay invoice screen, and they will be redirected after the transaction to the Order Completed page
+	* **Modal** - This will open a popup modal on your site, and will display the order details once the transaction is completed.
+* **Checkout Message** - Because the transaction may take time to complete, this message should let users know that their order will be on hold until BitPay finishes processing
+* **Branding** - Choose the button that matches your site design
+* **Auto Reize** - The plugin will attempt to resize the button on the checkout page, but if it does not look correct then you will have to modify your CSS file
+	
 This plugin also includes an IPN endpoint that will update  your WooCommerce order status.
 
 An order note will automatically be added with a link to the invoice *(will open in a new window)*
