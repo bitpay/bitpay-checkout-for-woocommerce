@@ -131,7 +131,7 @@ function wc_bitpay_gateway_init()
                 ),
 
                 'bitpay_merchant_info' => array(
-                    'description' => __('If you have not created a BitPay Merchant Token, you can create one at BitPay.com<br><a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Test)</a>  or <a href= "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Production)</a> </p>', 'woocommerce'),
+                    'description' => __('If you have not created a BitPay Merchant Token, you can create one on your BitPay Dashboard.<br><a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Test)</a>  or <a href= "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Production)</a> </p>', 'woocommerce'),
                     'type' => 'title',
                 ),
                 'title' => array(
@@ -150,16 +150,16 @@ function wc_bitpay_gateway_init()
                 ),
 
                 'bitpay_token_dev' => array(
-                    'title' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
-                    'label' => __('BitPay Merchant Token (Dev)', 'woocommerce'),
+                    'title' => __('Development Token', 'woocommerce'),
+                    'label' => __('Development Token', 'woocommerce'),
                     'type' => 'text',
                     'description' => 'Your <b>development</b> merchant token.  <a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
                     'default' => '',
 
                 ),
                 'bitpay_token_prod' => array(
-                    'title' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
-                    'label' => __('BitPay Merchant Token (Prod)', 'woocommerce'),
+                    'title' => __('Production Token', 'woocommerce'),
+                    'label' => __('Production Token', 'woocommerce'),
                     'type' => 'text',
                     'description' => 'Your <b>production</b> merchant token.  <a href = "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
                     'default' => '',
@@ -167,7 +167,7 @@ function wc_bitpay_gateway_init()
                 ),
 
                 'bitpay_endpoint' => array(
-                    'title' => __('BitPay Server Endpoint', 'woocommerce'),
+                    'title' => __('Endpoint', 'woocommerce'),
                     'type' => 'select',
                     'description' => __('Select <b>Test</b> for testing the plugin, <b>Production</b> when you are ready to go live.'),
                     'options' => array(
@@ -191,9 +191,9 @@ function wc_bitpay_gateway_init()
                 'bitpay_flow' => array(
                     'title' => __('Checkout Flow', 'woocommerce'),
                     'type' => 'select',
-                    'description' => __('If this is set to <b>Redirect</b>, then the customer will be redirected to <b>BitPay</b> to checkout, and return to the checkout page once the payment is made.<br>If this is set to <b>Popup Modal</b>, the user will stay on <b>' . get_bloginfo('name', null) . '</b> and complete the transaction.', 'woocommerce'),
+                    'description' => __('If this is set to <b>Redirect</b>, then the customer will be redirected to <b>BitPay</b> to checkout, and return to the checkout page once the payment is made.<br>If this is set to <b>Modal</b>, the user will stay on <b>' . get_bloginfo('name', null) . '</b> and complete the transaction.', 'woocommerce'),
                     'options' => array(
-                        '1' => 'Popup Modal',
+                        '1' => 'Modal',
                         '2' => 'Redirect',
                     ),
                     'default' => '2',
