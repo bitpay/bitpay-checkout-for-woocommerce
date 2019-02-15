@@ -47,7 +47,6 @@ class Invoice
         endif;
 
         #if the currency was set for BTC or BCH, do another call to update this invoice id
-        error_log('email class: '.$this->item->item_params->buyers_email);
          if (isset($this->item->item_params->buyers_email)):
             $this->updateBuyersEmail($result, $this->item->item_params->buyers_email);
          endif;
