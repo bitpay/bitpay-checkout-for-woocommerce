@@ -8,6 +8,14 @@
  * Author URI: http://www.bitpay.com
  */
 
+global $current_user;
+add_action('init','get_email');
+function get_email(){
+  
+
+
+}
+
 add_action('plugins_loaded', 'wc_bitpay_gateway_init', 11);
 
 #create the table if it doesnt exist
@@ -81,10 +89,9 @@ function wc_bitpay_gateway_init()
             $this->id = 'bitpay_gateway';
             #$this->icon = getLogo($bitpay_options['bitpay_endpoint']);
             $this->icon = getLogo();
-            $this->class = "josh";
             $this->has_fields = true;
-            $this->method_title = __('BitPay', 'wc-bitpay');
-            $this->method_label = __('BitPay', 'wc-bitpay');
+            $this->method_title = __('BitPay Checkout', 'wc-bitpay');
+            $this->method_label = __('BitPay Checkout', 'wc-bitpay');
             $this->method_description = __('Expand your payment options by accepting instant BTC and BCH payments without risk or price fluctuations.', 'wc-bitpay');
 
             if (empty($_GET['woo-bitpay-return'])) {
@@ -209,6 +216,17 @@ function wc_bitpay_gateway_init()
                     ),
                     'default' => '1',
                 ),
+                'bitpay_capture_email' => array(
+                    'title' => __('Auto-Capture Email', 'woocommerce'),
+                    'type' => 'select',
+                    'description' => __('Should BitPay Checkout try to auto-add the client\'s email address?  If <b>Yes</b>, the client will not be able to change the email address on the BitPay Checkout invoice.  If <b>No</b>, they will be able to add their own email address when paying the invoice.', 'woocommerce'),
+                    'options' => array(
+                        '1' => 'Yes',
+                        '0' => 'No',
+                      
+                    ),
+                    'default' => '1',
+                ),
                 'bitpay_checkout_message' => array(
                     'title' => __('Checkout Message', 'woocommerce'),
                     'type' => 'textarea',
@@ -240,6 +258,7 @@ add_action('admin_notices', 'no_token_set');
 
 function no_token_set()
 {
+    
     //lookup the token based on the environment
     $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
     //dev or prod token
@@ -424,7 +443,14 @@ function woo_custom_redirect_after_purchase()
             $params->extension_version = getInfo();
             $params->price = $order->total;
             $params->currency = $order->currency; //set as needed
-            //$params->buyers_email = 'jlewis@bitpay.com'; //set as needed
+            if($bitpay_options['bitpay_capture_email'] == 1):
+                $current_user = wp_get_current_user();
+                
+                if($current_user->user_email):
+                    $params->buyers_email = $current_user->user_email;
+                endif;
+            endif;
+           
 
             //use other fields as needed from API Doc
             //which crytpo does the merchant accept? set it in the config
@@ -521,7 +547,7 @@ function getBrands(){
     $buttons = $buttonObj->getButtons();
     $brand = '<div>';
     foreach($buttons as $key=>$b):  
-        $brand.= '<figure style = "float:left;"><figcaption style = "text-align:center;font-style:italic">BitPay Button '.($key+1).'</figcaption><img src = "'.$b.'"  style = "width:150px;padding:5px;"></figure>';
+        $brand.= '<figure style = "float:left;"><figcaption style = "text-align:center;font-style:italic">BitPay Button '.($key+1).'</figcaption><img src = "'.$b.'"  style = "width:150px;padding:1px;"></figure>';
     endforeach;
 
     $brand.= '</div>';
