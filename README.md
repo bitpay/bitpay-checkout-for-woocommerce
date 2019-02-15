@@ -32,6 +32,7 @@ After the plugin is activated, BitPay will appear in the WooCommerce->Payments s
 	*  **Redirect** - This will send the user to the BitPay invoice screen, and they will be redirected after the transaction to the Order Completed page
 	* **Modal** - This will open a popup modal on your site, and will display the order details once the transaction is completed.
 * **Checkout Message** - Because the transaction may take time to complete, this message should let users know that their order will be on hold until BitPay finishes processing
+* **Auto Capture Email** - If enabled, the plugin will attempt to auto-fill the buyer's email address when paying the invoice
 * **Branding** - Choose the button that matches your site design
 * **Auto Reize** - The plugin will attempt to resize the button on the checkout page, but if it does not look correct then you will have to modify your CSS file
 	

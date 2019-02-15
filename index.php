@@ -529,11 +529,23 @@ function getDashboardLink($endpoint,$invoiceID)
 function getBrandOptions(){
     require_once 'classes/Buttons.php';
     $buttonObj = new Buttons;
-    $buttons = $buttonObj->getButtons();
+    $buttons = json_decode($buttonObj->getButtons());
+   /*
+   'options' => array(
+                        '1' => 'Yes',
+                        '0' => 'No',
+                      
+                    ),
+   */
     $output = [];
     $x = 0;
-     foreach($buttons as $key=>$b):  
-        $output[$b] = 'BitPay Button '. ($x+1);
+     foreach($buttons->data as $key=>$b):  
+       
+        $names = preg_split('/(?=[A-Z])/',$b->name);
+        $names = implode(" ",$names);
+        $names = ucwords($names);
+
+        $output['//'.$b->url] = $names;
         $x++;
      endforeach;
     return $output;
@@ -541,13 +553,17 @@ function getBrandOptions(){
 }
 #brand returned from API
 function getBrands(){
-   
     require_once 'classes/Buttons.php';
     $buttonObj = new Buttons;
-    $buttons = $buttonObj->getButtons();
+    $buttons = json_decode($buttonObj->getButtons());
     $brand = '<div>';
-    foreach($buttons as $key=>$b):  
-        $brand.= '<figure style = "float:left;"><figcaption style = "text-align:center;font-style:italic">BitPay Button '.($key+1).'</figcaption><img src = "'.$b.'"  style = "width:150px;padding:1px;"></figure>';
+    foreach($buttons->data as $key=>$b):  
+        $names = preg_split('/(?=[A-Z])/',$b->name);
+        $names = implode(" ",$names);
+        $names = ucwords($names);
+        $brand.= '<figure style = "float:left;"><img src = "//'.$b->url.'"  style = "width:150px;padding:1px;">';
+        $brand.= '<figcaption style = "text-align:left;font-style:italic"><b>'.$names.'</b><br>'.$b->description.'</figcaption>';
+        $brand.='</figure>';
     endforeach;
 
     $brand.= '</div>';
