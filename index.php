@@ -332,13 +332,17 @@ function bitpay_ipn(WP_REST_Request $request)
     global $woocommerce;
 
     $data = $request->get_body();
-    #print_r($data);die();
+  
+    #$data = json_decode($data);
     $data = json_decode($data);
+    $event = $data->event;
+    $data = $data->data;
+   #print_r($data);die();
 
     $orderid = $data->orderId;
     $order_status = $data->status;
     $invoiceID = $data->id;
-        #verify the ipn matches the status of the actual invoice
+    #verify the ipn matches the status of the actual invoice
 
    if(get_bitpay($orderid,$invoiceID)):
         require 'classes/Config.php';
@@ -364,8 +368,8 @@ function bitpay_ipn(WP_REST_Request $request)
         #update the lookup table
         update_bitpay($orderid,$invoiceID,$order_status);
 
-    switch($orderStatus->data->status){
-        case 'complete':
+        switch($event->name){
+        case 'invoice_completed':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
         $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> processing has been completed.' );
@@ -378,8 +382,8 @@ function bitpay_ipn(WP_REST_Request $request)
         $woocommerce->cart->empty_cart();
         break;
 
-        case 'confirmed':
-        case 'paid':
+        case 'invoice_confirmed':
+        case 'invoice_paidInFull':
         default:
         $order = new WC_Order($orderid);
         //private order note with the invoice id
@@ -388,17 +392,17 @@ function bitpay_ipn(WP_REST_Request $request)
         $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
         break;
 
-        case 'invalid':
+        case 'invoice_failedToConfirm':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
         $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> has become invalid because of network congestion.  Order will automatically update when the status changes.');
         // Mark as on-hold (we're awaiting the cheque)
         $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
         break;
-        case 'expired':
+        case 'invoice_expired':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a>');
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'"> has been cancelled.' . $invoiceID.'</a>');
         // Mark as on-hold (we're awaiting the cheque)
         $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
         break;
@@ -440,6 +444,7 @@ function woo_custom_redirect_after_purchase()
             $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']); 
             //sample values to create an item, should be passed as an object'
             $params = new stdClass();
+            #$params->fullNotifications = 'true';
             $params->extension_version = getInfo();
             $params->price = $order->total;
             $params->currency = $order->currency; //set as needed
@@ -473,6 +478,7 @@ function woo_custom_redirect_after_purchase()
 
             $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status';
             //http://bp.local.wpbase.com/wp-json/bitpay/ipn/status
+            $params->extendedNotifications = true;
 
             $item = new Item($config, $params);
             $invoice = new Invoice($item);
@@ -481,6 +487,9 @@ function woo_custom_redirect_after_purchase()
             $invoice->createInvoice();
             $invoiceData = json_decode($invoice->getInvoiceData());
             //now we have to append the invoice transaction id for the callback verification
+            error_log(print_r($invoice,true));
+            error_log('-----------------');
+             error_log(print_r($invoiceData,true));
             $invoiceID = $invoiceData->data->id;
             //set a cookie for redirects and updating the order status
             $cookie_name = "bitpay-invoice-id";
