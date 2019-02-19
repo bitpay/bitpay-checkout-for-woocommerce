@@ -446,6 +446,7 @@ function woo_custom_redirect_after_purchase()
             $config = new Configuration($bitpay_token, $bitpay_options['bitpay_endpoint']); 
             //sample values to create an item, should be passed as an object'
             $params = new stdClass();
+            $current_user = wp_get_current_user();
             #$params->fullNotifications = 'true';
             $params->extension_version = getInfo();
             $params->price = $order->total;
@@ -454,7 +455,10 @@ function woo_custom_redirect_after_purchase()
                 $current_user = wp_get_current_user();
                 
                 if($current_user->user_email):
-                    $params->buyers_email = $current_user->user_email;
+                    $buyerInfo = new stdClass();
+                    $buyerInfo->name = $current_user->display_name;
+                    $buyerInfo->email =$current_user->user_email;
+                    $params->buyer = $buyerInfo;
                 endif;
             endif;
            
@@ -491,7 +495,7 @@ function woo_custom_redirect_after_purchase()
             //now we have to append the invoice transaction id for the callback verification
             error_log(print_r($invoice,true));
             error_log('-----------------');
-             error_log(print_r($invoiceData,true));
+            error_log(print_r($invoiceData,true));
             $invoiceID = $invoiceData->data->id;
             //set a cookie for redirects and updating the order status
             $cookie_name = "bitpay-invoice-id";

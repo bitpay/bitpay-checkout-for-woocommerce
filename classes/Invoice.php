@@ -26,6 +26,7 @@ class Invoice
     public function createInvoice()
     {
        
+       
         $post_fields = json_encode($this->item->item_params);
 
         $pluginInfo = $this->item->item_params->extension_version;
@@ -34,7 +35,7 @@ class Invoice
         $request_headers[] = 'Content-Type: application/json';
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->item_params->invoice_endpoint);
+        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->invoice_endpoint);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
@@ -43,14 +44,8 @@ class Invoice
 
         #if the currency was set for BTC or BCH, do another call to update this invoice id
         if ($this->item->item_params->buyerSelectedTransactionCurrency != 1):
-            $this->updateBuyerCurrency($result, $this->item->item_params->buyerSelectedTransactionCurrency);
+            $this->updateBuyerCurrency($result, $this->item->buyerSelectedTransactionCurrency);
         endif;
-
-        #if the currency was set for BTC or BCH, do another call to update this invoice id
-         if (isset($this->item->item_params->buyers_email)):
-            $this->updateBuyersEmail($result, $this->item->item_params->buyers_email);
-         endif;
-
 
         $this->invoiceData = $result;
 
@@ -80,7 +75,7 @@ class Invoice
         $update_fields = json_encode($update_fields);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->item_params->buyers_email_endpoint);
+        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->buyers_email_endpoint);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $update_fields);
@@ -102,7 +97,7 @@ class Invoice
         $update_fields = json_encode($update_fields);
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->item_params->buyer_transaction_endpoint);
+        curl_setopt($ch, CURLOPT_URL, 'https://' . $this->item->buyer_transaction_endpoint);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $update_fields);
