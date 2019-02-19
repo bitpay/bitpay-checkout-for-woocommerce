@@ -408,6 +408,18 @@ function bitpay_ipn(WP_REST_Request $request)
         // Mark as on-hold (we're awaiting the cheque)
         $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
         break;
+
+        case 'invoice_refundComplete':
+        $order = new WC_Order($orderid);
+        //private order note with the invoice id
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'"> has been refunded.' . $invoiceID.'</a>');
+        // Mark as on-hold (we're awaiting the cheque)
+        $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
+        break;
+
+
+
+        
     }
    die();
    endif;
