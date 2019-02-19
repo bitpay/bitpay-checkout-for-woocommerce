@@ -25,7 +25,7 @@ class Invoice
 
     public function createInvoice()
     {
-        #setup some curl
+       
         $post_fields = json_encode($this->item->item_params);
 
         $pluginInfo = $this->item->item_params->extension_version;

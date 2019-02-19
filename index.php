@@ -9,7 +9,6 @@
  */
 
 global $current_user;
-error_log(plugins_url('bitpay.css',__FILE__ ));
 
 function bitpay_css() {
     wp_register_style('bitpay_css', plugins_url('/bitpay.css',__FILE__ ));
@@ -111,7 +110,10 @@ function wc_bitpay_gateway_init()
             // Define user set variables
             $this->title = $this->get_option('title');
             $this->description = $this->get_option('description').'<br>';
+            $this->description.='<div style = "clear:both;min-height: 200px;">';
             $this->description.= '<img src="'.getLogo().'" style = "cursor:pointer;min-height: 150px;margin-top: 25px;margin-bottom: 25px;" alt="BitPay" onclick = "jQuery(\'#place_order\').click();">';
+            $this->description.=' </div>';
+           
             /*
             */
             //<img src="//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg" alt="BitPay">
@@ -215,17 +217,7 @@ function wc_bitpay_gateway_init()
                     'description' => __('Choose from one of our branded buttons<br>'.getBrands(), 'woocommerce'),
                     'options' => getBrandOptions()
                 ),
-                'bitpay_ux' => array(
-                    'title' => __('Auto-Resize Buttons', 'woocommerce'),
-                    'type' => 'select',
-                    'description' => __('If <b>Yes</b>, the plugin will attempt to automatically resize the branding button on the checkout page.  If <b>No</b>, then you will need to edit your CSS file.', 'woocommerce'),
-                    'options' => array(
-                        '1' => 'Yes',
-                        '0' => 'No',
-                      
-                    ),
-                    'default' => '1',
-                ),
+                
                 'bitpay_capture_email' => array(
                     'title' => __('Auto-Capture Email', 'woocommerce'),
                     'type' => 'select',
@@ -539,7 +531,7 @@ function replace_order_button_html( $order_button,$override = false ) {
 
 function getInfo(){
     $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin Name' => 'Plugin Name'), false);
-    $plugin_version = $plugin_data['Plugin Name'].' - '.$plugin_data['Version'];
+    $plugin_version = 'Woocommerce_'.$plugin_data['Version'];
     return $plugin_version;
 }
 //retrieves the token based on the endpoint
@@ -735,26 +727,30 @@ function hide_place_order(){
 ?>
 <script type = "text/javascript">
         jQuery(document).ready(function(){
-            var $payment_method;
-             jQuery("input:radio").attr("checked", false);
-            var paymentCheck =  setInterval(function(){ 
-                var blockOverlay = jQuery(".blockOverlay").css("display");
-                    if(blockOverlay == undefined){
-                          
-                            clearInterval(paymentCheck);
-                        
-                    }
-                    jQuery("#place_order").css('opacity',1)
-                    console.log('aaa')
-                    },100);
-
+            var $payment_method =  jQuery('input[name=payment_method]:checked').val();
+            var $bgcolor = jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('backgroundColor')
+                var paymentCheck =  setInterval(function(){ 
+                    var blockOverlay = jQuery(".blockOverlay").css("display");
+                        if(blockOverlay == undefined){
+                            
+                                clearInterval(paymentCheck);
+                            
+                        }
+                         if($payment_method != 'bitpay_gateway'){
+                        jQuery("#place_order").css('opacity',1)
+                         }
+                        },100);
+                
              jQuery('form[name="checkout"]').change(function(){
                $payment_method =  jQuery('input[name=payment_method]:checked').val();
               if($payment_method == 'bitpay_gateway'){
                    jQuery("#place_order").css('opacity',0)
+                   jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('background-color','transparent')
 
               }else{
                   jQuery("#place_order").css('opacity',1)
+                jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('background-color',$bgcolor)
+
 
               }
 
@@ -766,24 +762,6 @@ function hide_place_order(){
     
 </script>
 <?php
-}
-
-add_action('woocommerce_review_order_before_payment', 'bitpay_button_fix');
-function bitpay_button_fix()
-{
-    $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
-    //dev or prod token
-    $bitpay_ux = $bitpay_options['bitpay_ux'];
-    if($bitpay_ux):
-    echo '<script type "text/javascript">';
-    echo 'var img = jQuery("#payment .payment_methods li img");';
-    echo 'setTimeout(function(){ ';
-    echo 'var img = jQuery("#payment .payment_methods li img");';
-    echo 'img.css("max-height","50px");return;';
-    echo'  }, 900);';
-    echo '</script>';
-    endif;
-  
 }
 
 //custom info for bitpay checkout
