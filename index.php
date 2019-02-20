@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: BitPay Checkout Plugin
+ * Plugin Name: BitPay Plugin
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_gateway">WooCommerce->Payments plugin</a>.
  * Version: 2.0
@@ -94,8 +94,8 @@ function wc_bitpay_gateway_init()
             #$this->icon = getLogo($bitpay_options['bitpay_endpoint']);
             #$this->icon = getLogo();
             $this->has_fields = true;
-            $this->method_title = __('BitPay Checkout', 'wc-bitpay');
-            $this->method_label = __('BitPay Checkout', 'wc-bitpay');
+            $this->method_title = __('BitPay', 'wc-bitpay');
+            $this->method_label = __('BitPay', 'wc-bitpay');
             $this->method_description = __('Expand your payment options by accepting instant BTC and BCH payments without risk or price fluctuations.', 'wc-bitpay');
 
             if (empty($_GET['woo-bitpay-return'])) {
@@ -132,7 +132,7 @@ function wc_bitpay_gateway_init()
             $this->form_fields = array(
                 'enabled' => array(
                     'title' => __('Enable/Disable', 'woocommerce'),
-                    'label' => __('Enable BitPay Checkout', 'woocommerce'),
+                    'label' => __('Enable BitPay', 'woocommerce'),
                     'type' => 'checkbox',
                     'description' => '',
                     'default' => 'no',
@@ -190,14 +190,14 @@ function wc_bitpay_gateway_init()
                 ),
                 'bitpay_currency' => array(
                     'title' => __('Accepted Cryptocurrencies', 'woocommerce'),
-                    'type' => 'select',
-                    'description' => __('Bitcoin (BTC), Bitcoin Cash (BCH), or All.'),
+                    'type' => 'multiselect',
+                    'description' => __('Bitcoin (BTC) or Bitcoin Cash (BCH).  If none are selected, the default will be BTC and BCH.'),
+                    'css'=>'min-height:150px;',
                     'options' => array(
-                        '1' => '--All--',
                         'BTC' => 'BTC',
                         'BCH' => 'BCH',
                     ),
-                    'default' => '1',
+                    'default' => 'BTC',
                 ),
 
                 'bitpay_flow' => array(
@@ -221,7 +221,7 @@ function wc_bitpay_gateway_init()
                 'bitpay_capture_email' => array(
                     'title' => __('Auto-Capture Email', 'woocommerce'),
                     'type' => 'select',
-                    'description' => __('Should BitPay Checkout try to auto-add the client\'s email address?  If <b>Yes</b>, the client will not be able to change the email address on the BitPay Checkout invoice.  If <b>No</b>, they will be able to add their own email address when paying the invoice.', 'woocommerce'),
+                    'description' => __('Should BitPay try to auto-add the client\'s email address?  If <b>Yes</b>, the client will not be able to change the email address on the BitPay invoice.  If <b>No</b>, they will be able to add their own email address when paying the invoice.', 'woocommerce'),
                     'options' => array(
                         '1' => 'Yes',
                         '0' => 'No',
@@ -271,7 +271,7 @@ function no_token_set()
    
     <div class="error notice">
         <p>
-            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  <b>BitPay Checkout</b> will not function if this is not set.');?>
+            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
         </p>
     </div>
 <?php 
@@ -478,17 +478,10 @@ function woo_custom_redirect_after_purchase()
             //use other fields as needed from API Doc
             //which crytpo does the merchant accept? set it in the config
             $bitpay_currency = $bitpay_options['bitpay_currency'];
-            switch ($bitpay_currency) {
-                default:
-                case 1:
-                    break;
-                case 'BTC':
-                    $params->buyerSelectedTransactionCurrency = 'BTC';
-                    break;
-                case 'BCH':
-                    $params->buyerSelectedTransactionCurrency = 'BCH';
-                    break;
+            if(empty($bitpay_currency)){
+                $bitpay_currency = array("BTC","BCH");
             }
+            $params->paymentCurrencies = $bitpay_currency;
             //orderid
             $params->orderId = trim($order_id);
             //redirect and ipn stuff
@@ -780,7 +773,7 @@ function hide_place_order(){
 <?php
 }
 
-//custom info for bitpay checkout
+//custom info for BitPay
 add_action('woocommerce_thankyou', 'bitpay_custom_message');
 function bitpay_custom_message()
 {
