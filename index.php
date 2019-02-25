@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: BitPay Plugin
+ * Plugin Name: BitPay Checkout
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_gateway">WooCommerce->Payments plugin</a>.
- * Version: 2.0
+ * Version: 3.0
  * Author: Joshua Lewis
  * Author URI: http://www.bitpay.com
  */
@@ -478,7 +478,7 @@ function woo_custom_redirect_after_purchase()
 
             $item = new Item($config, $params);
             $invoice = new Invoice($item);
-
+            error_log(print_r($params,true));
             //this creates the invoice with all of the config params from the item
             $invoice->createInvoice();
             $invoiceData = json_decode($invoice->getInvoiceData());
@@ -524,8 +524,10 @@ function replace_order_button_html( $order_button,$override = false ) {
 }
 
 function getInfo(){
-    $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin Name' => 'Plugin Name'), false);
-    $plugin_version = 'Woocommerce_'.$plugin_data['Version'];
+    $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin_Name' => 'Plugin Name'), false);
+    $plugin_name = $plugin_data['Plugin_Name'];
+    $plugin_name = str_replace(" ","_",$plugin_name);
+    $plugin_version = $plugin_name.'_Woocommerce_'.$plugin_data['Version'];
     return $plugin_version;
 }
 //retrieves the token based on the endpoint
