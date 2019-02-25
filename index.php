@@ -13,8 +13,6 @@ global $current_user;
 function bitpay_css() {
     wp_register_style('bitpay_css', plugins_url('/bitpay.css',__FILE__ ));
     wp_enqueue_style('bitpay_css');
-   # wp_register_script( 'your_namespace', plugins_url('your_script.js',__FILE__ ));
-   # wp_enqueue_script('your_namespace');
 }
 
 add_action( 'init','bitpay_css');
@@ -478,14 +476,11 @@ function woo_custom_redirect_after_purchase()
 
             $item = new Item($config, $params);
             $invoice = new Invoice($item);
-            error_log(print_r($params,true));
             //this creates the invoice with all of the config params from the item
             $invoice->createInvoice();
             $invoiceData = json_decode($invoice->getInvoiceData());
             //now we have to append the invoice transaction id for the callback verification
-            error_log(print_r($invoice,true));
-            error_log('-----------------');
-            error_log(print_r($invoiceData,true));
+           
             $invoiceID = $invoiceData->data->id;
             //set a cookie for redirects and updating the order status
             $cookie_name = "bitpay-invoice-id";
