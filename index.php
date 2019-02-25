@@ -189,20 +189,7 @@ function wc_bitpay_gateway_init()
                     'default' => 'test',
                 ),
 
-              
-                'bitpay_currency_btc' => array(
-                    'title' => __('Accepted Cryptocurrencies', 'woocommerce'),
-                    'type' => 'checkbox',
-                    'label' =>'BTC (Bitcoin)',
-                    'description' => __('Accept Bitcoin as a payment option '),
-                    
-                ),
-                'bitpay_currency_bch' => array(
-                    'type' => 'checkbox',
-                    'label' =>'BCH (Bitcoin Cash)',
-                    'description' => __('Accept Bitcoin Cash as a payment option '),
-                    
-                ),
+            
 
                 'bitpay_flow' => array(
                     'title' => __('Checkout Flow', 'woocommerce'),
@@ -480,26 +467,6 @@ function woo_custom_redirect_after_purchase()
                 endif;
             endif;
            
-
-            //use other fields as needed from API Doc
-            //which crytpo does the merchant accept? set it in the config
-           # $bitpay_currency = $bitpay_options['bitpay_currency'];
-
-            $btc_checked = $bitpay_options['bitpay_currency_btc'];
-            $bch_checked = $bitpay_options['bitpay_currency_bch'];
-            
-            $bitpay_currency = [];
-            if($btc_checked == 'yes'):
-                $bitpay_currency[] = 'BTC';
-            endif;
-             if($bch_checked == 'yes'):
-                $bitpay_currency[] = 'BCH';
-            endif;
-
-            if(empty($bitpay_currency)){
-                $bitpay_currency = array("BTC","BCH");
-            }
-            $params->paymentCurrencies = $bitpay_currency;
             //orderid
             $params->orderId = trim($order_id);
             //redirect and ipn stuff
