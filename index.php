@@ -234,7 +234,7 @@ function wc_bitpay_gateway_init()
             $order = new WC_Order($order_id);
 
             // Mark as on-hold (we're awaiting the cheque)
-            $order->update_status('on-hold', __('Awaiting BitPay payment', 'woocommerce'));
+            $order->update_status('pending-payment', __('Awaiting BitPay payment', 'woocommerce'));
             // Return thankyou redirect
             return array(
                 'result' => 'success',
@@ -395,7 +395,7 @@ function bitpay_ipn(WP_REST_Request $request)
         case 'invoice_expired':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'"> has been cancelled.' . $invoiceID.'</a>');
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been cancelled.');
         // Mark as on-hold (we're awaiting the cheque)
         $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
         break;
