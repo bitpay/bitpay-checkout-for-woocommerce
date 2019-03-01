@@ -350,7 +350,7 @@ function bitpay_ipn(WP_REST_Request $request)
         $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
 
         $params = new stdClass();
-        $params->extension_version = getInfo();
+        $params->extension_version = getBpCheckoutInfo();
         $params->invoiceID = $invoiceID;
 
         $item = new Item($config, $params);
@@ -451,7 +451,7 @@ function woo_custom_redirect_after_purchase()
             $params = new stdClass();
             $current_user = wp_get_current_user();
             #$params->fullNotifications = 'true';
-            $params->extension_version = getInfo();
+            $params->extension_version = getBpCheckoutInfo();
             $params->price = $order->total;
             $params->currency = $order->currency; //set as needed
             if($bitpay_options['bitpay_capture_email'] == 1):
@@ -518,7 +518,7 @@ function replace_order_button_html( $order_button,$override = false ) {
     endif;
 }
 
-function getInfo(){
+function getBpCheckoutInfo(){
     $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin_Name' => 'Plugin Name'), false);
     $plugin_name = $plugin_data['Plugin_Name'];
     $plugin_name = str_replace(" ","_",$plugin_name);
@@ -630,7 +630,7 @@ function checkToken($bitpay_token,$bitpay_endpoint){
     $config = new Configuration($bitpay_token, $bitpay_endpoint); 
     //sample values to create an item, should be passed as an object'
     $params = new stdClass();
-    $params->extension_version = getInfo();
+    $params->extension_version = getBpCheckoutInfo();
     $params->price = '.50';
     $params->currency = 'USD'; //set as needed
 
