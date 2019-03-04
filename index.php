@@ -545,23 +545,18 @@ function getBrandOptions(){
     require_once 'classes/Buttons.php';
     $buttonObj = new Buttons;
     $buttons = json_decode($buttonObj->getButtons());
-   /*
-   'options' => array(
-                        '1' => 'Yes',
-                        '0' => 'No',
-                      
-                    ),
-   */
     $output = [];
-    $x = 0;
      foreach($buttons->data as $key=>$b):  
        
         $names = preg_split('/(?=[A-Z])/',$b->name);
         $names = implode(" ",$names);
         $names = ucwords($names);
-
+        if(strpos($names,"Donate") === 0):
+            continue;
+        else:  
+         $names = str_replace(" Button","",$names);    
         $output['//'.$b->url] = $names;
-        $x++;
+        endif;
      endforeach;
     return $output;
    
@@ -578,9 +573,15 @@ function getBrands(){
         $names = preg_split('/(?=[A-Z])/',$b->name);
         $names = implode(" ",$names);
         $names = ucwords($names);
+
+        if(strpos($names,"Donate") === 0):
+            continue;
+        else:
+        $names = str_replace(" Button","",$names);
         $brand.= '<figure style = "float:left;"><img src = "//'.$b->url.'"  style = "width:150px;padding:1px;">';
         $brand.= '<figcaption style = "text-align:left;font-style:italic"><b>'.$names.'</b><br>'.$b->description.'</figcaption>';
         $brand.='</figure>';
+        endif;
     endforeach;
 
     $brand.= '</div>';
