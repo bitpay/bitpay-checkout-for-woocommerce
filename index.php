@@ -148,14 +148,14 @@ function wc_bitpay_gateway_init()
                     'title' => __('Title', 'woocommerce'),
                     'type' => 'text',
                     'description' => __('This controls the title which the user sees during checkout.', 'woocommerce'),
-                    'default' => __('Pay With BitPay', 'woocommerce'),
+                    'default' => __('BitPay', 'woocommerce'),
 
                 ),
                 'description' => array(
                     'title' => __('Description', 'woocommerce'),
                     'type' => 'text',
                     'description' => __('This is the message box that will appear on the <b>checkout page</b> when they select BitPay.', 'woocommerce'),
-                    'default' => 'Checkout with BitPay',
+                    'default' => 'Pay with BitPay using one of the supported cryptocurrencies',
 
                 ),
 
