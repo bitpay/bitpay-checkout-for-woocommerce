@@ -403,7 +403,7 @@ function bitpay_ipn(WP_REST_Request $request)
         case 'invoice_refundComplete':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'"> has been refunded.' . $invoiceID.'</a>');
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getDashboardLink($bitpay_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been refunded.' . $invoiceID);
         // Mark as on-hold (we're awaiting the cheque)
         $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
         break;
@@ -673,7 +673,7 @@ function bitpay_thankyou($order_id)
     if ($order->payment_method == 'bitpay_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-	<script src="//bitpay.com/bitpay.js"></script>
+	<script src="//bitpay.com/bitpay.min.js"></script>
 	<script type='text/javascript'>
 	    jQuery("#primary").hide()
 	    var payment_status = null;
