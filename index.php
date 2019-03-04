@@ -108,8 +108,8 @@ function wc_bitpay_gateway_init()
             // Define user set variables
             $this->title = $this->get_option('title');
             $this->description = $this->get_option('description').'<br>';
-            $this->description.='<div style = "clear:both;min-height: 200px;">';
-            $this->description.= '<img src="'.getLogo().'" style = "cursor:pointer;min-height: 150px;margin-top: 25px;margin-bottom: 25px;" alt="BitPay" onclick = "jQuery(\'#place_order\').click();">';
+            $this->description.='<div style = "clear:both;min-height: 200px;display:flex;">';
+            $this->description.= '<img src="'.getLogo().'" style = "cursor:pointer;min-height: 75px;margin:auto;display:block" alt="BitPay" onclick = "jQuery(\'#place_order\').click();">';
             $this->description.=' </div>';
            
             /*
