@@ -3,7 +3,7 @@ BitPay Checkout for Woocommerce
 
 ## Build Status
 
-[![Build Status](https://travis-ci.org/bitpay/bitpay-checkout-for-woocommerce.svg?branch=master)](https://travis-ci.org/bitpaybitpay-checkout-for-woocommerce)
+[![Build Status](https://travis-ci.org/bitpay/bitpay-checkout-for-woocommerce.svg?branch=master)](https://travis-ci.org/bitpay/bitpay-checkout-for-woocommerce)
 
 This plugin allows stores using the WooCommerce shopping cart system to accept cryptocurrency payments via the BitPay gateway. It only takes a few minutes to configure.
 
