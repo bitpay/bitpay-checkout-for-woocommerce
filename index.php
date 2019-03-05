@@ -356,7 +356,8 @@ function bitpay_ipn(WP_REST_Request $request)
         bitpay_update_order_note($orderid,$invoiceID,$order_status);
 
         switch($event->name){
-        case 'invoice_completed':
+        #case 'invoice_completed':
+        case 'invoice_confirmed':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
         $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> processing has been completed.' );
@@ -369,13 +370,7 @@ function bitpay_ipn(WP_REST_Request $request)
         $woocommerce->cart->empty_cart();
         break;
 
-        case 'invoice_confirmed': #processing
-        $order = new WC_Order($orderid);
-        //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> is now processing.');
-
-        $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
-        break;
+        
         case 'invoice_paidInFull': #pending
         default:
         $order = new WC_Order($orderid);
