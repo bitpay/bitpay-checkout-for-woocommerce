@@ -1,115 +1,101 @@
-=== BitPay Checkout for Woocommerce ===
+=== bitpay-for-woocommerce ===
 Contributors: bitpay
-Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
-Requires at least: 4.9
-Tested up to: 5.0.4
+Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment
+Requires at least: 4.3.1
+Tested up to: 4.9.8
 Requires PHP: 5.5
-Stable tag: 3.0
+Stable tag: 2.2.16
 License: MIT License (MIT)
-License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
-
-Try out our brand new plugin for Woocommerce. Accept cryptocurrency payments through BitPay on your WooCommerce store and get paid via bank transfers
+License URI: https://opensource.org/licenses/MIT
+ 
+This version of the plugin is not be maintain anymore. Please download the brand new BitPay Checkout for Woocommerce (3.0).
 
 == Description ==
 
-== BitPay Payment Gateway plugin for WooCommerce ==
+Use BitPay's plugin to accept Bitcoin payments from customers anywhere on earth.
 
-= Key features =
+Key features:
 
-* accept bitcoin and bitcoin cash payments from payment protocol compatible wallets
-* Price in your local currency
-* Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://bitpay.com/docs/settlement)), BTC, BCH or stable coins (GUSD, USDC)
-* By design, chargebacks are not possible with cryptocurrency payments
-* Have an overview of all your bitcoin and bitcoin cash payments in your BitPay merchant account at https://bitpay.com/dashboard
-* Refund your customers in bitcoin or bitcoin cash in your BitPay merchant dashboard at https://bitpay.com/dashboard/payments
+* Support all bitcoin and bitcoin cash wallets that support payment protocol
+* Price in your local currency, let customers pay with bitcoin and bitcoin cash
+* Have an overview of all your bitcoin and bitcoin cash payments in your BitPay merchant dashboard at https://bitpay.com
+* Refund your customers in bitcoin or bitcoin cash in your BitPay merchant dashboard at https://bitpay.com
+ 
+= Installation =
+This plugin requires Woocommerce. Please make sure you have Woocommerce installed.
 
-= Customer journey =
+1. Get started by signing up for a [BitPay merchant account.](https://bitpay.com/dashboard/signup)
+1. Search for the BitPay plugin: Plugins -> Add New -> Search plugins and type `BitPay`
+1. Select `bitpay-for-woocommerce` and click on 'Install Now' and then on `Activate Plugin`
 
-1. The customer is adding items to his shopping card and proceeds to checkout - the total amount is $100 USD.
-2. The customer selects BitPay as checkout method.
-3. A BitPay invoice is generated, the customer selects one of the supported cryptocurrency to complete the payment. The invoice will display an amount to pay in the selected cryptocurrency, at an exchange rate locked for 15 minutes.
-4. The customer completes the payment using a compatible wallet within the 15 min window.
-5. Once the transaction is fully confirmed on the blockchain, BitPay notifies the merchant and the corresponding amount is credited to the BitPay merchant account minus our 1% processing fee - thus $99 USD in this example.
-
-== Installation ==
-
-= Requirements =
-
-* This plugin requires [Woocommerce](https://wordpress.org/plugins/woocommerce/).
-* A BitPay merchant account ([Test](http://test.bitpay.com) and [Production](http://www.bitpay.com))
-
-NOTE: If you were using a previous version of this plugin, this version (3.0) was completely rewritten to improve the user experience and the security.
-
-= Plugin installation =
-
-1. Get started by signing up for a [BitPay merchant account](https://bitpay.com/dashboard/signup)
-2. Look for the BitPay plugin via the [Wordpress Plugin Manager](https://codex.wordpress.org/Plugins_Add_New_Screen). From your Wordpress admin panel, go to Plugins > Add New > Search plugins and type **BitPay**
-3. Select **BitPay for Woocommerce** and click on **Install Now** and then on **Activate Plugin**
-
-After the plugin is activated, BitPay will appear in the WooCommerce>Payments section.
-
-= Plugin configuration =
-
-After you have installed the BitPay plugin, the configuration steps are:
+= Connecting BitPay and Woocommerce =
+After you have installed the BitPay plugin, you can configure the plugin:
 
 1. Create a BitPay pairing code in your BitPay merchant dashboard:
-	* Login to your BitPay merchant account and go to the [API token settings](https://bitpay.com/dashboard/merchant/api-tokens)
-	* click on the **Add new token** button: indicate a token label (for instance: Woocommerce), uncheck "Require Authentication" and click on the **Add Token** button
-	* Copy the token value
-2. Log in to your WordPress admin panel, select Woocommerce > Payments and click on the **Set up** button next to the BitPay Payment methods
-	* Paste the token value into the appropriate field: **Development Token** for token copied from the sandbox environment (test.bitpay.com) and **Production Token** for token copied from the live environment (bitpay.com)
-	* select the endpoint - Test or Production
-	* Click "Save changes" at the bottom of the page
+	* Login to your [BitPay merchant account](https://bitpay.com/dashboard/login/) and select Payment Tools -> Manage API Tokens -> Add New Token -> Add Token
+	* Copy the 7 character pairing code
+2. Log in to your WordPress admin panel and select "Plugins" -> "Settings" link for the BitPay plugin.
+	* Paste the 7 character pairing code into the "Pairing Code" field in your BitPay plugin and click "Find"
+	* Click "Save changes" at the bottom
 
-= Order fulfilment =
-	
-This plugin also includes an IPN endpoint that will update  your WooCommerce order status. An order note will automatically be added with a link to the invoice *(will open in a new window)*:
+Pairing codes need to be used once and are only valid for 24 hours. If a code expires before you get to use it, you can always create a new one and pair with it.
 
-* Initially your order will be in a **Pending Payment** status when it is iniially created
-* After the invoice is paid by the user, it will change to a **Processing** status
-* When BitPay finalizes the transaction, it will change to a **Completed** status, and your order will be safe to ship, allow access to downloadable products, etc.
-* If a bitpay invoice expires before the customer completed the payment, the Woocommerce order will change to **Cancelled**.
-* If you refund a BitPay invoice from your BitPay merchant dashboard, the Woocommerce order will change to **Refunded** once the refund is processed by BitPay.
+Nice work! Your customers will now be able to check out with bitcoin on your WordPress site.
 
 == Frequently Asked Questions ==
 
 = How do I pay a BitPay invoice? =
-You can pay a BitPay invoice with one of the compatible wallets. You can either scan the QR code, click on the "open in wallet" button or copy/paste the payment URL via a compatible wallet.
+You can pay a BitPay invoice with a Bitcoin wallet. You can either scan the QR code or copy/paste the payment link in your Bitcoin wallet.
 
-More information about paying a BitPay invoice can be found [here.](https://support.bitpay.com/hc/en-us/articles/115005559826-How-do-I-pay-a-BitPay-merchant-without-a-bitcoin-address-)
+More information about paying a BitPay invoice can be found [here.](https://support.bitpay.com/hc/en-us/articles/203281456-How-do-I-pay-a-BitPay-invoice-)
 
 = Does BitPay have a test environment? =
-Yes, you can create an account on BitPay's sandbox environment to process payments on testnet. You will also need to setup a wallet on testnet to make test transactions. More information about the test environment can be found [here.](https://bitpay.com/docs/testing)
+BitPay allows you to create a test merchant account and a testnet Bitcoin wallet.
+
+More information about the test environment can be found [here.](https://bitpay.com/docs/testing)
 
 = The BitPay plugin does not work =
 If BitPay invoices are not created, please check the following:
 
-* The minimum invoice amount is $1 USD. Please make sure you are trying to create a BitPay invoice for $1 USD or more (or your currency equivalent).
-* Check your current approved processing limits in your [BitPay merchant account](https://bitpay.com/dashboard/verification)
+* The minimum invoice amount is USD 5. Please make sure you are trying to create a BitPay invoice for USD 5 or more (or your currency equivalent).
+* Please make sure your BitPay merchant account is enabled for your transaction amounts. In your [BitPay merchant account](https://bitpay.com/dashboard/login/), go to Settings -> General -> Increase Processing Volume
 
 = I need support from BitPay =
 When contacting BitPay support, please describe your issue and attach screenshots and the BitPay logs.
 
 BitPay logs can be retrieved in your Wordpress / Woocommerce environment:
 
-* Enable logging in your BitPay plugin: Plugins > Settings > Debug Log > Enable logging
-* Download the logs from Plugins > Logs
+* Enable logging in your BitPay plugin: Plugins -> Settings -> Debug Log -> Enable logging
+* Download the logs from Plugins -> Logs
 
-You can contact our support team via the following form https://bitpay.com/request-help/wizard
+You can email your issue report to support@bitpay.com
 
-== Screenshots ==
-
-1. BitPay merchant dashboard - create a new POS token
-2. BitPay merchant dashboard - Point of Sale token created
-3. Wordpress Woocommerce - BitPay plugin settings (1)
-4. Wordpress Woocommerce - BitPay plugin settings (2)
-5. BitPay checkout option - example
-6. BitPay hosted invoice - modal option. Displayed to the user after he clicked the "Pay with BitPay" button
-7. BitPay hosted invoice - cryptocurrency selected
-8. BitPay hosted invoice - Customer clicked on the "open in wallet", this opens the compatible wallet installed on the device which automatically retrieves the payment information.
-9. The customer confirmed the payment via his compatible wallet. The BitPay invoice is then marked as paid.
-10. BitPay merchant dashboard - the invoice previously paid is recorded unde the "Payments" section.
-11. BitPay merchant dashboard - detailed invoice view
-12. BitPay merchant dashboard - refund option
 
 == Changelog ==
+
+= [2.2.16] - 2018-08-20 =
+* Fixed expired (unpaid) invoices should not decrease the stock (#88)
+* Fixed the Bitpay payment plugin was called to process an IPN message but could not retrieve the order details for order_id (#87)
+* Fixed unclear error message when doing payments below BitPay minimum (#85)
+* Fixed after installation of the BitPay Woocommerce plugin v2.2.12, an openssl_decrypt error pops up (#82)
+* Set transactionSpeed to medium for all invoices. This simplifies the plugin configuration.
+
+= [2.2.15] - 2018-04-12 = 
+* Fixed Compatibility with BitPay's upcoming API changes (May 1st 2018)
+
+= 2.2.14 =
+* (fixed via PHP package update) Price must be formatted as a float (#78)
+* Fixed WC 2.5 compatibility, with get_billing_email() error (#83)
+
+= 2.2.13 = 
+* Fixed wrong function call resulting in undefined wc_reduce_stock_levels() (#84)
+* Fixed syntax error in class-wc-gateway-bitpay.php (#80)
+* Fixed price must be formatted as a float (#78)
+* Added redirect page, displaying 'payment successful' even for unpaid invoices (#81)
+
+= 2.2.12 =
+* Removed non-working option to disable BitPay from the BitPay plugin config page
+* Populate buyer email when creating BitPay invoice
+* WC v3 compatibility fixes
+* Change Mcrypt to OpenSSL (#77)
+* Improve logging around updating order states

@@ -111,10 +111,6 @@ function wc_bitpay_gateway_init()
             $this->description.='<div style = "clear:both;min-height: 200px;display:flex;">';
             $this->description.= '<img src="'.getBitPayLogo().'" style = "cursor:pointer;min-height: 75px;margin:auto;display:block" alt="BitPay" onclick = "jQuery(\'#place_order\').click();">';
             $this->description.=' </div>';
-           
-            /*
-            */
-            //<img src="//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg" alt="BitPay">
             $this->instructions = $this->get_option('instructions', $this->description);
 
             // Actions
@@ -234,7 +230,7 @@ function wc_bitpay_gateway_init()
             $order = new WC_Order($order_id);
 
     
-            $order->update_status('pending-payment', __('Awaiting BitPay payment', 'woocommerce'));
+            #$order->update_status('pending-payment', __('Awaiting BitPay payment', 'woocommerce'));
             // Return thankyou redirect
             return array(
                 'result' => 'success',
@@ -259,26 +255,26 @@ function bitpay_check_token()
     $bitpay_endpoint = $bitpay_options['bitpay_endpoint'];
     if (empty($bitpay_token)): ?>
 
-   
-    <div class="error notice">
-        <p>
-            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
-        </p>
-    </div>
+
+<div class="error notice">
+    <p>
+        <?php _e('There is no token set for your <b>' . strtoupper($bitpay_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
+    </p>
+</div>
 <?php 
 ##check and see if the token is valid
 else: 
     if($_POST && !empty($bitpay_token) && !empty($bitpay_endpoint)){
          if(!checkBitPayToken($bitpay_token,$bitpay_endpoint)):?>
-        <div class="error notice">
-        <p>
-            <?php _e('The token for <b>'.strtoupper($bitpay_endpoint).'</b> is invalid.  Please verify your settings.');?>
-        </p>
-    </div>
-         <?php endif;
+<div class="error notice">
+    <p>
+        <?php _e('The token for <b>'.strtoupper($bitpay_endpoint).'</b> is invalid.  Please verify your settings.');?>
+    </p>
+</div>
+<?php endif;
     } 
    
-?>    
+?>
 <?php endif;
 }
 
@@ -326,11 +322,9 @@ function bitpay_ipn(WP_REST_Request $request)
 
     $data = $request->get_body();
   
-    #$data = json_decode($data);
     $data = json_decode($data);
     $event = $data->event;
     $data = $data->data;
-   #print_r($data);die();
 
     $orderid = $data->orderId;
     $order_status = $data->status;
@@ -412,11 +406,7 @@ function bitpay_ipn(WP_REST_Request $request)
         $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been refunded.' . $invoiceID);
 
         $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
-        break;
-
-
-
-        
+        break;        
     }
    die();
    endif;
@@ -437,7 +427,7 @@ function woo_custom_redirect_after_purchase()
         require 'classes/Invoice.php';
         $order_id = $wp->query_vars['order-received'];
         $order = new WC_Order($order_id);
-        $order->update_status('pending-payment', __('BitPay payment pending', 'woocommerce'));
+        #$order->update_status('pending-payment', __('BitPay payment pending', 'woocommerce'));
 
         //this means if the user is using bitpay AND this is not the redirect
         $show_bitpay = true;
@@ -678,84 +668,85 @@ function bitpay_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-	<script src="https://bitpay.com/bitpay.min.js"></script>
-	<script type='text/javascript'>
-	    jQuery("#primary").hide()
-	    var payment_status = null;
-	    window.addEventListener("message", function (event) {
-	        payment_status = event.data.status;
-	    }, false);
-	    //hide the order info
-	    bitpay.onModalWillEnter(function () {
-	        jQuery("primary").hide()
-	    });
-	    //show the order info
-	    bitpay.onModalWillLeave(function () {
-	        if (payment_status == 'paid') {
-	            jQuery("#primary").fadeIn("slow");
-	        } else {
-	            var myKeyVals = {
-	                orderid: '<?php echo $order_id; ?>'
-	            }
-	            var redirect = '<?php echo $cart_url;?>';
-	            var api = '<?php echo $restore_url;?>';
-	            var saveData = jQuery.ajax({
-	                type: 'POST',
-	                url: api,
-	                data: myKeyVals,
-	                dataType: "text",
-	                success: function (resultData) {
-	                    window.location = redirect;
-	                }
-	            });
-	        }
-	    });
-	    //show the modal
-	    bitpay.enableTestMode(<?php echo $test_mode; ?>)
-	    bitpay.showInvoice('<?php echo $invoiceID; ?>');
-	</script>
-	<?php
+<script src="https://bitpay.com/bitpay.min.js"></script>
+<script type='text/javascript'>
+jQuery("#primary").hide()
+var payment_status = null;
+window.addEventListener("message", function(event) {
+    payment_status = event.data.status;
+}, false);
+//hide the order info
+bitpay.onModalWillEnter(function() {
+    jQuery("primary").hide()
+});
+//show the order info
+bitpay.onModalWillLeave(function() {
+    if (payment_status == 'paid') {
+        jQuery("#primary").fadeIn("slow");
+    } else {
+        var myKeyVals = {
+            orderid: '<?php echo $order_id; ?>'
+        }
+        var redirect = '<?php echo $cart_url;?>';
+        var api = '<?php echo $restore_url;?>';
+        var saveData = jQuery.ajax({
+            type: 'POST',
+            url: api,
+            data: myKeyVals,
+            dataType: "text",
+            success: function(resultData) {
+                window.location = redirect;
+            }
+        });
+    }
+});
+//show the modal
+bitpay.enableTestMode(<?php echo $test_mode; ?>)
+bitpay.showInvoice('<?php echo $invoiceID; ?>');
+</script>
+<?php
 endif;
 }
 
 add_action('woocommerce_review_order_before_payment', 'bitpay_hide_place_order');
 function bitpay_hide_place_order(){
 ?>
-<script type = "text/javascript">
-        jQuery(document).ready(function(){
-            var $payment_method =  jQuery('input[name=payment_method]:checked').val();
-            var $bgcolor = jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('backgroundColor')
-                var paymentCheck =  setInterval(function(){ 
-                    var blockOverlay = jQuery(".blockOverlay").css("display");
-                        if(blockOverlay == undefined){
-                            
-                                clearInterval(paymentCheck);
-                            
-                        }
-                         if($payment_method != 'bitpay_gateway'){
-                        jQuery("#place_order").css('opacity',1)
-                         }
-                        },100);
-                
-             jQuery('form[name="checkout"]').change(function(){
-               $payment_method =  jQuery('input[name=payment_method]:checked').val();
-              if($payment_method == 'bitpay_gateway'){
-                   jQuery("#place_order").css('opacity',0)
-                   jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('background-color','transparent')
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    var $payment_method = jQuery('input[name=payment_method]:checked').val();
+    var $bgcolor = jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css(
+        'backgroundColor')
+    var paymentCheck = setInterval(function() {
+        var blockOverlay = jQuery(".blockOverlay").css("display");
+        if (blockOverlay == undefined) {
 
-              }else{
-                  jQuery("#place_order").css('opacity',1)
-                jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css('background-color',$bgcolor)
+            clearInterval(paymentCheck);
+
+        }
+        if ($payment_method != 'bitpay_gateway') {
+            jQuery("#place_order").css('opacity', 1)
+        }
+    }, 100);
+
+    jQuery('form[name="checkout"]').change(function() {
+        $payment_method = jQuery('input[name=payment_method]:checked').val();
+        if ($payment_method == 'bitpay_gateway') {
+            jQuery("#place_order").css('opacity', 0)
+            jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css(
+                'background-color', 'transparent')
+
+        } else {
+            jQuery("#place_order").css('opacity', 1)
+            jQuery("#payment .payment_methods > li .payment_box, #payment .place-order").css(
+                'background-color', $bgcolor)
 
 
-              }
+        }
 
 
-        });
-       
     });
-    
-    
+
+});
 </script>
 <?php
 }
