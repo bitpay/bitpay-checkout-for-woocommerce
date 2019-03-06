@@ -16,7 +16,7 @@ This plugin requires the following:
 
 # Installation
 
-Install the plugin via the [Wordpress Plugin Manager](https://wordpress.org/plugins/bitpay-checkout-for-woocommerce/#installation)
+Install the plugin via the [Wordpress Plugin Manager](https://wordpress.org/plugins/bitpay-checkout-for-woocommerce/#installation).
 
 ### When Installing From the Downloadable Archive
 
@@ -24,7 +24,7 @@ Visit the [Releases](https://github.com/bitpay/bitpay-checkout-for-woocommerce/r
 
 **WARNING:** 
 * It is good practice to backup your database before installing plugins. Please make sure you create backups.
-* If you were using a previous version of this plugin, this version (3.0) was completely rewritten to improve the user experience and the security. You will have to pair the plugin with you BitPay merchant account (fetch a new API token from the BitPay merchant dashboard).
+* If you were using a previous version of this plugin, this version (3.0) was completely rewritten to improve the user experience and the security. You will need to renew the configuration of the plugin (fetch a new API token from the BitPay merchant dashboard).
 
 ## Support
 
