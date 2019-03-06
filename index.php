@@ -374,9 +374,9 @@ function bitpay_ipn(WP_REST_Request $request)
         case 'invoice_paidInFull': #pending
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> is pending.');
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">' . $invoiceID.'</a> is processing.');
 
-        $order->update_status('pending', __('BitPay payment pending', 'woocommerce'));
+        $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
         break;
 
         case 'invoice_failedToConfirm':
