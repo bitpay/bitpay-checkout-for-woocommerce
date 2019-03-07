@@ -12,7 +12,7 @@ global $current_user;
 
 #autoloader
 function BPC_autoloader($class) {
-    if (strpos($class, 'BPC') !== false):
+    if (strpos($class, 'BPC_') !== false):
         if (!class_exists('BitPayLib/'.$class, false)):
         #doesnt exist so include it
         include 'BitPayLib/' . $class . '.php';
