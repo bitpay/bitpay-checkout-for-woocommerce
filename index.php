@@ -332,10 +332,10 @@ function bitpay_ipn(WP_REST_Request $request)
     #verify the ipn matches the status of the actual invoice
 
    if(bitpay_get_order_transaction($orderid,$invoiceID)):
-        require 'classes/Config.php';
-        require 'classes/Client.php';
-        require 'classes/Item.php';
-        require 'classes/Invoice.php';
+        require 'BitPayLib/Config.php';
+        require 'BitPayLib/Client.php';
+        require 'BitPayLib/Item.php';
+        require 'BitPayLib/Invoice.php';
     
         $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
         //dev or prod token
@@ -415,10 +415,10 @@ function woo_custom_redirect_after_purchase()
 
     if (is_checkout() && !empty($wp->query_vars['order-received'])) {
 
-        require 'classes/Config.php';
-        require 'classes/Client.php';
-        require 'classes/Item.php';
-        require 'classes/Invoice.php';
+        require 'BitPayLib/Config.php';
+        require 'BitPayLib/Client.php';
+        require 'BitPayLib/Item.php';
+        require 'BitPayLib/Invoice.php';
         $order_id = $wp->query_vars['order-received'];
         $order = new WC_Order($order_id);
         #$order->update_status('pending-payment', __('BitPay payment pending', 'woocommerce'));
@@ -530,7 +530,7 @@ function getBitPayDashboardLink($endpoint,$invoiceID)
 
 
 function getBitPayBrandOptions(){
-    require_once 'classes/Buttons.php';
+    require_once 'BitPayLib/Buttons.php';
     $buttonObj = new Buttons;
     $buttons = json_decode($buttonObj->getButtons());
     $output = [];
@@ -553,7 +553,7 @@ function getBitPayBrandOptions(){
 
 #brand returned from API
 function getBitPayBrands(){
-    require_once 'classes/Buttons.php';
+    require_once 'BitPayLib/Buttons.php';
     $buttonObj = new Buttons;
     $buttons = json_decode($buttonObj->getButtons());
     $brand = '<div>';
@@ -579,7 +579,7 @@ function getBitPayBrands(){
 
 function getBitPayLogo($endpoint = null)
 {  
-    require_once 'classes/Buttons.php';
+    require_once 'BitPayLib/Buttons.php';
     $buttonObj = new Buttons;
     $buttons = $buttonObj->getButtons();
     $bitpay_options = get_option('woocommerce_bitpay_gateway_settings');
@@ -610,10 +610,10 @@ function getBitPayToken($endpoint)
 
 function checkBitPayToken($bitpay_token,$bitpay_endpoint){
    
-    require 'classes/Config.php';
-    require 'classes/Client.php';
-    require 'classes/Item.php';
-    require 'classes/Invoice.php';
+    require 'BitPayLib/Config.php';
+    require 'BitPayLib/Client.php';
+    require 'BitPayLib/Item.php';
+    require 'BitPayLib/Invoice.php';
     
     #we're going to see if we can create an invoice
     $config = new Configuration($bitpay_token, $bitpay_endpoint); 
