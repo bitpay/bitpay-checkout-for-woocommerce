@@ -386,7 +386,7 @@ function bitpay_ipn(WP_REST_Request $request)
         case 'invoice_refundComplete':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.BPC_getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been refunded.' . $invoiceID);
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.BPC_getBitPayDashboardLink($bitpay_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been refunded.');
 
         $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
         break;        
