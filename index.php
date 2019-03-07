@@ -736,5 +736,3 @@ function wc_bitpay_add_to_gateways($gateways)
     $gateways[] = 'WC_Gateway_BitPay';
     return $gateways;
 }
-
-?>
