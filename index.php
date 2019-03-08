@@ -10,33 +10,6 @@
 
 global $current_user;
 
-function bitpay_checkout_expired_status()
-{
-    register_post_status('wc-bitpay-expired', array(
-        'label' => 'BitPay Expired',
-        'public' => true,
-        'exclude_from_search' => false,
-        'show_in_admin_all_list' => false,
-        'show_in_admin_status_list' => true,
-        'label_count' => _n_noop('BitPay Expired <span class="count">(%s)</span>', 'BitPay Expired <span class="count">(%s)</span>'),
-    ));
-}
-add_action('init', 'bitpay_checkout_expired_status');
-
-// Add to list of WC Order statuses
-function add_bitpay_checkout_expired_status($order_statuses)
-{
-    $new_order_statuses = array();
-    // add new order status after processing
-    foreach ($order_statuses as $key => $status) {
-        $new_order_statuses[$key] = $status;
-            $new_order_statuses['wc-bitpay-expired'] = 'BitPay Expired';
-    }
-    return $new_order_statuses;
-}
-add_filter('wc_order_statuses', 'add_bitpay_checkout_expired_status');
-
-
 
 #autoloader
 function BPC_autoloader($class) {
@@ -403,11 +376,8 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
         break;
         case 'invoice_expired':
-        $order = new WC_Order($orderid);
-        //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.BPC_getBitPayDashboardLink($bitpay_checkout_endpoint,$invoiceID).'">'.$invoiceID.' </a> has expired.');
-
-        $order->update_status('bitpay-expired', __('BitPay payment expired', 'woocommerce'));
+        //delete the previous order
+        wp_delete_post($orderid, true);
         break;
 
         case 'invoice_refundComplete':
@@ -474,7 +444,9 @@ function woo_custom_redirect_after_purchase()
             #http://<host>/wp-json/bitpay/ipn/status
             $params->extendedNotifications = true;
             $params->transactionSpeed = 'medium';
+            $params->acceptanceWindow = 1200000;
 
+            
             $item = new BPC_Item($config, $params);
             $invoice = new BPC_Invoice($item);
             //this creates the invoice with all of the config params from the item
