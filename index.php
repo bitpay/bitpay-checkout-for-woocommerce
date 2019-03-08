@@ -10,6 +10,34 @@
 
 global $current_user;
 
+function bitpay_checkout_expired_status()
+{
+    register_post_status('wc-bitpay-expired', array(
+        'label' => 'BitPay Expired',
+        'public' => true,
+        'exclude_from_search' => false,
+        'show_in_admin_all_list' => false,
+        'show_in_admin_status_list' => true,
+        'label_count' => _n_noop('BitPay Expired <span class="count">(%s)</span>', 'BitPay Expired <span class="count">(%s)</span>'),
+    ));
+}
+add_action('init', 'bitpay_checkout_expired_status');
+
+// Add to list of WC Order statuses
+function add_bitpay_checkout_expired_status($order_statuses)
+{
+    $new_order_statuses = array();
+    // add new order status after processing
+    foreach ($order_statuses as $key => $status) {
+        $new_order_statuses[$key] = $status;
+            $new_order_statuses['wc-bitpay-expired'] = 'BitPay Expired';
+    }
+    return $new_order_statuses;
+}
+add_filter('wc_order_statuses', 'add_bitpay_checkout_expired_status');
+
+
+
 #autoloader
 function BPC_autoloader($class) {
     if (strpos($class, 'BPC_') !== false):
@@ -377,9 +405,9 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         case 'invoice_expired':
         $order = new WC_Order($orderid);
         //private order note with the invoice id
-        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.BPC_getBitPayDashboardLink($bitpay_checkout_endpoint,$invoiceID).'">'.$invoiceID.' </a> has been cancelled.');
+        $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "'.BPC_getBitPayDashboardLink($bitpay_checkout_endpoint,$invoiceID).'">'.$invoiceID.' </a> has expired.');
 
-        $order->update_status('cancelled', __('BitPay payment cancelled', 'woocommerce'));
+        $order->update_status('bitpay-expired', __('BitPay payment expired', 'woocommerce'));
         break;
 
         case 'invoice_refundComplete':
@@ -493,7 +521,10 @@ function BPC_getBitPayVersionInfo(){
     $plugin_data = get_file_data(__FILE__, array('Version' => 'Version','Plugin_Name' => 'Plugin Name'), false);
     $plugin_name = $plugin_data['Plugin_Name'];
     $plugin_name = str_replace(" ","_",$plugin_name);
-    $plugin_version = $plugin_name.'_Woocommerce_'.$plugin_data['Version'];
+    $plugin_name = str_replace("_for_","_",$plugin_name);
+    $plugin_version = $plugin_name.'_'.$plugin_data['Version'];
+
+    
     return $plugin_version;
 }
 
