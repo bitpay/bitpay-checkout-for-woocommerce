@@ -4,11 +4,11 @@ Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
 Tested up to: 5.0.4
 Requires PHP: 5.5
-Stable tag: 3.0
+Stable tag: 3.0.1.0
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
-Try out our brand new plugin for Woocommerce. Accept cryptocurrency payments through BitPay on your WooCommerce store and get paid via bank transfers
+The most secure and fastest way to accept crypto payments (Bitcoin, Bitcoin Cash, etc).
 
 == Description ==
 
@@ -16,7 +16,7 @@ Try out our brand new plugin for Woocommerce. Accept cryptocurrency payments thr
 
 = Key features =
 
-* accept bitcoin and bitcoin cash payments from payment protocol compatible wallets
+* Accept bitcoin and bitcoin cash payments from payment protocol compatible wallets
 * Price in your local currency
 * Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://bitpay.com/docs/settlement)), BTC, BCH or stable coins (GUSD, USDC)
 * By design, chargebacks are not possible with cryptocurrency payments
