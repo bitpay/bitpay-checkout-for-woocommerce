@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.3.5
+ * Version: 3.0.3.6
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
@@ -374,7 +374,7 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
 function bitpay_checkout_ipn(WP_REST_Request $request)
 {
     global $woocommerce;
-    $hash_key = $_REQUEST['hash_key'];
+    #$hash_key = $_REQUEST['hash_key'];
     $data = $request->get_body();
 
     $data = json_decode($data);
@@ -399,9 +399,10 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
 
         #verify the hash before moving on
-        if(!$config->BPC_checkHash($orderid,$hash_key)):
-            die();
-        endif;
+        #disable this for awhile so new orders can start creating them
+        #if(!$config->BPC_checkHash($orderid,$hash_key)):
+        #    die();
+        #endif;
        
 
         $params = new stdClass();
