@@ -113,3 +113,5 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. Wordpress Woocommerce - order view
 
 == Changelog ==
+= 3.0.1.4 =
+* Added IPN security updates to verify order verification originates from IPN
