@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.1.3
+ * Version: 3.0.1.4
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
