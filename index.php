@@ -374,7 +374,7 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
 function bitpay_checkout_ipn(WP_REST_Request $request)
 {
     global $woocommerce;
-
+    $hash_key = $_REQUEST['hash_key'];
     $data = $request->get_body();
 
     $data = json_decode($data);
@@ -384,6 +384,11 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     $orderid = $data->orderId;
     $order_status = $data->status;
     $invoiceID = $data->id;
+
+
+    #check the hash to make sure it comes from the right place
+    
+
     #verify the ipn matches the status of the actual invoice
 
     if (bitpay_checkout_get_order_transaction($orderid, $invoiceID)):
@@ -392,6 +397,12 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
         $config = new BPC_Configuration($bitpay_checkout_token, $bitpay_checkout_options['bitpay_checkout_endpoint']);
         $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+
+        #verify the hash before moving on
+        if(!$config->BPC_checkHash($orderid,$hash_key)):
+            die();
+        endif;
+       
 
         $params = new stdClass();
         $params->extension_version = BPC_getBitPayVersionInfo();
@@ -500,11 +511,16 @@ function woo_custom_redirect_after_purchase()
             //redirect and ipn stuff
             $params->redirectURL = get_home_url() . '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
 
-            $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status';
+            #create a hash for the ipn
+            $hash_key = $config->BPC_generateHash($params->orderId);
+
+
+            $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status?hash_key='.$hash_key;
             #http://<host>/wp-json/bitpay/ipn/status
             $params->extendedNotifications = true;
             $params->transactionSpeed = 'medium';
             $params->acceptanceWindow = 1200000;
+
 
             $item = new BPC_Item($config, $params);
             $invoice = new BPC_Invoice($item);
