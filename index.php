@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.3.6
+ * Version: 3.0.3.8
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
@@ -164,7 +164,11 @@ function wc_bitpay_checkout_gateway_init()
                 // Customer Emails
                 add_action('woocommerce_email_before_order_table', array($this, 'email_instructions'), 10, 3);
             }
-
+            public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
+                if ( $this->instructions && ! $sent_to_admin && 'bitpay_checkout_gateway' === $order->get_payment_method() && $order->has_status( 'processing' ) ) {
+                    echo wp_kses_post( wpautop( wptexturize( $this->instructions ) ) . PHP_EOL );
+                }
+            }
             public function init_form_fields()
             {
                 $this->form_fields = array(
@@ -302,9 +306,9 @@ function wc_bitpay_checkout_gateway_init()
     }
 
 //this is an error message incase a token isnt set
-    add_action('admin_notices', 'bitpay_checkout_check_token');
+   # add_action('admin_notices', 'bitpay_checkout_check_token');
     function bitpay_checkout_check_token()
-{
+        {
         //lookup the token based on the environment
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         //dev or prod token
@@ -312,12 +316,13 @@ function wc_bitpay_checkout_gateway_init()
         $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
         if (empty($bitpay_checkout_token)): ?>
 
-
-	<div class="error notice">
+    <!--
+    <div class="error notice is-dismissible">
 	    <p>
 	        <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
 	    </p>
 	</div>
+    -->
 	<?php
     ##check and see if the token is valid
     else:
@@ -334,6 +339,8 @@ function wc_bitpay_checkout_gateway_init()
     ?>
 <?php endif;
 }
+
+
 
 #http://<host>/wp-json/bitpay/ipn/status
 add_action('rest_api_init', function () {
@@ -516,7 +523,8 @@ function woo_custom_redirect_after_purchase()
             $hash_key = $config->BPC_generateHash($params->orderId);
 
 
-            $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status?hash_key='.$hash_key;
+            #$params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status?hash_key='.$hash_key;
+            $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status';
             #http://<host>/wp-json/bitpay/ipn/status
             $params->extendedNotifications = true;
             $params->transactionSpeed = 'medium';
@@ -758,12 +766,15 @@ endif;
 
 #custom info for BitPay
 add_action('woocommerce_thankyou', 'bitpay_checkout_custom_message');
-function bitpay_checkout_custom_message()
+function bitpay_checkout_custom_message($order_id)
 {
-    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-    $checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
-    if ($checkout_message != ''):
-        echo '<hr><b>' . $checkout_message . '</b><br><br><hr>';
+    $order = new WC_Order($order_id);
+    if( $order->payment_method == 'bitpay_checkout_gateway'):
+        $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+        $checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
+        if ($checkout_message != ''):
+            echo '<hr><b>' . $checkout_message . '</b><br><br><hr>';
+        endif;
     endif;
 }
 
