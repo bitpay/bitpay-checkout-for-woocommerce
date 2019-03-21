@@ -4,7 +4,7 @@ Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
 Tested up to: 5.0.4
 Requires PHP: 5.5
-Stable tag: 3.0.3.6
+Stable tag: 3.0.3.8
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -113,5 +113,12 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. Wordpress Woocommerce - order view
 
 == Changelog ==
+= 3.0.3.8 =
+* Fixed error log warnings
+* Fixed issue where the BitPay checkout message would appear with other payment methods
+
+= 3.0.3.6 =
+* IPN Updates
+
 = 3.0.3.5 =
 * Added IPN security updates to verify order verification originates from IPN
