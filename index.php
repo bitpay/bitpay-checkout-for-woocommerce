@@ -3,12 +3,19 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.3.9
+ * Version: 3.0.4.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
 
 global $current_user;
+add_action('wp_enqueue_scripts', 'enable_bitpaycheckout_js');
+function enable_bitpaycheckout_js()
+{
+    wp_enqueue_script( 'remote-bitpaycheckout-js', 'https://bitpay.com/bitpay.min.js',null,null,true);    
+    
+}
+
 
 #autoloader
 function BPC_autoloader($class)
@@ -721,7 +728,6 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-		<script src="https://bitpay.com/bitpay.min.js"></script>
 		<script type='text/javascript'>
 		jQuery("#primary").hide()
 		var payment_status = null;
