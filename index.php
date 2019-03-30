@@ -3,17 +3,17 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.4.0
+ * Version: 3.0.4.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
-
+if ( ! defined( 'ABSPATH' ) ): exit;endif;
 global $current_user;
-add_action('wp_enqueue_scripts', 'enable_bitpaycheckout_js');
+#add_filter('wp_enqueue_scripts', 'enable_bitpaycheckout_js',0);
+#add_action( 'init', 'enable_bitpaycheckout_js', 0 );
 function enable_bitpaycheckout_js()
 {
-    wp_enqueue_script( 'remote-bitpaycheckout-js', 'https://bitpay.com/bitpay.min.js',null,null,true);    
-    
+    wp_enqueue_script( 'remote-bitpaycheckout-js', '//bitpay.com/bitpay.min.js',null,null,true);    
 }
 
 
@@ -313,9 +313,12 @@ function wc_bitpay_checkout_gateway_init()
     }
 
 //this is an error message incase a token isnt set
-   # add_action('admin_notices', 'bitpay_checkout_check_token');
+    add_action('admin_notices', 'bitpay_checkout_check_token');
     function bitpay_checkout_check_token()
         {
+           
+        if($_GET['section'] == 'bitpay_checkout_gateway' && $_POST):
+      
         //lookup the token based on the environment
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         //dev or prod token
@@ -342,9 +345,10 @@ function wc_bitpay_checkout_gateway_init()
 		</div>
 		<?php endif;
     }
+           
+    endif;
 
-    ?>
-<?php endif;
+endif;
 }
 
 
@@ -607,6 +611,8 @@ function BPC_getBitPayDashboardLink($endpoint, $invoiceID)
 
 function BPC_getBitPayBrandOptions()
 {
+    
+    if (is_admin()  && $_GET['section'] == 'bitpay_checkout_gateway'):
     $buttonObj = new BPC_Buttons;
     $buttons = json_decode($buttonObj->BPC_getButtons());
     $output = [];
@@ -623,7 +629,7 @@ function BPC_getBitPayBrandOptions()
         endif;
     endforeach;
     return $output;
-
+endif;
 }
 
 #brand returned from API
@@ -728,6 +734,7 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
+        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
 		<script type='text/javascript'>
 		jQuery("#primary").hide()
 		var payment_status = null;
