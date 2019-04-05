@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.4.3
+ * Version: 3.0.4.4
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
@@ -247,6 +247,13 @@ function wc_bitpay_checkout_gateway_init()
                             '2' => 'Redirect',
                         ),
                         'default' => '2',
+                    ),
+                    'bitpay_checkout_slug' => array(
+                        'title' => __('Checkout Page', 'woocommerce'),
+                        'type' => 'text',
+                        'description' => __('By default, this will be "checkout".  If you have a different Checkout page, enter the <b>page slug</b>. <br>ie. '.get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce'),
+                        
+                        'default' => 'checkout',
                     ),
 
                     'bitpay_checkout_brand' => array(
@@ -527,7 +534,11 @@ function woo_custom_redirect_after_purchase()
             //orderid
             $params->orderId = trim($order_id);
             //redirect and ipn stuff
-            $params->redirectURL = get_home_url() . '/checkout/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
+            $checkout_slug = $bitpay_checkout_options['bitpay_checkout_slug'];
+            if(empty($checkout_slug)):
+                $checkout_slug = 'checkout';
+            endif;
+            $params->redirectURL = get_home_url() . '/'.$checkout_slug.'/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
 
             #create a hash for the ipn
             $hash_key = $config->BPC_generateHash($params->orderId);
@@ -539,7 +550,7 @@ function woo_custom_redirect_after_purchase()
             $params->extendedNotifications = true;
             $params->transactionSpeed = 'medium';
             $params->acceptanceWindow = 1200000;
-
+            error_log(print_r($params,true));
 
             $item = new BPC_Item($config, $params);
             $invoice = new BPC_Invoice($item);
