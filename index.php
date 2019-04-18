@@ -554,7 +554,6 @@ function woo_custom_redirect_after_purchase()
             $params->extendedNotifications = true;
             $params->transactionSpeed = 'medium';
             $params->acceptanceWindow = 1200000;
-            error_log(print_r($params,true));
 
             $item = new BPC_Item($config, $params);
             $invoice = new BPC_Invoice($item);
