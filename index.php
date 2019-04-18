@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: http://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.4.4
+ * Version: 3.0.5.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
  */
@@ -373,14 +373,17 @@ add_action('rest_api_init', function () {
 
 function bitpay_checkout_cart_restore(WP_REST_Request $request)
 {
-    global $woocommerce;
+    WC()->frontend_includes();
+    WC()->cart = new WC_Cart();
+    WC()->session = new WC_Session_Handler();
+    WC()->session->init();
     $data = $request->get_params();
     $order_id = $data['orderid'];
     $order = new WC_Order($order_id);
     $items = $order->get_items();
-
+    
     //clear the cart first so things dont double up
-    $woocommerce->cart->empty_cart();
+    WC()->cart->empty_cart();
     foreach ($items as $item) {
         //now insert for each quantity
         $item_count = $item->get_quantity();
@@ -398,6 +401,10 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
 function bitpay_checkout_ipn(WP_REST_Request $request)
 {
     global $woocommerce;
+    WC()->frontend_includes();
+    WC()->cart = new WC_Cart();
+    WC()->session = new WC_Session_Handler();
+    WC()->session->init();
     #$hash_key = $_REQUEST['hash_key'];
     $data = $request->get_body();
 
@@ -408,11 +415,8 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     $orderid = $data->orderId;
     $order_status = $data->status;
     $invoiceID = $data->id;
-
-
     #check the hash to make sure it comes from the right place
     
-
     #verify the ipn matches the status of the actual invoice
 
     if (bitpay_checkout_get_order_transaction($orderid, $invoiceID)):
@@ -453,7 +457,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 $order->reduce_order_stock();
 
                 // Remove cart
-                $woocommerce->cart->empty_cart();
+                WC()->cart->empty_cart();
                 break;
 
             case 'invoice_paidInFull': #pending
@@ -728,6 +732,7 @@ add_action('woocommerce_thankyou', 'bitpay_checkout_thankyou_page', 10, 1);
 function bitpay_checkout_thankyou_page($order_id)
 {
     global $woocommerce;
+    $_SESSION['wcbp'] = $woocommerce;
     $order = new WC_Order($order_id);
 
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
