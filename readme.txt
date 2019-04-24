@@ -114,6 +114,10 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.1 =
+* Added option to have no image on checkout page
+
+
 = 3.0.5.0 =
 * Hotfix to support WooCommerce 3.6.x update
 
