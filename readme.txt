@@ -2,7 +2,7 @@
 Contributors: bitpay
 Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
-Tested up to: 5.0.4
+Tested up to: 5.1.1
 Requires PHP: 5.5
 Stable tag: 3.0.5.0
 License: MIT License (MIT)
