@@ -31,6 +31,9 @@ function BPC_autoloader($class)
 spl_autoload_register('BPC_autoloader');
 
 #check and see if requirements are met for turning on plugin
+function _isCurl(){
+    return function_exists('curl_version');
+}
 
 function bitpay_checkout_woocommerce_bitpay_failed_requirements()
 {
@@ -43,6 +46,8 @@ function bitpay_checkout_woocommerce_bitpay_failed_requirements()
         $errors[] = 'The WooCommerce plugin for WordPress needs to be installed and activated. Please contact your web server administrator for assistance.';
     } elseif (true === version_compare($woocommerce->version, '2.2', '<')) {
         $errors[] = 'Your WooCommerce version is too old. The BitPay payment plugin requires WooCommerce 2.2 or higher to function. Your version is ' . $woocommerce->version . '. Please contact your web server administrator for assistance.';
+    } elseif (!_isCurl()){
+        $errors[] = 'cUrl needs to be installed/enabled for BitPay Checkout to function';
     }
     if (empty($errors)):
         return false;
