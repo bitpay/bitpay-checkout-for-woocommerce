@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: BitPay Checkout for WooCommerce
- * Plugin URI: http://www.bitpay.com
+ * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.1
+ * Version: 3.0.5.3
  * Author: BitPay
- * Author URI: mailto:integrations@bitpay.com?subject=BitPay for WooCommerce
+ * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 if ( ! defined( 'ABSPATH' ) ): exit;endif;
 global $current_user;
@@ -153,7 +153,7 @@ function wc_bitpay_checkout_gateway_init()
                 $this->icon = BPC_getBitPayLogo();
 
                 $this->has_fields = true;
-                $this->method_title = __('BitPay', 'wc-bitpay');
+                $this->method_title = __(BPC_getBitPayVersionInfo($clean = true), 'wc-bitpay');
                 $this->method_label = __('BitPay', 'wc-bitpay');
                 $this->method_description = __('Expand your payment options by accepting instant BTC and BCH payments without risk or price fluctuations.', 'wc-bitpay');
 
@@ -602,13 +602,17 @@ function bitpay_checkout_replace_order_button_html($order_button, $override = fa
     endif;
 }
 
-function BPC_getBitPayVersionInfo()
+function BPC_getBitPayVersionInfo($clean = null)
 {
     $plugin_data = get_file_data(__FILE__, array('Version' => 'Version', 'Plugin_Name' => 'Plugin Name'), false);
     $plugin_name = $plugin_data['Plugin_Name'];
+    if($clean):
+        $plugin_version = $plugin_name.' '.$plugin_data['Version'];
+    else:
     $plugin_name = str_replace(" ", "_", $plugin_name);
     $plugin_name = str_replace("_for_", "_", $plugin_name);
     $plugin_version = $plugin_name . '_' . $plugin_data['Version'];
+endif;
 
     return $plugin_version;
 }
