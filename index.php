@@ -3,19 +3,18 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.3
+ * Version: 3.0.5.4
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
-if ( ! defined( 'ABSPATH' ) ): exit;endif;
+if (!defined('ABSPATH')): exit;endif;
 global $current_user;
 #add_filter('wp_enqueue_scripts', 'enable_bitpaycheckout_js',0);
 #add_action( 'init', 'enable_bitpaycheckout_js', 0 );
 function enable_bitpaycheckout_js()
 {
-    wp_enqueue_script( 'remote-bitpaycheckout-js', '//bitpay.com/bitpay.min.js',null,null,true);    
+    wp_enqueue_script('remote-bitpaycheckout-js', '//bitpay.com/bitpay.min.js', null, null, true);
 }
-
 
 #autoloader
 function BPC_autoloader($class)
@@ -31,7 +30,8 @@ function BPC_autoloader($class)
 spl_autoload_register('BPC_autoloader');
 
 #check and see if requirements are met for turning on plugin
-function _isCurl(){
+function _isCurl()
+{
     return function_exists('curl_version');
 }
 
@@ -46,7 +46,7 @@ function bitpay_checkout_woocommerce_bitpay_failed_requirements()
         $errors[] = 'The WooCommerce plugin for WordPress needs to be installed and activated. Please contact your web server administrator for assistance.';
     } elseif (true === version_compare($woocommerce->version, '2.2', '<')) {
         $errors[] = 'Your WooCommerce version is too old. The BitPay payment plugin requires WooCommerce 2.2 or higher to function. Your version is ' . $woocommerce->version . '. Please contact your web server administrator for assistance.';
-    } elseif (!_isCurl()){
+    } elseif (!_isCurl()) {
         $errors[] = 'cUrl needs to be installed/enabled for BitPay Checkout to function';
     }
     if (empty($errors)):
@@ -176,9 +176,10 @@ function wc_bitpay_checkout_gateway_init()
                 // Customer Emails
                 add_action('woocommerce_email_before_order_table', array($this, 'email_instructions'), 10, 3);
             }
-            public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-                if ( $this->instructions && ! $sent_to_admin && 'bitpay_checkout_gateway' === $order->get_payment_method() && $order->has_status( 'processing' ) ) {
-                    echo wp_kses_post( wpautop( wptexturize( $this->instructions ) ) . PHP_EOL );
+            public function email_instructions($order, $sent_to_admin, $plain_text = false)
+            {
+                if ($this->instructions && !$sent_to_admin && 'bitpay_checkout_gateway' === $order->get_payment_method() && $order->has_status('processing')) {
+                    echo wp_kses_post(wpautop(wptexturize($this->instructions)) . PHP_EOL);
                 }
             }
             public function init_form_fields()
@@ -256,8 +257,8 @@ function wc_bitpay_checkout_gateway_init()
                     'bitpay_checkout_slug' => array(
                         'title' => __('Checkout Page', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('By default, this will be "checkout".  If you have a different Checkout page, enter the <b>page slug</b>. <br>ie. '.get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce'),
-                        
+                        'description' => __('By default, this will be "checkout".  If you have a different Checkout page, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce'),
+
                         'default' => 'checkout',
                     ),
 
@@ -327,42 +328,40 @@ function wc_bitpay_checkout_gateway_init()
 //this is an error message incase a token isnt set
     add_action('admin_notices', 'bitpay_checkout_check_token');
     function bitpay_checkout_check_token()
-        {
-           
-        if($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
-        //lookup the token based on the environment
-        $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-        //dev or prod token
-        $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
-        $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
-        if (empty($bitpay_checkout_token)): ?>
+{
 
-    <!--
-    <div class="error notice is-dismissible">
-	    <p>
-	        <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
-	    </p>
-	</div>
-    -->
-	<?php
-    ##check and see if the token is valid
-    else:
-        if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
-            if (!BPC_checkBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
-		<div class="error notice">
-		    <p>
-		        <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
-		    </p>
-		</div>
-		<?php endif;
-    }
-           
+        if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
+            //lookup the token based on the environment
+            $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+            //dev or prod token
+            $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
+            $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+            if (empty($bitpay_checkout_token)): ?>
+
+		    <!--
+		    <div class="error notice is-dismissible">
+			    <p>
+			        <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
+			    </p>
+			</div>
+		    -->
+			<?php
+        ##check and see if the token is valid
+        else:
+            if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
+                if (!BPC_checkBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
+				<div class="error notice">
+				    <p>
+				        <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
+				    </p>
+				</div>
+				<?php endif;
+        }
+
     endif;
 
-endif;
+    endif;
 }
-
-
 
 #http://<host>/wp-json/bitpay/ipn/status
 add_action('rest_api_init', function () {
@@ -386,7 +385,7 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
     $order_id = $data['orderid'];
     $order = new WC_Order($order_id);
     $items = $order->get_items();
-    
+
     //clear the cart first so things dont double up
     WC()->cart->empty_cart();
     foreach ($items as $item) {
@@ -421,7 +420,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     $order_status = $data->status;
     $invoiceID = $data->id;
     #check the hash to make sure it comes from the right place
-    
+
     #verify the ipn matches the status of the actual invoice
 
     if (bitpay_checkout_get_order_transaction($orderid, $invoiceID)):
@@ -436,7 +435,6 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         #if(!$config->BPC_checkHash($orderid,$hash_key)):
         #    die();
         #endif;
-       
 
         $params = new stdClass();
         $params->extension_version = BPC_getBitPayVersionInfo();
@@ -446,43 +444,48 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
 
         $invoice = new BPC_Invoice($item); //this creates the invoice with all of the config params
         $orderStatus = json_decode($invoice->BPC_checkInvoiceStatus($invoiceID));
-
         #update the lookup table
         bitpay_checkout_update_order_note($orderid, $invoiceID, $order_status);
-
         switch ($event->name) {
-            #case 'invoice_completed':
             case 'invoice_confirmed':
-                $order = new WC_Order($orderid);
-                //private order note with the invoice id
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> processing has been completed.');
+                if ($orderStatus->data->status == 'confirmed'):
+                    $order = new WC_Order($orderid);
+                    //private order note with the invoice id
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> processing has been completed.');
 
-                $order->update_status('completed', __('BitPay payment complete', 'woocommerce'));
-                // Reduce stock levels
-                $order->reduce_order_stock();
+                    $order->update_status('completed', __('BitPay payment complete', 'woocommerce'));
+                    // Reduce stock levels
+                    $order->reduce_order_stock();
 
-                // Remove cart
-                WC()->cart->empty_cart();
+                    // Remove cart
+                    WC()->cart->empty_cart();
+                endif;
                 break;
 
             case 'invoice_paidInFull': #pending
-                $order = new WC_Order($orderid);
-                //private order note with the invoice id
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> is processing.');
+                if ($orderStatus->data->status == 'paid'):
+                    $order = new WC_Order($orderid);
+                    //private order note with the invoice id
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> is processing.');
 
-                $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
+                    $order->update_status('processing', __('BitPay payment processing', 'woocommerce'));
+                endif;
                 break;
 
             case 'invoice_failedToConfirm':
-                $order = new WC_Order($orderid);
-                //private order note with the invoice id
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has become invalid because of network congestion.  Order will automatically update when the status changes.');
+                if ($orderStatus->data->status == 'invalid'):
+                    $order = new WC_Order($orderid);
+                    //private order note with the invoice id
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has become invalid because of network congestion.  Order will automatically update when the status changes.');
 
-                $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
+                    $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
+                endif;
                 break;
             case 'invoice_expired':
-                //delete the previous order
-                wp_delete_post($orderid, true);
+                if ($orderStatus->data->status == 'expired'):
+                    //delete the previous order
+                    wp_delete_post($orderid, true);
+                endif;
                 break;
 
             case 'invoice_refundComplete':
@@ -544,16 +547,14 @@ function woo_custom_redirect_after_purchase()
             $params->orderId = trim($order_id);
             //redirect and ipn stuff
             $checkout_slug = $bitpay_checkout_options['bitpay_checkout_slug'];
-            if(empty($checkout_slug)):
+            if (empty($checkout_slug)):
                 $checkout_slug = 'checkout';
             endif;
-            $params->redirectURL = get_home_url() . '/'.$checkout_slug.'/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
+            $params->redirectURL = get_home_url() . '/' . $checkout_slug . '/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
 
             #create a hash for the ipn
             $hash_key = $config->BPC_generateHash($params->orderId);
 
-
-            #$params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status?hash_key='.$hash_key;
             $params->notificationURL = get_home_url() . '/wp-json/bitpay/ipn/status';
             #http://<host>/wp-json/bitpay/ipn/status
             $params->extendedNotifications = true;
@@ -606,13 +607,13 @@ function BPC_getBitPayVersionInfo($clean = null)
 {
     $plugin_data = get_file_data(__FILE__, array('Version' => 'Version', 'Plugin_Name' => 'Plugin Name'), false);
     $plugin_name = $plugin_data['Plugin_Name'];
-    if($clean):
-        $plugin_version = $plugin_name.' '.$plugin_data['Version'];
+    if ($clean):
+        $plugin_version = $plugin_name . ' ' . $plugin_data['Version'];
     else:
-    $plugin_name = str_replace(" ", "_", $plugin_name);
-    $plugin_name = str_replace("_for_", "_", $plugin_name);
-    $plugin_version = $plugin_name . '_' . $plugin_data['Version'];
-endif;
+        $plugin_name = str_replace(" ", "_", $plugin_name);
+        $plugin_name = str_replace("_for_", "_", $plugin_name);
+        $plugin_version = $plugin_name . '_' . $plugin_data['Version'];
+    endif;
 
     return $plugin_version;
 }
@@ -633,28 +634,28 @@ function BPC_getBitPayDashboardLink($endpoint, $invoiceID)
 
 function BPC_getBitPayBrandOptions()
 {
-    
-    if (is_admin()  && $_GET['section'] == 'bitpay_checkout_gateway'):
-    $buttonObj = new BPC_Buttons;
-    $buttons = json_decode($buttonObj->BPC_getButtons());
-    $output = [];
-    foreach ($buttons->data as $key => $b):
 
-        $names = preg_split('/(?=[A-Z])/', $b->name);
-        $names = implode(" ", $names);
-        $names = ucwords($names);
-        if (strpos($names, "Donate") === 0):
-            continue;
-        else:
-            $names = str_replace(" Button", "", $names);
-            $output['//' . $b->url] = $names;
-        endif;
-    endforeach;
-    #add a 'no image' option
-    $output['-'] = 'No Image';
+    if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
+        $buttonObj = new BPC_Buttons;
+        $buttons = json_decode($buttonObj->BPC_getButtons());
+        $output = [];
+        foreach ($buttons->data as $key => $b):
 
-    return $output;
-endif;
+            $names = preg_split('/(?=[A-Z])/', $b->name);
+            $names = implode(" ", $names);
+            $names = ucwords($names);
+            if (strpos($names, "Donate") === 0):
+                continue;
+            else:
+                $names = str_replace(" Button", "", $names);
+                $output['//' . $b->url] = $names;
+            endif;
+        endforeach;
+        #add a 'no image' option
+        $output['-'] = 'No Image';
+
+        return $output;
+    endif;
 }
 
 #brand returned from API
@@ -761,62 +762,61 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
-		<script type='text/javascript'>
-		jQuery("#primary").hide()
-		var payment_status = null;
-        var is_paid = false
-		window.addEventListener("message", function(event) {
-		    payment_status = event.data.status;
-           
-            if(payment_status == 'paid'){
-                is_paid = true
-            }
-		}, false);
-		//hide the order info
-		bitpay.onModalWillEnter(function() {
-		    jQuery("primary").hide()
-		});
-		//show the order info
-		bitpay.onModalWillLeave(function() {
-            
-		    if (is_paid == true) {
-		        jQuery("#primary").fadeIn("slow");
-		    } else {
-		        var myKeyVals = {
-		            orderid: '<?php echo $order_id; ?>'
-		        }
-                console.log('payment_status leave 2',payment_status)
-		        var redirect = '<?php echo $cart_url; ?>';
-		        var api = '<?php echo $restore_url; ?>';
-		        var saveData = jQuery.ajax({
-		            type: 'POST',
-		            url: api,
-		            data: myKeyVals,
-		            dataType: "text",
-		            success: function(resultData) {
-		                window.location = redirect;
-		            }
-		        });
-		    }
-		});
-		//show the modal
-        <?php if($test_mode):?>
-		bitpay.enableTestMode()
-        <?php endif;?>
+	        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
+			<script type='text/javascript'>
+			jQuery("#primary").hide()
+			var payment_status = null;
+	        var is_paid = false
+			window.addEventListener("message", function(event) {
+			    payment_status = event.data.status;
+
+	            if(payment_status == 'paid'){
+	                is_paid = true
+	            }
+			}, false);
+			//hide the order info
+			bitpay.onModalWillEnter(function() {
+			    jQuery("primary").hide()
+			});
+			//show the order info
+			bitpay.onModalWillLeave(function() {
+
+			    if (is_paid == true) {
+			        jQuery("#primary").fadeIn("slow");
+			    } else {
+			        var myKeyVals = {
+			            orderid: '<?php echo $order_id; ?>'
+			        }
+	                console.log('payment_status leave 2',payment_status)
+			        var redirect = '<?php echo $cart_url; ?>';
+			        var api = '<?php echo $restore_url; ?>';
+			        var saveData = jQuery.ajax({
+			            type: 'POST',
+			            url: api,
+			            data: myKeyVals,
+			            dataType: "text",
+			            success: function(resultData) {
+			                window.location = redirect;
+			            }
+			        });
+			    }
+			});
+			//show the modal
+	        <?php if ($test_mode): ?>
+			bitpay.enableTestMode()
+	        <?php endif;?>
 		bitpay.showInvoice('<?php echo $invoiceID; ?>');
 		</script>
 		<?php
 endif;
 }
 
-
 #custom info for BitPay
 add_action('woocommerce_thankyou', 'bitpay_checkout_custom_message');
 function bitpay_checkout_custom_message($order_id)
 {
     $order = new WC_Order($order_id);
-    if( $order->payment_method == 'bitpay_checkout_gateway'):
+    if ($order->payment_method == 'bitpay_checkout_gateway'):
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         $checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
         if ($checkout_message != ''):
