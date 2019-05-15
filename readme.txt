@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.5 =
+* Allow overrides in IPN messages for order statuses
+
 = 3.0.5.4 =
 * IPN Updates
 
