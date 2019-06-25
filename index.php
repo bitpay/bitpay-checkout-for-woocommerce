@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.8
+ * Version: 3.0.5.9
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -755,6 +755,7 @@ function BPC_getBitPayBrandOptions()
 {
 
     if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
+
         $buttonObj = new BPC_Buttons;
         $buttons = json_decode($buttonObj->BPC_getButtons());
         $output = [];
@@ -780,6 +781,7 @@ function BPC_getBitPayBrandOptions()
 #brand returned from API
 function BPC_getBitPayBrands()
 {
+    if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
     $buttonObj = new BPC_Buttons;
     $buttons = json_decode($buttonObj->BPC_getButtons());
     $brand = '<div>';
@@ -800,11 +802,13 @@ function BPC_getBitPayBrands()
 
     $brand .= '</div>';
     return $brand;
+endif;
 
 }
 
 function BPC_getBitPayLogo($endpoint = null)
 {
+    if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
     $buttonObj = new BPC_Buttons;
     $buttons = $buttonObj->BPC_getButtons();
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
@@ -816,6 +820,7 @@ function BPC_getBitPayLogo($endpoint = null)
     else:
         return $brand;
     endif;
+endif;
 
 }
 
