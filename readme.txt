@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.8 =
+* Added information and links to Tier settings
+
 = 3.0.5.7 =
 * Added transaction and error logging
 
