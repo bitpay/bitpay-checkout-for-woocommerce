@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.11 =
+* Code cleanup
+
 = 3.0.5.10 =
 * Code cleanup
 
