@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.12
+ * Version: 3.0.5.13
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -187,7 +187,7 @@ function wc_bitpay_checkout_gateway_init()
                 $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
 
                 $this->id = 'bitpay_checkout_gateway';
-                $this->icon = BPC_getBitPayLogo();
+                $this->icon = BPC_getBitPaymentIcon();
 
                 $this->has_fields = true;
                 $this->method_title = __(BPC_getBitPayVersionInfo($clean = true), 'wc-bitpay');
@@ -949,24 +949,13 @@ function bitpay_checkout_custom_message($order_id)
 }
 
 #bitpay image on payment page
-
-add_filter('woocommerce_gateway_icon', 'custom_payment_gateway_icons', 10, 2);
-function custom_payment_gateway_icons($icon, $gateway_id)
-{
-#bitpay_checkout_gateway
-
-    foreach (WC()->payment_gateways->get_available_payment_gateways() as $gateway) {
-        if ($gateway_id == 'bitpay_checkout_gateway'):
-            #is a brand set?
-            $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-            $brand = $bitpay_checkout_options['bitpay_checkout_brand'];
-            if ($brand != '-'):
-                $icon = '<img class = "bitpay_logo" src="' . WC_HTTPS::force_https_url($brand) . '" alt="' . esc_attr($title) . '" />';
-                return $icon;
-            endif;
-        endif;
-    }
-
+function BPC_getBitPaymentIcon(){
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $brand = $bitpay_checkout_options['bitpay_checkout_brand'];
+    if ($brand != '-'):
+        $icon = $brand .'" class="bitpay_logo"';
+        return $icon;
+    endif;
 }
 
 #add the gatway to woocommerce

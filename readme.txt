@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.13 =
+* Fixed issue where BitPay logo was causing other logos to be hidden.  Add / modify the "bitpay_logo" CSS class in your theme if needed.
+
 = 3.0.5.12 =
 * Added optional BitPay logo on checkout page with a css class "bitpay_logo".  Adjust the "max-height" in your css to resize as needed
 
