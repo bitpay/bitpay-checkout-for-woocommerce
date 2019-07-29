@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.15 =
+* Changed speed setting so users can defined in BitPay dashboard
+
 = 3.0.5.14 =
 * Added API token validation
 
