@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.0.5.17 =
+* Added redirect to cart if order becomes invalid when a user hasn't completed a purchase
+
 = 3.0.5.16 =
 * Added redirect to cart if order becomes invalid when a user hasn't completed a purchase
 
