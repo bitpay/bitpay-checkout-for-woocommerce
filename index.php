@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.17
+ * Version: 3.0.5.18
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -415,31 +415,34 @@ function wc_bitpay_checkout_gateway_init()
     function bitpay_checkout_check_token()
 {
 
-        if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
-            //lookup the token based on the environment
-            $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-            //dev or prod token
+        if (isset($_GET['section'])):
+            if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
+                //lookup the token based on the environment
+                $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+                //dev or prod token
 
-            $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
-            $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
-            if (empty($bitpay_checkout_token)): ?>
-		            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
-		            <?php
-        ##check and see if the token is valid
-        else:
-            if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
-                if (!BPC_isValidBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
-		            <div class="error notice">
-		                <p>
-		                    <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
-		                </p>
-		            </div>
-		            <?php endif;
-        }
+                $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
+                $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+                if (empty($bitpay_checkout_token)): ?>
+											            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
+											            <?php
+            ##check and see if the token is valid
+            else:
+                if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
+                    if (!BPC_isValidBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
+											            <div class="error notice">
+											                <p>
+											                    <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
+											                </p>
+											            </div>
+											            <?php endif;
+            }
+
+        endif;
 
     endif;
-
     endif;
+
 }
 
 #http://<host>/wp-json/bitpay/ipn/status
@@ -757,57 +760,59 @@ function BPC_getBitPayDashboardLink($endpoint, $invoiceID)
 
 function BPC_getBitPayBrandOptions()
 {
+    if (isset($_GET['section'])):
+        if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
 
-    if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
+            $buttonObj = new BPC_Buttons;
+            $buttons = json_decode($buttonObj->BPC_getButtons());
+            $output = [];
+            foreach ($buttons->data as $key => $b):
 
-        $buttonObj = new BPC_Buttons;
-        $buttons = json_decode($buttonObj->BPC_getButtons());
-        $output = [];
-        foreach ($buttons->data as $key => $b):
+                $names = preg_split('/(?=[A-Z])/', $b->name);
+                $names = implode(" ", $names);
+                $names = ucwords($names);
+                if (strpos($names, "Donate") === 0):
+                    continue;
+                else:
+                    $names = str_replace(" Button", "", $names);
+                    $output['//' . $b->url] = $names;
+                endif;
+            endforeach;
+            #add a 'no image' option
+            $output['-'] = 'No Image';
 
-            $names = preg_split('/(?=[A-Z])/', $b->name);
-            $names = implode(" ", $names);
-            $names = ucwords($names);
-            if (strpos($names, "Donate") === 0):
-                continue;
-            else:
-                $names = str_replace(" Button", "", $names);
-                $output['//' . $b->url] = $names;
-            endif;
-        endforeach;
-        #add a 'no image' option
-        $output['-'] = 'No Image';
-
-        return $output;
+            return $output;
+        endif;
     endif;
 }
 
 #brand returned from API
 function BPC_getBitPayBrands()
 {
-    if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
-        $buttonObj = new BPC_Buttons;
-        $buttons = json_decode($buttonObj->BPC_getButtons());
-        $brand = '<div>';
-        foreach ($buttons->data as $key => $b):
-            $names = preg_split('/(?=[A-Z])/', $b->name);
-            $names = implode(" ", $names);
-            $names = ucwords($names);
+    if (isset($_GET['section'])):
+        if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
+            $buttonObj = new BPC_Buttons;
+            $buttons = json_decode($buttonObj->BPC_getButtons());
+            $brand = '<div>';
+            foreach ($buttons->data as $key => $b):
+                $names = preg_split('/(?=[A-Z])/', $b->name);
+                $names = implode(" ", $names);
+                $names = ucwords($names);
 
-            if (strpos($names, "Donate") === 0):
-                continue;
-            else:
-                $names = str_replace(" Button", "", $names);
-                $brand .= '<figure style = "float:left;"><img src = "//' . $b->url . '"  style = "width:150px;padding:1px;">';
-                $brand .= '<figcaption style = "text-align:left;font-style:italic"><b>' . $names . '</b><br>' . $b->description . '</figcaption>';
-                $brand .= '</figure>';
-            endif;
-        endforeach;
+                if (strpos($names, "Donate") === 0):
+                    continue;
+                else:
+                    $names = str_replace(" Button", "", $names);
+                    $brand .= '<figure style = "float:left;"><img src = "//' . $b->url . '"  style = "width:150px;padding:1px;">';
+                    $brand .= '<figcaption style = "text-align:left;font-style:italic"><b>' . $names . '</b><br>' . $b->description . '</figcaption>';
+                    $brand .= '</figure>';
+                endif;
+            endforeach;
 
-        $brand .= '</div>';
-        return $brand;
+            $brand .= '</div>';
+            return $brand;
+        endif;
     endif;
-
 }
 
 function BPC_getBitPayLogo($endpoint = null)
@@ -879,50 +884,50 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-							        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
-									<script type='text/javascript'>
-									jQuery("#primary").hide()
-									var payment_status = null;
-							        var is_paid = false
-									window.addEventListener("message", function(event) {
-									    payment_status = event.data.status;
-	                                    console.log('payment_status',event.data)
+										        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
+												<script type='text/javascript'>
+												jQuery("#primary").hide()
+												var payment_status = null;
+										        var is_paid = false
+												window.addEventListener("message", function(event) {
+												    payment_status = event.data.status;
+				                                    console.log('payment_status',event.data)
 
-							            if(payment_status == 'paid'){
-							                is_paid = true
-							            }
-									}, false);
-									//hide the order info
-									bitpay.onModalWillEnter(function() {
-									    jQuery("primary").hide()
-									});
-									//show the order info
-									bitpay.onModalWillLeave(function() {
+										            if(payment_status == 'paid'){
+										                is_paid = true
+										            }
+												}, false);
+												//hide the order info
+												bitpay.onModalWillEnter(function() {
+												    jQuery("primary").hide()
+												});
+												//show the order info
+												bitpay.onModalWillLeave(function() {
 
-									    if (is_paid == true) {
-									        jQuery("#primary").fadeIn("slow");
-									    } else {
-									        var myKeyVals = {
-									            orderid: '<?php echo $order_id; ?>'
-									        }
-							                console.log('payment_status leave 2',payment_status)
-									        var redirect = '<?php echo $cart_url; ?>';
-									        var api = '<?php echo $restore_url; ?>';
-									        var saveData = jQuery.ajax({
-									            type: 'POST',
-									            url: api,
-									            data: myKeyVals,
-									            dataType: "text",
-									            success: function(resultData) {
-									                window.location = redirect;
-									            }
-									        });
-									    }
-									});
-									//show the modal
-							        <?php if ($test_mode): ?>
-									bitpay.enableTestMode()
-							        <?php endif;?>
+												    if (is_paid == true) {
+												        jQuery("#primary").fadeIn("slow");
+												    } else {
+												        var myKeyVals = {
+												            orderid: '<?php echo $order_id; ?>'
+												        }
+										                console.log('payment_status leave 2',payment_status)
+												        var redirect = '<?php echo $cart_url; ?>';
+												        var api = '<?php echo $restore_url; ?>';
+												        var saveData = jQuery.ajax({
+												            type: 'POST',
+												            url: api,
+												            data: myKeyVals,
+												            dataType: "text",
+												            success: function(resultData) {
+												                window.location = redirect;
+												            }
+												        });
+												    }
+												});
+												//show the modal
+										        <?php if ($test_mode): ?>
+												bitpay.enableTestMode()
+										        <?php endif;?>
 		bitpay.showInvoice('<?php echo $invoiceID; ?>');
 		</script>
 		<?php
