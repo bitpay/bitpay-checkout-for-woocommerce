@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.18
+ * Version: 3.0.5.19
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -410,35 +410,107 @@ function wc_bitpay_checkout_gateway_init()
 
     }
 
+    add_action('admin_notices', 'bitpay_checkout_upgrade');
+    function bitpay_checkout_upgrade()
+{
+    //have we checked in?
+    #remove the delete after testing
+    #delete_option('bpcwoo');
+    #make sure we're on the right page
+    if ($_GET['page'] == 'wc-settings' && is_admin() ):
+        #make sure tokens and env are set
+        $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+        $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+        $bitpay_checkout_token = $bitpay_checkout_options['bitpay_checkout_token_prod'];
+        
+        if($bitpay_checkout_endpoint == 'production' && $bitpay_checkout_token != ''):
+        $bitpay_cleanup = get_option('bpcwoo');
+
+        if($bitpay_cleanup == '' && !isset($_POST['btn_bpc_cleanup']) ):#show the message ?>
+        <div class="notice notice-info">
+        <form action="" method="POST">
+            <p>
+               BitPay Checkout needs to run a cleanup script 
+               <input style = "margin-left:20px;" type="submit" value="Run" name="btn_bpc_cleanup" class = "button button-primary">
+            </p>
+        </form>
+        </div>
+        <?php elseif($bitpay_cleanup == '' && $_POST && isset($_POST['btn_bpc_cleanup'])):
+          #function to update will go here
+          if(runCleanup($bitpay_checkout_token) == 1):?>
+            <div class="notice notice-success is-dismissible">
+                <p>
+                BitPay Checkout has finished it's cleanup
+                </p>    
+            </div>
+        <?php
+        else:?>
+        <div class="notice notice-error">
+        <form action="" method="POST">
+                <p>
+               There was an error with the cleanup script, please try again. <input style = "margin-left:20px;" type="submit" value="Run again" name="btn_bpc_cleanup" class = "button button-primary">
+                </p>    
+            </div>
+            </form>
+        <?php
+        endif;
+        endif;
+    endif;
+endif;
+
+}
+
+function runCleanup($bitpay_checkout_token){
+    #this will be the cUrl validation
+    #sample object
+   
+    $obj['token'] = $bitpay_checkout_token;
+    $obj['message'] = 'blah blah blah';
+    $obj['status'] = 200;
+
+    $response = wp_remote_post('http://local.se-api.com:5555/api/checkinTest',array(
+        'headers'   => array('Content-Type' => 'application/json; charset=utf-8'),
+        'data_format' => 'body',
+        'body'        => json_encode($obj),
+    )
+    );
+    $response = json_decode($response['body']);
+    if($response->status == 200){
+        update_option('bpcwoo', '1' );
+        return 1;
+    }
+    return 0;
+}
+
 //this is an error message incase a token isnt set
-    add_action('admin_notices', 'bitpay_checkout_check_token');
-    function bitpay_checkout_check_token()
+add_action('admin_notices', 'bitpay_checkout_check_token');
+function bitpay_checkout_check_token()
 {
 
-        if (isset($_GET['section'])):
-            if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
-                //lookup the token based on the environment
-                $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-                //dev or prod token
+    if (isset($_GET['section'])):
+        if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
+            //lookup the token based on the environment
+            $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+            //dev or prod token
 
-                $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
-                $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
-                if (empty($bitpay_checkout_token)): ?>
-											            <?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
-											            <?php
-            ##check and see if the token is valid
-            else:
-                if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
-                    if (!BPC_isValidBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
-											            <div class="error notice">
-											                <p>
-											                    <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
-											                </p>
-											            </div>
-											            <?php endif;
-            }
+            $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
+            $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+            if (empty($bitpay_checkout_token)): ?>
+<?php _e('There is no token set for your <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> environment.  <b>BitPay</b> will not function if this is not set.');?>
+<?php
+        ##check and see if the token is valid
+        else:
+            if ($_POST && !empty($bitpay_checkout_token) && !empty($bitpay_checkout_endpoint)) {
+                if (!BPC_isValidBitPayToken($bitpay_checkout_token, $bitpay_checkout_endpoint)): ?>
+<div class="error notice">
+    <p>
+        <?php _e('The token for <b>' . strtoupper($bitpay_checkout_endpoint) . '</b> is invalid.  Please verify your settings.');?>
+    </p>
+</div>
+<?php endif;
+        }
 
-        endif;
+    endif;
 
     endif;
     endif;
@@ -884,53 +956,55 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-										        <script type = "text/javascript" src = "//bitpay.com/bitpay.min.js"></script>
-												<script type='text/javascript'>
-												jQuery("#primary").hide()
-												var payment_status = null;
-										        var is_paid = false
-												window.addEventListener("message", function(event) {
-												    payment_status = event.data.status;
-				                                    console.log('payment_status',event.data)
+<script type="text/javascript" src="//bitpay.com/bitpay.min.js"></script>
+<script type='text/javascript'>
+jQuery("#primary").hide()
+var payment_status = null;
+var is_paid = false
+window.addEventListener("message", function(event) {
+    payment_status = event.data.status;
+    console.log('payment_status', event.data)
 
-										            if(payment_status == 'paid'){
-										                is_paid = true
-										            }
-												}, false);
-												//hide the order info
-												bitpay.onModalWillEnter(function() {
-												    jQuery("primary").hide()
-												});
-												//show the order info
-												bitpay.onModalWillLeave(function() {
+    if (payment_status == 'paid') {
+        is_paid = true
+    }
+}, false);
+//hide the order info
+bitpay.onModalWillEnter(function() {
+    jQuery("primary").hide()
+});
+//show the order info
+bitpay.onModalWillLeave(function() {
 
-												    if (is_paid == true) {
-												        jQuery("#primary").fadeIn("slow");
-												    } else {
-												        var myKeyVals = {
-												            orderid: '<?php echo $order_id; ?>'
-												        }
-										                console.log('payment_status leave 2',payment_status)
-												        var redirect = '<?php echo $cart_url; ?>';
-												        var api = '<?php echo $restore_url; ?>';
-												        var saveData = jQuery.ajax({
-												            type: 'POST',
-												            url: api,
-												            data: myKeyVals,
-												            dataType: "text",
-												            success: function(resultData) {
-												                window.location = redirect;
-												            }
-												        });
-												    }
-												});
-												//show the modal
-										        <?php if ($test_mode): ?>
-												bitpay.enableTestMode()
-										        <?php endif;?>
-		bitpay.showInvoice('<?php echo $invoiceID; ?>');
-		</script>
-		<?php
+    if (is_paid == true) {
+        jQuery("#primary").fadeIn("slow");
+    } else {
+        var myKeyVals = {
+            orderid: '<?php echo $order_id; ?>'
+        }
+        console.log('payment_status leave 2', payment_status)
+        var redirect = '<?php echo $cart_url; ?>';
+        var api = '<?php echo $restore_url; ?>';
+        var saveData = jQuery.ajax({
+            type: 'POST',
+            url: api,
+            data: myKeyVals,
+            dataType: "text",
+            success: function(resultData) {
+                window.location = redirect;
+            }
+        });
+    }
+});
+//show the modal
+<
+? php
+if ($test_mode): ? >
+    bitpay.enableTestMode() <
+    ? php endif; ? >
+bitpay.showInvoice('<?php echo $invoiceID; ?>');
+</script>
+<?php
 endif;
 }
 
