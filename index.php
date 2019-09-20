@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.19
+ * Version: 3.0.5.20
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -132,6 +132,13 @@ function bitpay_checkout_insert_order_note($order_id = null, $transaction_id = n
     global $wpdb;
 
     if ($order_id != null && $transaction_id != null):
+        global $woocommerce;
+
+    //Retrieve the order
+    $order = new WC_Order($order_id);
+    $order->set_transaction_id($transaction_id);
+    $order->save();
+    //Retrieve the transaction ID
 
         $table_name = '_bitpay_checkout_transactions';
         $wpdb->insert(
@@ -413,9 +420,6 @@ function wc_bitpay_checkout_gateway_init()
     #add_action('admin_notices', 'bitpay_checkout_upgrade');
     function bitpay_checkout_upgrade()
 {
-    //have we checked in?
-    #remove the delete after testing
-    #delete_option('bpcwoo');
     #make sure we're on the right page
     if ($_GET['page'] == 'wc-settings' && is_admin() ):
         #make sure tokens and env are set
@@ -696,6 +700,7 @@ function woo_custom_redirect_after_purchase()
 
         try {
             $order = new WC_Order($order_id);
+           
 
             //this means if the user is using bitpay AND this is not the redirect
             $show_bitpay = true;
@@ -729,6 +734,7 @@ function woo_custom_redirect_after_purchase()
                 endif;
 
                 //orderid
+                
                 $params->orderId = trim($order_id);
                 //redirect and ipn stuff
                 $checkout_slug = $bitpay_checkout_options['bitpay_checkout_slug'];
@@ -753,7 +759,8 @@ function woo_custom_redirect_after_purchase()
                 $invoiceData = json_decode($invoice->BPC_getInvoiceData());
                 BPC_Logger($invoiceData, 'NEW BITPAY INVOICE', true);
                 //now we have to append the invoice transaction id for the callback verification
-
+                
+              
                 $invoiceID = $invoiceData->data->id;
                 //set a cookie for redirects and updating the order status
                 $cookie_name = "bitpay-invoice-id";
@@ -765,6 +772,7 @@ function woo_custom_redirect_after_purchase()
 
                 #insert into the database
                 bitpay_checkout_insert_order_note($order_id, $invoiceID);
+                
 
                 //use the modal if '1', otherwise redirect
                 if ($use_modal == 2):
