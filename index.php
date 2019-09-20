@@ -410,7 +410,7 @@ function wc_bitpay_checkout_gateway_init()
 
     }
 
-    add_action('admin_notices', 'bitpay_checkout_upgrade');
+    #add_action('admin_notices', 'bitpay_checkout_upgrade');
     function bitpay_checkout_upgrade()
 {
     //have we checked in?
@@ -611,12 +611,6 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $config = new BPC_Configuration($bitpay_checkout_token, $bitpay_checkout_options['bitpay_checkout_endpoint']);
         $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
 
-        #verify the hash before moving on
-        #disable this for awhile so new orders can start creating them
-        #if(!$config->BPC_checkHash($orderid,$hash_key)):
-        #    die();
-        #endif;
-
         $params = new stdClass();
         $params->extension_version = BPC_getBitPayVersionInfo();
         $params->invoiceID = $invoiceID;
@@ -637,7 +631,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 $order_status = bitpay_checkout_ipn_status('invoice_confirmed');
                 $order->update_status($order_status, __('BitPay payment ' . $order_status, 'woocommerce'));
                 // Reduce stock levels
-                $order->reduce_order_stock();
+                wc_reduce_stock_levels($orderid);
 
                 // Remove cart
                 WC()->cart->empty_cart();
