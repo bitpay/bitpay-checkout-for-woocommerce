@@ -115,7 +115,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 == Changelog ==
 
 = 3.0.5.22 =
-* Changed branding to default icon
+* Changed branding to default icon, updated IPN changes
 
 = 3.0.5.21 =
 * bug cleanup
