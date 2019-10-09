@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.22
+ * Version: 3.0.1910
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -13,7 +13,7 @@ global $current_user;
 #add_action( 'init', 'enable_bitpaycheckout_js', 0 );
 function enable_bitpaycheckout_js()
 {
-    wp_enqueue_script('remote-bitpaycheckout-js', '//bitpay.com/bitpay.min.js', null, null, true);
+    wp_enqueue_script('remote-bitpaycheckout-js', '//test.bitpay.com/bitpay.min.js', null, null, true);
 }
 
 #autoloader
@@ -343,17 +343,7 @@ function wc_bitpay_checkout_gateway_init()
                         'default' => '0',
                     ),
                     
-                    'bitpay_checkout_auto_delete' => array(
-                        'title' => __('Auto-Delete Expired Invoices/Orders', 'woocommerce'),
-                        'type' => 'select',
-                        'description' => __('If the invoice has <b>expired</b>, ie a user started the checkout but never completed payment, should the order be automatically removed during the IPN notification?  If set to <b>Yes</b> then the order will be completely removed.  If set to <b>No</b> then the status will be set to <b>Cancelled</b>.  Defaults to <b>Yes</b>.', 'woocommerce'),
-                        'options' => array(
-                            '1' => 'Yes',
-                            '0' => 'No',
-
-                        ),
-                        'default' => '1',
-                    ),
+                
 
                     'bitpay_log_mode' => array(
                         'title' => __('Developer Logging', 'woocommerce'),
@@ -533,6 +523,8 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
     $items = $order->get_items();
 
     BPC_Logger('User canceled order: ' . $order_id . ', removing from WooCommerce', 'USER CANCELED ORDER', true);
+    $order->add_order_note('User closed the modal, the order will be set to canceled state');
+    $order->update_status('canceled', __('BitPay payment canceled by user', 'woocommerce'));
 
     //clear the cart first so things dont double up
     WC()->cart->empty_cart();
@@ -544,8 +536,13 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
         endfor;
     }
     //delete the previous order
-    wp_delete_post($order_id, true);
-    bitpay_checkout_delete_order_transaction($order_id);
+   // wp_delete_post($order_id, true);
+   // bitpay_checkout_delete_order_transaction($order_id);
+   
+   
+
+
+
     setcookie("bitpay-invoice-id", "", time() - 3600);
 }
 
@@ -641,12 +638,9 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 #if ($orderStatus->data->status == 'expired'):
                 //delete the previous order
                 $order = new WC_Order($orderid);
-                if ($bitpay_checkout_options['bitpay_checkout_auto_delete'] == 1):
-                    wp_delete_post($orderid, true);
-                else:
-                    $order->update_status('cancelled', __('BitPay cancelled the order.', 'woocommerce'));
-                endif;
-                #endif;
+                $order->add_order_note('BitPay invoice has expired, this order has been been placed on hold');
+                $order->update_status('on-hold', __('BitPay payment invalid', 'woocommerce'));
+                
                 break;
 
             case 'invoice_refundComplete':
@@ -789,7 +783,7 @@ function BPC_getBitPayVersionInfo($clean = null)
         $plugin_name = str_replace("_for_", "_", $plugin_name);
         $plugin_version = $plugin_name . '_' . $plugin_data['Version'];
     endif;
-
+   
     return $plugin_version;
 }
 
@@ -893,14 +887,13 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-<script type="text/javascript" src="//bitpay.com/bitpay.min.js"></script>
+<script type="text/javascript" src="//test.bitpay.com/bitpay.min.js"></script>
 <script type='text/javascript'>
 jQuery("#primary").hide()
 var payment_status = null;
 var is_paid = false
 window.addEventListener("message", function(event) {
     payment_status = event.data.status;
-    console.log('payment_status', event.data)
 
     if (payment_status == 'paid') {
         is_paid = true
@@ -919,7 +912,6 @@ bitpay.onModalWillLeave(function() {
         var myKeyVals = {
             orderid: '<?php echo $order_id; ?>'
         }
-        console.log('payment_status leave 2', payment_status)
         var redirect = '<?php echo $cart_url; ?>';
         var api = '<?php echo $restore_url; ?>';
         var saveData = jQuery.ajax({
