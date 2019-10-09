@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.5.21
+ * Version: 3.0.1910
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -13,7 +13,7 @@ global $current_user;
 #add_action( 'init', 'enable_bitpaycheckout_js', 0 );
 function enable_bitpaycheckout_js()
 {
-    wp_enqueue_script('remote-bitpaycheckout-js', '//bitpay.com/bitpay.min.js', null, null, true);
+    wp_enqueue_script('remote-bitpaycheckout-js', '//test.bitpay.com/bitpay.min.js', null, null, true);
 }
 
 #autoloader
@@ -228,6 +228,7 @@ function wc_bitpay_checkout_gateway_init()
             }
             public function init_form_fields()
             {
+                
                 $this->form_fields = array(
                     'enabled' => array(
                         'title' => __('Enable/Disable', 'woocommerce'),
@@ -311,12 +312,7 @@ function wc_bitpay_checkout_gateway_init()
                         'default' => 'checkout',
                     ),
 
-                    'bitpay_checkout_brand' => array(
-                        'title' => __('Branding', 'woocommerce'),
-                        'type' => 'select',
-                        'description' => __('Choose from one of our branded buttons<br>' . BPC_getBitPayBrands(), 'woocommerce'),
-                        'options' => BPC_getBitPayBrandOptions(),
-                    ),
+                
 
                     'bitpay_checkout_capture_email' => array(
                         'title' => __('Auto-Capture Email', 'woocommerce'),
@@ -336,31 +332,18 @@ function wc_bitpay_checkout_gateway_init()
                         'default' => 'Thank you.  We will notify you when BitPay has processed your transaction.',
                     ),
 
-                    'bitpay_checkout_order_paid' => array(
-                        'title' => __('Paid Status', 'woocommerce'),
+                    'bitpay_checkout_order_process_status' => array(
+                        'title' => __('Processing Status', 'woocommerce'),
                         'type' => 'select',
-                        'description' => __('Customize the order status when a user intially <b>Pays</b> the invoice.  This step is not yet confirmed on the blockchain, but has received a crytpocurrency payment.  Defaults to <b>Processing</b>.', 'woocommerce'),
-                        'options' => $this->BPC_getOrderStatus(),
-                        'default' => 'wc-processing',
-                    ),
-                    'bitpay_checkout_order_confirmed' => array(
-                        'title' => __('Confirmed Status', 'woocommerce'),
-                        'type' => 'select',
-                        'description' => __('The payment has been <b></b>confirmed</b> based on transaction speeds.  Defaults to <b>Completed</b>.', 'woocommerce'),
-                        'options' => $this->BPC_getOrderStatus(),
-                        'default' => 'wc-completed',
-                    ),
-                    'bitpay_checkout_auto_delete' => array(
-                        'title' => __('Auto-Delete Expired Invoices/Orders', 'woocommerce'),
-                        'type' => 'select',
-                        'description' => __('If the invoice has <b>expired</b>, ie a user started the checkout but never completed payment, should the order be automatically removed during the IPN notification?  If set to <b>Yes</b> then the order will be completely removed.  If set to <b>No</b> then the status will be set to <b>Cancelled</b>.  Defaults to <b>Yes</b>.', 'woocommerce'),
+                        'description' => __('Based on the transaction speed configured in your <a href = "'.BPC_getProcessingLink().'" target = "_blank">BitPay Dashboard</a>, indicate which BitPay invoice status shall be used to mark the Woocommerce order to the status <b>Processing</b>', 'woocommerce'),
                         'options' => array(
-                            '1' => 'Yes',
-                            '0' => 'No',
-
+                            '0'=>'Confirmed',
+                            '1'=>'Complete'
                         ),
-                        'default' => '1',
+                        'default' => '0',
                     ),
+                    
+                
 
                     'bitpay_log_mode' => array(
                         'title' => __('Developer Logging', 'woocommerce'),
@@ -375,12 +358,7 @@ function wc_bitpay_checkout_gateway_init()
 
                 );
             }
-            function BPC_getOrderStatus()
-            {
-                $order_statuses = wc_get_order_statuses();
-                return apply_filters('wc_order_statuses', $order_statuses);
-
-            }
+            
             function process_payment($order_id)
             {
                 #this is the one that is called intially when someone checks out
@@ -545,6 +523,8 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
     $items = $order->get_items();
 
     BPC_Logger('User canceled order: ' . $order_id . ', removing from WooCommerce', 'USER CANCELED ORDER', true);
+    $order->add_order_note('User closed the modal, the order will be set to canceled state');
+    $order->update_status('canceled', __('BitPay payment canceled by user', 'woocommerce'));
 
     //clear the cart first so things dont double up
     WC()->cart->empty_cart();
@@ -556,33 +536,16 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
         endfor;
     }
     //delete the previous order
-    wp_delete_post($order_id, true);
-    bitpay_checkout_delete_order_transaction($order_id);
+   // wp_delete_post($order_id, true);
+   // bitpay_checkout_delete_order_transaction($order_id);
+   
+   
+
+
+
     setcookie("bitpay-invoice-id", "", time() - 3600);
 }
 
-function bitpay_checkout_ipn_status($status)
-{
-    global $woocommerce;
-    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-    switch ($status) {
-        case 'invoice_confirmed':
-            if ($bitpay_checkout_options['bitpay_checkout_order_confirmed'] == ''):
-                return 'completed';
-            else:
-                return str_replace('wc-', '', $bitpay_checkout_options['bitpay_checkout_order_confirmed']);
-            endif;
-            break;
-        case 'invoice_paidInFull':
-            if ($bitpay_checkout_options['bitpay_checkout_order_paid'] == ''):
-                return 'processing';
-            else:
-                return str_replace('wc-', '', $bitpay_checkout_options['bitpay_checkout_order_paid']);
-            endif;
-            break;
-
-    }
-}
 //http://<host>/wp-json/bitpay/ipn/status
 function bitpay_checkout_ipn(WP_REST_Request $request)
 {
@@ -612,6 +575,8 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         //dev or prod token
         $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
+        $bitpay_checkout_order_process_status = $bitpay_checkout_options['bitpay_checkout_order_process_status'];
+
         $config = new BPC_Configuration($bitpay_checkout_token, $bitpay_checkout_options['bitpay_checkout_endpoint']);
         $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
 
@@ -627,31 +592,38 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         bitpay_checkout_update_order_note($orderid, $invoiceID, $order_status);
         switch ($event->name) {
             case 'invoice_confirmed':
-                #if ($orderStatus->data->status == 'confirmed'):
+            if($bitpay_checkout_order_process_status == 0 || $bitpay_checkout_order_process_status == ''):
                 $order = new WC_Order($orderid);
                 //private order note with the invoice id
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> processing has been completed.');
+                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> processing has completed.');
 
-                $order_status = bitpay_checkout_ipn_status('invoice_confirmed');
-                $order->update_status($order_status, __('BitPay payment ' . $order_status, 'woocommerce'));
+                $order_status = "wc-processing";
+                $order->update_status($order_status, __('BitPay payment ', 'woocommerce'));
                 // Reduce stock levels
                 wc_reduce_stock_levels($orderid);
 
                 // Remove cart
                 WC()->cart->empty_cart();
-                #endif;
+            endif;
                 break;
 
-            case 'invoice_paidInFull': #pending
-                # if ($orderStatus->data->status == 'paid'):
-                $order = new WC_Order($orderid);
-                //private order note with the invoice id
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> is processing.');
+                case 'invoice_completed':
+                if($bitpay_checkout_order_process_status == 1):
+                    $order = new WC_Order($orderid);
+                    //private order note with the invoice id
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> processing has completed.');
 
-                $order_status = bitpay_checkout_ipn_status('invoice_paidInFull');
-                $order->update_status($order_status, __('BitPay payment ' . $order_status, 'woocommerce'));
-                # endif;
+                    $order_status = "wc-processing";
+                    $order->update_status($order_status, __('BitPay payment ', 'woocommerce'));
+                    // Reduce stock levels
+                    wc_reduce_stock_levels($orderid);
+
+                    // Remove cart
+                    WC()->cart->empty_cart();
+                endif;
                 break;
+
+           
 
             case 'invoice_failedToConfirm':
                 if ($orderStatus->data->status == 'invalid'):
@@ -666,12 +638,9 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 #if ($orderStatus->data->status == 'expired'):
                 //delete the previous order
                 $order = new WC_Order($orderid);
-                if ($bitpay_checkout_options['bitpay_checkout_auto_delete'] == 1):
-                    wp_delete_post($orderid, true);
-                else:
-                    $order->update_status('cancelled', __('BitPay cancelled the order.', 'woocommerce'));
-                endif;
-                #endif;
+                $order->add_order_note('BitPay invoice has expired, this order has been been placed on hold');
+                $order->update_status('on-hold', __('BitPay payment invalid', 'woocommerce'));
+                
                 break;
 
             case 'invoice_refundComplete':
@@ -814,7 +783,7 @@ function BPC_getBitPayVersionInfo($clean = null)
         $plugin_name = str_replace("_for_", "_", $plugin_name);
         $plugin_version = $plugin_name . '_' . $plugin_data['Version'];
     endif;
-
+   
     return $plugin_version;
 }
 
@@ -832,62 +801,22 @@ function BPC_getBitPayDashboardLink($endpoint, $invoiceID)
     }
 }
 
-function BPC_getBitPayBrandOptions()
-{
-    if (isset($_GET['section'])):
-        if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
-
-            $buttonObj = new BPC_Buttons;
-            $buttons = json_decode($buttonObj->BPC_getButtons());
-            $output = [];
-            foreach ($buttons->data as $key => $b):
-
-                $names = preg_split('/(?=[A-Z])/', $b->name);
-                $names = implode(" ", $names);
-                $names = ucwords($names);
-                if (strpos($names, "Donate") === 0):
-                    continue;
-                else:
-                    $names = str_replace(" Button", "", $names);
-                    $output['//' . $b->url] = $names;
-                endif;
-            endforeach;
-            #add a 'no image' option
-            $output['-'] = 'No Image';
-
-            return $output;
-        endif;
-    endif;
+#retrieves the invoice token based on the endpoint
+function BPC_getProcessingLink()
+{ //dev or prod token
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
+    switch ($bitpay_checkout_endpoint) {
+        case 'test':
+        default:
+            return 'https://test.bitpay.com/dashboard/settings/edit/order';
+            break;
+        case 'production':
+        return 'https://test.bitpay.com/dashboard/settings/edit/order';
+            break;
+    }
 }
 
-#brand returned from API
-function BPC_getBitPayBrands()
-{
-    if (isset($_GET['section'])):
-        if (is_admin() && $_GET['section'] == 'bitpay_checkout_gateway'):
-            $buttonObj = new BPC_Buttons;
-            $buttons = json_decode($buttonObj->BPC_getButtons());
-            $brand = '<div>';
-            foreach ($buttons->data as $key => $b):
-                $names = preg_split('/(?=[A-Z])/', $b->name);
-                $names = implode(" ", $names);
-                $names = ucwords($names);
-
-                if (strpos($names, "Donate") === 0):
-                    continue;
-                else:
-                    $names = str_replace(" Button", "", $names);
-                    $brand .= '<figure style = "float:left;"><img src = "//' . $b->url . '"  style = "width:150px;padding:1px;">';
-                    $brand .= '<figcaption style = "text-align:left;font-style:italic"><b>' . $names . '</b><br>' . $b->description . '</figcaption>';
-                    $brand .= '</figure>';
-                endif;
-            endforeach;
-
-            $brand .= '</div>';
-            return $brand;
-        endif;
-    endif;
-}
 
 function BPC_getBitPayLogo($endpoint = null)
 {
@@ -958,14 +887,13 @@ function bitpay_checkout_thankyou_page($order_id)
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-<script type="text/javascript" src="//bitpay.com/bitpay.min.js"></script>
+<script type="text/javascript" src="//test.bitpay.com/bitpay.min.js"></script>
 <script type='text/javascript'>
 jQuery("#primary").hide()
 var payment_status = null;
 var is_paid = false
 window.addEventListener("message", function(event) {
     payment_status = event.data.status;
-    console.log('payment_status', event.data)
 
     if (payment_status == 'paid') {
         is_paid = true
@@ -984,7 +912,6 @@ bitpay.onModalWillLeave(function() {
         var myKeyVals = {
             orderid: '<?php echo $order_id; ?>'
         }
-        console.log('payment_status leave 2', payment_status)
         var redirect = '<?php echo $cart_url; ?>';
         var api = '<?php echo $restore_url; ?>';
         var saveData = jQuery.ajax({
@@ -1026,12 +953,10 @@ function bitpay_checkout_custom_message($order_id)
 #bitpay image on payment page
 function BPC_getBitPaymentIcon()
 {
-    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-    $brand = $bitpay_checkout_options['bitpay_checkout_brand'];
-    if ($brand != '-'):
-        $icon = $brand . '" class="bitpay_logo"';
-        return $icon;
-    endif;
+    $brand =  plugin_dir_url( __FILE__ ).'bp-payment-mark.svg';
+    $icon = $brand . '" class="bitpay_logo"';
+    return $icon;
+   
 }
 
 #add the gatway to woocommerce
