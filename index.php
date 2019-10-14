@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.0.1910
+ * Version: 3.1.1910
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -333,7 +333,7 @@ function wc_bitpay_checkout_gateway_init()
                     ),
 
                     'bitpay_checkout_order_process_status' => array(
-                        'title' => __('Processing Status', 'woocommerce'),
+                        'title' => __('Woocommerce "Processing " Status', 'woocommerce'),
                         'type' => 'select',
                         'description' => __('Based on the transaction speed configured in your <a href = "'.BPC_getProcessingLink().'" target = "_blank">BitPay Dashboard</a>, indicate which BitPay invoice status shall be used to mark the Woocommerce order to the status <b>Processing</b>', 'woocommerce'),
                         'options' => array(
