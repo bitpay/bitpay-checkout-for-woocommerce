@@ -114,6 +114,10 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.1.1910 =
+* Fixed issue with IPN deleting orders
+* Added more descriptive label for Order Status mapping
+
 = 3.0.1910 =
 * Fixed issue with IPN deleting orders
 
