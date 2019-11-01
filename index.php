@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.1.1910
+ * Version: 3.1.1911
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -169,8 +169,10 @@ function bitpay_checkout_get_order_transaction($order_id, $transaction_id)
 {
     global $wpdb;
     $table_name = '_bitpay_checkout_transactions';
-    $rowcount = $wpdb->get_var("SELECT COUNT(order_id) FROM $table_name WHERE order_id = '$order_id'
-    AND transaction_id = '$transaction_id' LIMIT 1");
+    $rowcount = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(order_id) FROM $table_name 
+        WHERE order_id = %s
+        AND transaction_id = %s LIMIT 1",$order_id,$transaction_id));
     return $rowcount;
 
 }
@@ -179,7 +181,7 @@ function bitpay_checkout_delete_order_transaction($order_id)
 {
     global $wpdb;
     $table_name = '_bitpay_checkout_transactions';
-    $wpdb->query("DELETE FROM $table_name WHERE order_id = '$order_id'");
+    $wpdb->query($wpdb->prepare("DELETE FROM $table_name WHERE order_id = %s",$order_id));
 
 }
 
