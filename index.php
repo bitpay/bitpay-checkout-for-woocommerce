@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.1.1911
+ * Version: 3.2.1911
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -640,8 +640,8 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 #if ($orderStatus->data->status == 'expired'):
                 //delete the previous order
                 $order = new WC_Order($orderid);
-                $order->add_order_note('BitPay invoice has expired, this order has been been placed on hold');
-                $order->update_status('on-hold', __('BitPay payment invalid', 'woocommerce'));
+                $order->add_order_note('BitPay invoice has expired');
+                #$order->update_status('on-hold', __('BitPay payment invalid', 'woocommerce'));
                 
                 break;
 
