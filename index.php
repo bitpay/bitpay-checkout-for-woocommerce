@@ -29,6 +29,9 @@ function BPC_autoloader($class)
 
 function BPC_Logger($msg, $type = null, $isJson = false, $error = false)
 {
+    if (!file_exists(plugin_dir_path(__FILE__) . 'logs')) {
+        mkdir(plugin_dir_path(__FILE__) . 'logs', 0755, true);
+    }
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
     $transaction_log = plugin_dir_path(__FILE__) . 'logs/' . date('Ymd') . '_transactions.log';
     $error_log = plugin_dir_path(__FILE__) . 'logs/' . date('Ymd') . '_error.log';
@@ -405,6 +408,9 @@ function bitpay_checkout_check_token()
 
     if (isset($_GET['section'])):
         if ($_GET['section'] == 'bitpay_checkout_gateway' && $_POST && is_admin()):
+            if (!file_exists(plugin_dir_path(__FILE__) . 'logs')) {
+                mkdir(plugin_dir_path(__FILE__) . 'logs', 0755, true);
+            }
             //lookup the token based on the environment
             $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
             //dev or prod token
