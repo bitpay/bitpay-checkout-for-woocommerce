@@ -3,19 +3,12 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.4.1911
+ * Version: 3.5.1911
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 if (!defined('ABSPATH')): exit;endif;
 global $current_user;
-#add_filter('wp_enqueue_scripts', 'enable_bitpaycheckout_js',0);
-#add_action( 'init', 'enable_bitpaycheckout_js', 0 );
-function enable_bitpaycheckout_js()
-{
-    wp_enqueue_script('remote-bitpaycheckout-js', '//test.bitpay.com/bitpay.min.js', null, null, true);
-}
-
 #autoloader
 function BPC_autoloader($class)
 {
@@ -838,15 +831,17 @@ function bitpay_checkout_thankyou_page($order_id)
     $restore_url = get_home_url() . '/wp-json/bitpay/cartfix/restore';
     $cart_url = get_home_url() . '/cart';
     $test_mode = false;
+    $js_script = "https://bitpay.com/bitpay.min.js";
     if ($bitpay_checkout_test_mode == 'test'):
         $test_mode = true;
+        $js_script = "https://test.bitpay.com/bitpay.min.js";
     endif;
 
     #use the modal
     if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
-<script type="text/javascript" src="//test.bitpay.com/bitpay.min.js"></script>
+<script type="text/javascript" src="<?php echo $js_script;?>"></script>
 <script type='text/javascript'>
 jQuery("#primary").hide()
 var payment_status = null;
