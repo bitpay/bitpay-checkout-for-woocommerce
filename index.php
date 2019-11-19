@@ -165,7 +165,7 @@ function bitpay_checkout_update_order_note($order_id = null, $transaction_id = n
     if ($order_id != null && $transaction_id != null && $transaction_status != null):
         $wpdb->update($table_name, array('transaction_status' => $transaction_status), array("order_id" => $order_id, 'transaction_id' => $transaction_id));
     else:
-        BPC_Logger('Missing values' . PHP_EOL . 'order id: ' . $order_id . PHP_EOL . 'transaction id: ' . $transaction_id . PHP_EOL . 'transaction status: ' . $transaction . PHP_EOL, 'error', false, true);
+        BPC_Logger('Missing values' . PHP_EOL . 'order id: ' . $order_id . PHP_EOL . 'transaction id: ' . $transaction_id . PHP_EOL . 'transaction status: ' . $transaction_status . PHP_EOL, 'error', false, true);
     endif;
 }
 
