@@ -3,11 +3,13 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.8.1911
+ * Version: 3.9.1912
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 if (!defined('ABSPATH')): exit;endif;
+add_action('wp_enqueue_scripts', 'enable_bitpayquickpay_js');
+
 global $current_user;
 #autoloader
 function BPC_autoloader($class)
@@ -19,7 +21,6 @@ function BPC_autoloader($class)
         endif;
     endif;
 }
-
 function BPC_Logger($msg, $type = null, $isJson = false, $error = false)
 {
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
@@ -196,7 +197,7 @@ function wc_bitpay_checkout_gateway_init()
                 $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
 
                 $this->id = 'bitpay_checkout_gateway';
-                //$this->icon = BPC_getBitPaymentIcon();
+                $this->icon = BPC_getBitPaymentIcon();
 
                 $this->has_fields = true;
                 $this->method_title = __(BPC_getBitPayVersionInfo($clean = true), 'wc-bitpay');
@@ -206,6 +207,7 @@ function wc_bitpay_checkout_gateway_init()
                 if (empty($_GET['woo-bitpay-return'])) {
                     $this->order_button_text = __('Pay with BitPay', 'woocommerce-gateway-bitpay_checkout_gateway');
 
+                    
                 }
                 // Load the settings.
                 $this->init_form_fields();
@@ -312,6 +314,16 @@ function wc_bitpay_checkout_gateway_init()
                         'description' => __('By default, this will be "checkout".  If you have a different Checkout page, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce'),
 
                         'default' => 'checkout',
+                    ),
+                    'bitpay_checkout_product' => array(
+                        'title' => __('Show on Product page ', 'woocommerce'),
+                        'type' => 'select',
+                        'description' => __('Set to YES if you would like to show BitPay as an immediate checkout option on the product page', 'woocommerce'),
+                        'options' => array(
+                            '1' => 'Yes',
+                            '2' => 'No',
+                        ),
+                        'default' => '2',
                     ),
 
                 
@@ -456,6 +468,170 @@ function bitpay_checkout_check_token()
     endif;
 
 }
+
+//show on the product page
+add_action( 'woocommerce_after_add_to_cart_form', function() {
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
+    if($bitpay_checkout_product == 1):?>
+    <script type = "text/javascript">
+        function bpAddToCart(){
+            var btn =  jQuery("[name='add-to-cart']")
+            btn.trigger('click')           
+        }
+    </script>
+
+    <div class = "bpbutton" style = "padding-top:15px;padding-bottom:15px;clear:both;"><img style = "cursor:pointer" onclick = "bpAddToCart()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg"></div>
+
+    <?php
+    endif;
+
+});
+
+//show on the mini cart 
+function bitpay_mini_checkout() {
+    
+    $url = get_permalink( get_option( 'woocommerce_checkout_page_id' ) ); 
+    $url.='?payment=bitpay';
+    
+    ?>
+    <script type = "text/javascript">
+    //widget_shopping_cart_content
+    var obj = document.createElement("div");
+   // obj.style.cssText = 'margin:0 auto;cursor:pointer';
+    obj.innerHTML = '<img style = "margin:0 auto;cursor:pointer;padding-bottom:10px;" onclick = "bpMiniCheckout()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg">'
+
+    var miniCart = document.getElementsByClassName("widget_shopping_cart_content")[0];
+    miniCart.appendChild(obj);  
+
+    function bpMiniCheckout(){
+        let checkoutUrl = '<?php echo $url;?>';
+       window.location = checkoutUrl
+      
+    }
+
+    </script>
+    <?php
+}
+
+add_action( 'woocommerce_widget_shopping_cart_buttons', 'bitpay_mini_checkout', 20 );
+
+//redirect to cart if bitpay single page enabled
+function bp_redirect_to_checkout( $url ) {
+    $url = get_permalink( get_option( 'woocommerce_checkout_page_id' ) ); 
+    $url.='?payment=bitpay';
+
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
+   
+    if($bitpay_checkout_product == 1):
+       return $url;
+    endif;
+ }
+add_filter( 'woocommerce_add_to_cart_redirect', 'bp_redirect_to_checkout' );
+
+ function bitpay_default_payment_gateway(){
+     if( is_checkout() && ! is_wc_endpoint_url() ) {
+         // HERE define the default payment gateway ID
+         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+        $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
+        $default_payment_id = 'bitpay_checkout_gateway';
+        if($bitpay_checkout_product == 1 && isset($_GET['payment']) && $_GET['payment'] == 'bitpay'):
+            WC()->session->set( 'chosen_payment_method', $default_payment_id );
+        else:
+            WC()->session->set( 'chosen_payment_method', "false" );
+
+        endif;
+        
+     }
+ }
+ function enable_bitpayquickpay_js()
+{
+    wp_enqueue_script('bitpayquickpay-js', plugins_url('/js/bitpayquickpay_js.js', __FILE__));
+}
+
+ add_action( 'template_redirect', 'bitpay_default_payment_gateway' );
+
+ function action_woocommerce_checkout_after_terms_and_conditions(  ) { 
+  # echo 'asdasdasdasdasd';
+  if(isset($_GET['payment']) && $_GET['payment'] == 'bitpay'):
+    ?>
+
+    <script type = "text/javascript">
+    
+    setTimeout(function(){ 
+
+        var obj = document.createElement("div");
+        obj.setAttribute("id","bpimage")
+        obj.innerHTML = '<img  style = "margin:0 auto;cursor:pointer;padding-bottom:10px;" onclick = "triggerCheckout()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg">'
+
+            var toc = document.getElementsByClassName("woocommerce-terms-and-conditions-wrapper")[0];
+            //var btn = document.querySelector('#place_order');
+            //btn.style.display = "none";
+            document.getElementById("place_order").style.visibility = "hidden";
+            toc.appendChild(obj);  
+
+            var radios = document.forms["checkout"].elements["payment_method"];
+            for(var i = 0, max = radios.length; i < max; i++) {
+                radios[i].onclick = function() {
+                    if(this.value == 'bitpay_checkout_gateway'){
+                      
+                        //obj.style.display = ""
+                        document.getElementById("bpimage").style.visibility = "visible";
+                        document.getElementById("place_order").style.visibility = "hidden";
+                        
+                     
+                    }else{
+                        document.getElementById("place_order").style.visibility = "visible";
+                        //obj.style.display = "none"
+                        document.getElementById("bpimage").style.visibility = "hidden";
+                    }
+                }
+            }
+            }, 1000);
+
+    
+
+            function triggerCheckout(){
+                jQuery("#place_order").trigger('click')
+
+            }
+        
+
+    </script>
+    <?php
+  endif;
+}; 
+
+ add_action( 'woocommerce_after_cart_totals', 'add_bp_to_cart', 10, 0 ); 
+ function add_bp_to_cart(){
+    $url = get_permalink( get_option( 'woocommerce_checkout_page_id' ) ); 
+    $url.='?payment=bitpay';
+    ?>
+<script type = "text/javascript">
+            var obj = document.createElement("div");
+            obj.setAttribute("id","bpimage")
+            obj.innerHTML = '<img  style = "margin:0 auto;cursor:pointer;padding-bottom:10px;" onclick = "loadCart()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg">'
+
+            var toc = document.getElementsByClassName("wc-proceed-to-checkout")[0];
+            toc.appendChild(obj);  
+
+            function loadCart(){
+                let checkoutUrl = '<?php echo $url;?>';
+                window.location = checkoutUrl
+    
+}
+
+</script>
+
+    
+<?php
+ }
+
+
+
+
+ add_action( 'woocommerce_checkout_after_terms_and_conditions', 'action_woocommerce_checkout_after_terms_and_conditions', 10, 0 ); 
 
 #http://<host>/wp-json/bitpay/ipn/status
 add_action('rest_api_init', function () {
@@ -934,7 +1110,7 @@ function bitpay_checkout_custom_message($order_id)
 #bitpay image on payment page
 function BPC_getBitPaymentIcon()
 {
-    $brand =  plugin_dir_url( __FILE__ ).'bp-payment-mark.svg';
+    $brand = 'https://www.bitpay.com/cdn/en_US/bitpay-mark-std.svg';
     $icon = $brand . '" class="bitpay_logo"';
     return $icon;
    
