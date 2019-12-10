@@ -1041,11 +1041,11 @@ function BPC_getBitPaymentIcon()
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
     $bitpay_checkout_show_logo = $bitpay_checkout_options['bitpay_checkout_show_logo'];
     $icon = null;
-    #if($bitpay_checkout_show_logo  != 2):
+    if($bitpay_checkout_show_logo  != 2):
 
     $brand = 'https://www.bitpay.com/cdn/en_US/bitpay-mark-std.svg';
     $icon = $brand . '" class="bitpay_logo"';
-   # endif;
+    endif;
     return $icon;
    
 }
