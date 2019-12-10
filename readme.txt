@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.10.1912 =
+* Let the user decide to hide or show the logo on checkout
+
 = 3.9.1912 =
 * Added option to show BitPay on product pages for faster checkout
 
