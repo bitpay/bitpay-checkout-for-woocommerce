@@ -197,7 +197,7 @@ function wc_bitpay_checkout_gateway_init()
                 $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
 
                 $this->id = 'bitpay_checkout_gateway';
-                $this->icon = BPC_getBitPaymentIcon();
+                //$this->icon = BPC_getBitPaymentIcon();
 
                 $this->has_fields = true;
                 $this->method_title = __(BPC_getBitPayVersionInfo($clean = true), 'wc-bitpay');
