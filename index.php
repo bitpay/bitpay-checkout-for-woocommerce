@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.10.1912
+ * Version: 3.11.1912
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -485,12 +485,33 @@ add_action( 'woocommerce_after_add_to_cart_form', function() {
     if($bitpay_checkout_product == 1):?>
     <script type = "text/javascript">
         function bpAddToCart(){
-            var btn =  jQuery("[name='add-to-cart']")
+            var btn =  jQuery(".single_add_to_cart_button")
             btn.trigger('click')           
         }
     </script>
 
     <div class = "bpbutton" style = "padding-top:15px;padding-bottom:15px;clear:both;"><img style = "cursor:pointer" onclick = "bpAddToCart()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg"></div>
+
+    <?php
+    endif;
+
+});
+
+//show on the cart page
+add_action( 'woocommerce_after_cart_totals', function() {
+    $url = get_permalink( get_option( 'woocommerce_checkout_page_id' ) ); 
+    $url.='?payment=bitpay';
+
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
+    if($bitpay_checkout_product == 1):?>
+    <script type = "text/javascript">
+        function bpCheckout(){
+           window.location = '<?php echo $url;?>'    
+        }
+    </script>
+
+    <div class = "bpbutton" style = "padding-bottom:15px;clear:both;"><img style = "cursor:pointer" onclick = "bpCheckout()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg"></div>
 
     <?php
     endif;
