@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.11.1912
+ * Version: 3.12.1912
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -596,10 +596,13 @@ add_action('rest_api_init', function () {
 
 function bitpay_checkout_cart_restore(WP_REST_Request $request)
 {
-    WC()->frontend_includes();
-    WC()->cart = new WC_Cart();
-    WC()->session = new WC_Session_Handler();
-    WC()->session->init();
+    // Load cart functions which are loaded only on the front-end.
+    include_once WC_ABSPATH . 'includes/wc-cart-functions.php';
+    include_once WC_ABSPATH . 'includes/class-wc-cart.php';
+
+    if ( is_null( WC()->cart ) ) {
+        wc_load_cart();
+    }
     $data = $request->get_params();
     $order_id = $data['orderid'];
     $order = new WC_Order($order_id);
