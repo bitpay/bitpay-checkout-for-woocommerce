@@ -4,7 +4,7 @@ Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
 Tested up to: 5.3
 Requires PHP: 5.5
-Stable tag: 3.12.1912
+Stable tag: 3.14.1912
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -113,6 +113,12 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. Wordpress Woocommerce - order view
 
 == Changelog ==
+
+= 3.14.1912 =
+* Allow merchants to disable the BitPay logo in the mini cart
+
+= 3.13.1912 =
+* Added support for future release of BitPay Chrome extension
 
 = 3.12.1912 =
 * Fixed issue where cart might not be restored after canceling the payment invoice

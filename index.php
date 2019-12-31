@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.12.1912
+ * Version: 3.14.1912
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -326,6 +326,18 @@ function wc_bitpay_checkout_gateway_init()
                         'default' => '2',
                     ),
 
+                    'bitpay_checkout_mini' => array(
+                        'title' => __('Show in mini cart ', 'woocommerce'),
+                        'type' => 'select',
+                        'description' => __('Set to YES if you would like to show BitPay as an immediate checkout option in the mini cart', 'woocommerce'),
+                        'options' => array(
+                            '1' => 'Yes',
+                            '2' => 'No',
+                        ),
+                        'default' => '2',
+                    ),
+
+
                     'bitpay_checkout_show_logo' => array(
                         'title' => __('Show logo on Checkout ', 'woocommerce'),
                         'type' => 'select',
@@ -520,7 +532,9 @@ add_action( 'woocommerce_after_cart_totals', function() {
 
 //show on the mini cart 
 function bitpay_mini_checkout() {
-    
+    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+    $bitpay_checkout_mini = $bitpay_checkout_options['bitpay_checkout_mini'];
+    if($bitpay_checkout_mini == 1):
     $url = get_permalink( get_option( 'woocommerce_checkout_page_id' ) ); 
     $url.='?payment=bitpay';
     
@@ -542,6 +556,7 @@ function bitpay_mini_checkout() {
 
     </script>
     <?php
+    endif;
 }
 
 add_action( 'woocommerce_widget_shopping_cart_buttons', 'bitpay_mini_checkout', 20 );
@@ -1059,6 +1074,11 @@ function bitpay_checkout_custom_message($order_id)
     endif;
 }
 
+
+add_action('wp_footer', 'bitpay_chrome_extension');
+function bitpay_chrome_extension() {
+  echo '<div id = "bpDiv123119" style = "clear:both;"></div>';
+}
 #bitpay image on payment page
 function BPC_getBitPaymentIcon()
 {
