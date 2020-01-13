@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.15.2001
+ * Version: 3.16.2001
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -700,6 +700,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
 
         $invoice = new BPC_Invoice($item); //this creates the invoice with all of the config params
         $orderStatus = json_decode($invoice->BPC_checkInvoiceStatus($invoiceID));
+       
         #update the lookup table
         $note_set = null;
              
@@ -805,15 +806,15 @@ function woo_custom_redirect_after_purchase()
                 setcookie("bitpay-invoice-id", "", time() - 3600);
             endif;
 
-            if ($order->payment_method == 'bitpay_checkout_gateway' && $show_bitpay == true):
+            if ($order->get_payment_method() == 'bitpay_checkout_gateway' && $show_bitpay == true):
                 $config = new BPC_Configuration($bitpay_checkout_token, $bitpay_checkout_options['bitpay_checkout_endpoint']);
                 //sample values to create an item, should be passed as an object'
                 $params = new stdClass();
                 $current_user = wp_get_current_user();
                 #$params->fullNotifications = 'true';
                 $params->extension_version = BPC_getBitPayVersionInfo();
-                $params->price = $order->total;
-                $params->currency = $order->currency; //set as needed
+                $params->price = $order->get_total();
+                $params->currency = $order->get_currency(); //set as needed
                 if ($bitpay_checkout_options['bitpay_checkout_capture_email'] == 1):
                     $current_user = wp_get_current_user();
 
@@ -832,7 +833,7 @@ function woo_custom_redirect_after_purchase()
                 if (empty($checkout_slug)):
                     $checkout_slug = 'checkout';
                 endif;
-                $params->redirectURL = get_home_url() . '/' . $checkout_slug . '/order-received/' . $order_id . '/?key=' . $order->order_key . '&redirect=false';
+                $params->redirectURL = get_home_url() . '/' . $checkout_slug . '/order-received/' . $order_id . '/?key=' . $order->get_order_key() . '&redirect=false';
 
                 #create a hash for the ipn
                 $hash_key = $config->BPC_generateHash($params->orderId);
@@ -1008,7 +1009,7 @@ function bitpay_checkout_thankyou_page($order_id)
     endif;
 
     #use the modal
-    if ($order->payment_method == 'bitpay_checkout_gateway' && $use_modal == 1):
+    if ($order->get_payment_method() == 'bitpay_checkout_gateway' && $use_modal == 1):
         $invoiceID = $_COOKIE['bitpay-invoice-id'];
         ?>
 <script type="text/javascript" src="<?php echo $js_script;?>"></script>
@@ -1065,7 +1066,7 @@ add_action('woocommerce_thankyou', 'bitpay_checkout_custom_message');
 function bitpay_checkout_custom_message($order_id)
 {
     $order = new WC_Order($order_id);
-    if ($order->payment_method == 'bitpay_checkout_gateway'):
+    if ($order->get_payment_method() == 'bitpay_checkout_gateway'):
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         $checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
         if ($checkout_message != ''):
