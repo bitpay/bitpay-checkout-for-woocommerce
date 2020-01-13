@@ -114,6 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.15.2001 =
+* Removed unused code
+
 = 3.14.1912 =
 * Allow merchants to disable the BitPay logo in the mini cart
 
