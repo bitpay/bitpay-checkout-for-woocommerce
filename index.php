@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.16.2001
+ * Version: 3.17.2001
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -366,7 +366,12 @@ function wc_bitpay_checkout_gateway_init()
                         'description' => __('Insert your custom message for the <b>Order Received</b> page, so the customer knows that the order will not be completed until BitPay releases the funds.', 'woocommerce'),
                         'default' => 'Thank you.  We will notify you when BitPay has processed your transaction.',
                     ),
-
+                    'bitpay_checkout_error' => array(
+                        'title' => __('Error handling', 'woocommerce'),
+                        'type' => 'text',
+                        'description' => __('If there is an error with creting the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
+                       
+                    ),
                     'bitpay_checkout_order_process_status' => array(
                         'title' => __('Woocommerce "Processing" Status', 'woocommerce'),
                         'type' => 'select',
@@ -849,6 +854,27 @@ function woo_custom_redirect_after_purchase()
                 #BPC_Logger(json_decode($invoice->BPC_getInvoiceData()), 'NEW BITPAY INVOICE',true);
 
                 $invoiceData = json_decode($invoice->BPC_getInvoiceData());
+                if (property_exists($invoiceData, 'error')):
+                    $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+                    $errorURL = get_home_url().'/'.$bitpay_checkout_options['bitpay_checkout_error'];
+                    $order_status = "wc-cancelled";
+                    $order = new WC_Order($order_id);
+                    $items = $order->get_items();
+                    $order->update_status($order_status, __($invoiceData->error.'.', 'woocommerce'));
+
+                     //clear the cart first so things dont double up
+                    WC()->cart->empty_cart();
+                    foreach ($items as $item) {
+                        //now insert for each quantity
+                        $item_count = $item->get_quantity();
+                        for ($i = 0; $i < $item_count; $i++):
+                            WC()->cart->add_to_cart($item->get_product_id());
+                        endfor;
+                    }
+                    wp_redirect($errorURL);
+                    die();
+                endif; 
+              
                 BPC_Logger($invoiceData, 'NEW BITPAY INVOICE', true);
                 //now we have to append the invoice transaction id for the callback verification
                 
