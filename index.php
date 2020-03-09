@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.18.2002
+ * Version: 3.19.3002
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -532,15 +532,16 @@ function bp_redirect_to_checkout( $url ) {
 
  function bitpay_default_payment_gateway(){
      if( is_checkout() && ! is_wc_endpoint_url() ) {
+        global $woocommerce;
+        unset($gateways['WC_Gateway_BitPay']);
          // HERE define the default payment gateway ID
-         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
+        $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
         $default_payment_id = 'bitpay_checkout_gateway';
         if($bitpay_checkout_product == 1 && isset($_GET['payment']) && $_GET['payment'] == 'bitpay'):
+           
             WC()->session->set( 'chosen_payment_method', $default_payment_id );
-        else:
-            WC()->session->set( 'chosen_payment_method', "false" );
-
+        
         endif;
         
      }
@@ -766,7 +767,7 @@ function woo_custom_redirect_after_purchase()
                 //sample values to create an item, should be passed as an object'
                 $params = new stdClass();
                 $current_user = wp_get_current_user();
-                #$params->fullNotifications = 'true';
+               
                 $params->extension_version = BPC_getBitPayVersionInfo();
                 $params->price = $order->get_total();
                 $params->currency = $order->get_currency(); //set as needed
