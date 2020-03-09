@@ -4,7 +4,7 @@ Tags: bitcoin, bitcoin cash, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
 Tested up to: 5.3.2
 Requires PHP: 5.5
-Stable tag: 3.19.3002
+Stable tag: 3.19.2003
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -114,7 +114,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
-= 3.19.3002 =
+= 3.19.2003 =
 * Fixed issue where BitPay may stay persistent as a payment method
 
 = 3.18.2002 =
