@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.20.2003
+ * Version: 3.30.2004
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -214,7 +214,7 @@ function wc_bitpay_checkout_gateway_init()
                 $this->init_settings();
 
                 // Define user set variables
-                $this->title = $this->get_option('title');
+                $this->title = 'BitPay';
                 $this->description = $this->get_option('description') . '<br>';
                 $this->instructions = $this->get_option('instructions', $this->description);
 
@@ -257,13 +257,7 @@ function wc_bitpay_checkout_gateway_init()
                         'description' => __('<em><b>*** </b>If you are having trouble creating BitPay invoices, verify your Tier settings on your <a href = "https://support.bitpay.com/hc/en-us/articles/206003676-How-do-I-raise-my-approved-processing-volume-tier-limit-" target = "_blank">BitPay Dashboard</a>.</em>', 'woocommerce'),
                         'type' => 'title',
                     ),
-                    'title' => array(
-                        'title' => __('Title', 'woocommerce'),
-                        'type' => 'text',
-                        'description' => __('This controls the title which the user sees during checkout.', 'woocommerce'),
-                        'default' => __('BitPay', 'woocommerce'),
-
-                    ),
+                   
                     'description' => array(
                         'title' => __('Description', 'woocommerce'),
                         'type' => 'text',
@@ -328,18 +322,7 @@ function wc_bitpay_checkout_gateway_init()
                         ),
                         'default' => '2',
                     ),
-
-
-                    'bitpay_checkout_show_logo' => array(
-                        'title' => __('Show logo on Checkout ', 'woocommerce'),
-                        'type' => 'select',
-                        'description' => __('Set to YES if you would like to show the BitPay logo on the payment page', 'woocommerce'),
-                        'options' => array(
-                            '1' => 'Yes',
-                            '2' => 'No',
-                        ),
-                        'default' => '1',
-                    ),               
+          
 
                     'bitpay_checkout_capture_email' => array(
                         'title' => __('Auto-Capture Email', 'woocommerce'),
@@ -846,7 +829,7 @@ function woo_custom_redirect_after_purchase()
         }
     }
 }
-// Replacing the Place order button when total volume exceed 68 m3
+// Replacing the Place order 
 add_filter('woocommerce_order_button_html', 'bitpay_checkout_replace_order_button_html', 10, 2);
 function bitpay_checkout_replace_order_button_html($order_button, $override = false)
 {
@@ -1040,6 +1023,11 @@ function bitpay_checkout_custom_message($order_id)
 #bitpay image on payment page
 function BPC_getBitPaymentIcon()
 {
+
+    $brand = esc_url( plugins_url( 'images/bitpay-currency-group.svg', __FILE__ ) );
+    $icon = $brand . '" class="bitpay_logo"';
+    return $icon;
+
     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
     $bitpay_checkout_show_logo = $bitpay_checkout_options['bitpay_checkout_show_logo'];
     $icon = null;
