@@ -3,13 +3,12 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.30.2004
+ * Version: 3.31.2004
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 if (!defined('ABSPATH')): exit;endif;
 add_action('wp_enqueue_scripts', 'enable_bitpayquickpay_js');
-
 global $current_user;
 #autoloader
 function BPC_autoloader($class)
@@ -82,9 +81,10 @@ function bitpay_checkout_woocommerce_bitpay_failed_requirements()
 
 add_action('plugins_loaded', 'wc_bitpay_checkout_gateway_init', 11);
 #create the table if it doesnt exist
+
 function bitpay_checkout_plugin_setup()
 {
-
+    
     $failed = bitpay_checkout_woocommerce_bitpay_failed_requirements();
     $plugins_url = admin_url('plugins.php');
 
@@ -96,7 +96,7 @@ function bitpay_checkout_plugin_setup()
         $charset_collate = $wpdb->get_charset_collate();
         $sql = "CREATE TABLE IF NOT EXISTS $table_name(
         `id` int(11) NOT NULL AUTO_INCREMENT,
-        `order_id` int(11) NOT NULL,
+        `order_id` varchar(255) NOT NULL,
         `transaction_id` varchar(255) NOT NULL,
         `transaction_status` varchar(50) NOT NULL DEFAULT 'new',
         `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -233,7 +233,7 @@ function wc_bitpay_checkout_gateway_init()
             public function init_form_fields()
             {
                 $wc_statuses_arr = wc_get_order_statuses();
-                
+               
                 
                 $this->form_fields = array(
                     'enabled' => array(
@@ -427,7 +427,37 @@ function wc_bitpay_checkout_gateway_init()
     }
 
 
-//this is an error message incase a token isnt set
+//update the order_id field in the custom table, try and create the table if this is called before the original
+add_action('admin_notices', 'update_db_1');
+function update_db_1()
+{
+    if ($_GET['section'] == 'bitpay_checkout_gateway'  && is_admin()):
+    
+        if(get_option('bitpay_wc_checkout_db1') != 1):
+        global $wpdb;
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        $table_name = '_bitpay_checkout_transactions';
+       
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name(
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `order_id` varchar(255) NOT NULL,
+            `transaction_id` varchar(255) NOT NULL,
+            `transaction_status` varchar(50) NOT NULL DEFAULT 'new',
+            `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+            ) $charset_collate;";
+
+        dbDelta($sql);
+        $sql = "ALTER TABLE `$table_name` CHANGE `order_id` `order_id` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL; ";
+        $wpdb->query($sql);
+        update_option('bitpay_wc_checkout_db1',1);
+        endif;
+      
+    endif;
+}
+
 add_action('admin_notices', 'bitpay_checkout_check_token');
 function bitpay_checkout_check_token()
 {
@@ -598,7 +628,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     $data = json_decode($data);
     $event = $data->event;
     $data = $data->data;
-
+    
     //$orderid = $data->orderId;
     $invoiceID = $data->id;
     $orderid = bitpay_checkout_get_order_id_bitpay_invoice_id($invoiceID);
@@ -607,7 +637,6 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
 
     $order = new WC_Order($orderid);
     if ($order->get_payment_method() != 'bitpay_checkout_gateway'){
-        
         #ignore the IPN when the order payment method is (no longer) bitpay
         BPC_Logger("Order id = ".$orderid.", BitPay invoice id = ".$invoiceID.". Current payment method = " . $order->get_payment_method(), 'Ignore IPN', true);
         die();
@@ -617,6 +646,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     #verify the ipn matches the status of the actual invoice
 
     if (bitpay_checkout_get_order_transaction($orderid, $invoiceID)):
+      
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         //dev or prod token
         $bitpay_checkout_token = BPC_getBitPayToken($bitpay_checkout_options['bitpay_checkout_endpoint']);
@@ -635,8 +665,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         $item = new BPC_Item($config, $params);
 
         $invoice = new BPC_Invoice($item); //this creates the invoice with all of the config params
-        $orderStatus = json_decode($invoice->BPC_checkInvoiceStatus($invoiceID));
-       
+        $orderStatus = json_decode($invoice->BPC_checkInvoiceStatus($invoiceID,$bitpay_checkout_token));
         #update the lookup table
         $note_set = null;
              
@@ -659,8 +688,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
             break;
 
             case 'invoice_completed':
-            #if($bitpay_checkout_order_process_status == 1):
-
+               
                 $lbl = $wc_statuses_arr[$bitpay_checkout_order_process_status];
                 $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has changed to '.$lbl.'.');
 
@@ -681,11 +709,18 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
             break;
 
             case 'invoice_expired':
-                $order_status = "wc-cancelled";
-                $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has expired.');
-                if($bitpay_checkout_order_expired_status == 1):
-                     $order->update_status($order_status, __('BitPay payment invalid', 'woocommerce'));
+                if(property_exists($orderStatus->data,'underpaidAmount')):
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . ' </a> has been refunded.');
+                    $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
+                else:
+                    $order_status = "wc-cancelled";
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has expired.');
+                    if($bitpay_checkout_order_expired_status == 1):
+                         $order->update_status($order_status, __('BitPay payment invalid', 'woocommerce'));
+                    endif;
                 endif;
+                
+               
                
                 
             break;
