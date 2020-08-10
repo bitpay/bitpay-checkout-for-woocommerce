@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.33.2008
+ * Version: 3.34.2008
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -167,7 +167,7 @@ function bitpay_checkout_get_order_transaction($order_id, $transaction_id)
 {
     global $wpdb;
     $table_name = '_bitpay_checkout_transactions';
-    $rowcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(order_id) FROM $table_name WHERE transaction_id = %s LIMIT 1",$transaction_id));
+    $rowcount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(order_id) FROM $table_name WHERE transaction_id = %s",$transaction_id));
     return $rowcount;
 
 }
@@ -348,7 +348,7 @@ function wc_bitpay_checkout_gateway_init()
                        
                     ),
                     'bitpay_checkout_order_process_status' => array(
-                        'title' => __('Woocommerce Order Status', 'woocommerce'),
+                        'title' => __('Woocommerce Confirmed/Completed Order Status', 'woocommerce'),
                         'type' => 'select',
                         'description' => __('Configure your Transaction Speeds on your <a href = "'.BPC_getProcessingLink().'" target = "_blank">BitPay Dashboard</a>, and map the BitPay confirmation to one of the available WooCommerce order states.<br>All WooCommerce status options are listed here for your convenience.', 'woocommerce'),
                        'options' =>$wc_statuses_arr,
@@ -616,8 +616,8 @@ function bitpay_checkout_cart_restore(WP_REST_Request $request)
 //http://<host>/wp-json/bitpay/ipn/status
 function bitpay_checkout_ipn(WP_REST_Request $request)
 {
-    
     global $woocommerce;
+    
     WC()->frontend_includes();
     WC()->cart = new WC_Cart();
     WC()->session = new WC_Session_Handler();
@@ -633,6 +633,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
     $invoiceID = $data->id;
     $orderid = bitpay_checkout_get_order_id_bitpay_invoice_id($invoiceID);
     $order_status = $data->status;
+
     BPC_Logger($data, 'INCOMING IPN', true);
 
     $order = new WC_Order($orderid);
@@ -645,7 +646,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
 
     #verify the ipn matches the status of the actual invoice
 
-    if (bitpay_checkout_get_order_transaction($orderid, $invoiceID)):
+    if (bitpay_checkout_get_order_transaction($orderid, $invoiceID) == 1):
       
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         //dev or prod token
@@ -676,6 +677,10 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
         case 'invoice_confirmed':
            
                 $lbl = $wc_statuses_arr[$bitpay_checkout_order_process_status];
+                if(!isset($lbl)):
+                    $lbl = "Processing";
+                    $bitpay_checkout_order_process_status = 'wc-processing';
+                endif;
              
                 $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has changed to '.$lbl.'.');
                 $order_status =$bitpay_checkout_order_process_status;
@@ -690,6 +695,10 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
             case 'invoice_completed':
                
                 $lbl = $wc_statuses_arr[$bitpay_checkout_order_process_status];
+                if(!isset($lbl)):
+                    $lbl = "Processing";
+                    $bitpay_checkout_order_process_status = 'wc-processing';
+                endif;
                 $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has changed to '.$lbl.'.');
 
                 $order_status =$bitpay_checkout_order_process_status;

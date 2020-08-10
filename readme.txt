@@ -4,7 +4,7 @@ Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurre
 Requires at least: 4.9
 Tested up to: 5.4.1
 Requires PHP: 5.5
-Stable tag: 3.33.2008
+Stable tag: 3.34.2008
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -16,12 +16,11 @@ The most secure and fastest way to accept crypto payments.
 
 = Key features =
 
-* Accept cryptocurrency payments from your customers, such as Bitcoin, Ether, Ripple, Bitcoin Cash and USD stable coins (BUSD, USDC, GUSD, PAX).
-* Price in your local currency
-* Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://bitpay.com/docs/settlement)), BTC, BCH, XRP or stable coins (GUSD, USDC, BUSD, PAX)
-* By design, chargebacks are not possible with cryptocurrency payments
-* Have an overview of all incoming payments in your BitPay merchant account at https://bitpay.com/dashboard
-* Refund orders in cryptocurrencies via the BitPay merchant dashboard at https://bitpay.com/dashboard/payments
+* Accept cryptocurrency payments from your customers, such as Bitcoin, Ether, Ripple, Bitcoin Cash and USD stable coins.
+* Price in your local currency.
+* Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://bitpay.com/docs/settlement)), BTC, BCH, XRP or USD stable coins (GUSD, USDC, BUSD, PAX)
+* No chargebacks
+* View all incoming payments and have the possibility to refund orders via your [BitPay merchant dashboard](https://bitpay.com/dashboard/payments)
 
 = Customer journey =
 
@@ -112,8 +111,11 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.34.2008 =
+* Added default mapping for confirmed/completed orders if one isnt set in the plugin configuration
+
 = 3.33.2008 =
-* Updated assets and description in admin panel
+* UX updates
 
 = 3.32.2004 =
 * Limit the time a user has to complete  a purchase
