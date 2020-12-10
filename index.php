@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.36.2008
+ * Version: 3.37.2012
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -81,6 +81,15 @@ function bitpay_checkout_woocommerce_bitpay_failed_requirements()
 
 add_action('plugins_loaded', 'wc_bitpay_checkout_gateway_init', 11);
 #create the table if it doesnt exist
+
+#clear the cart if using a custom page
+add_action( 'init', 'woocommerce_clear_cart_url' );
+function woocommerce_clear_cart_url() {
+	if ( isset( $_GET['custompage'] ) ) {
+		global $woocommerce;
+		$woocommerce->cart->empty_cart();
+	}
+}
 
 function bitpay_checkout_plugin_setup()
 {
@@ -317,6 +326,11 @@ function wc_bitpay_checkout_gateway_init()
 
                         'default' => 'checkout',
                     ),
+                    'bitpay_custom_redirect' => array(
+                        'title' => __('Custom Redirect Page', 'woocommerce'),
+                        'type' => 'text',
+                        'description' => __('Set the full url <ie><i>https://yoursite.com/custompage</i></ie> if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
+                    ),
 
                     'bitpay_checkout_mini' => array(
                         'title' => __('Show in mini cart ', 'woocommerce'),
@@ -350,7 +364,7 @@ function wc_bitpay_checkout_gateway_init()
                     'bitpay_checkout_error' => array(
                         'title' => __('Error handling', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('If there is an error with creting the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
+                        'description' => __('If there is an error with creating the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
                        
                     ),
                     'bitpay_checkout_order_process_confirmed_status' => array(
@@ -813,8 +827,12 @@ function woo_custom_redirect_after_purchase()
                 if (empty($checkout_slug)):
                     $checkout_slug = 'checkout';
                 endif;
-                $params->redirectURL = get_home_url() . '/' . $checkout_slug . '/order-received/' . $order_id . '/?key=' . $order->get_order_key() . '&redirect=false';
 
+                if($bitpay_checkout_options['bitpay_custom_redirect'] == ""):
+                $params->redirectURL = get_home_url() . '/' . $checkout_slug . '/order-received/' . $order_id . '/?key=' . $order->get_order_key() . '&redirect=false';
+                else:
+                $params->redirectURL = $bitpay_checkout_options['bitpay_custom_redirect']."?custompage=true";
+                endif;
                 #create a hash for the ipn
                 $hash_key = $config->BPC_generateHash($params->orderId);
                 $params->acceptanceWindow = 1200000;
