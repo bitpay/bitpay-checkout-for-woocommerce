@@ -111,6 +111,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.38.2012 =
+* Added option for custom redirect page
+
 = 3.37.2012 =
 * Formatting Fix
 
