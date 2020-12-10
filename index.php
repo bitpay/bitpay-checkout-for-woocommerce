@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.38.2012
+ * Version: 3.39.2012
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -329,7 +329,7 @@ function wc_bitpay_checkout_gateway_init()
                     'bitpay_custom_redirect' => array(
                         'title' => __('Custom Redirect Page', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('Set the full url <ie><i>https://yoursite.com/custompage</i></ie> if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
+                        'description' => __('Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
                     ),
 
                     'bitpay_checkout_mini' => array(
