@@ -4,7 +4,7 @@ Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurre
 Requires at least: 4.9
 Tested up to: 5.6
 Requires PHP: 5.5
-Stable tag: 3.41.2102
+Stable tag: 3.42.2103
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -110,6 +110,12 @@ You can contact our support team via the following form https://bitpay.com/reque
 14. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+ = 3.43.2103 =
+* Updated Confirmed/Completed options with WooCommerce functionaity to complete an order in the system (if set)
+
+ = 3.42.2103 =
+* PHP notice cleanup
 
 = 3.41.2102  =
 * Route fixes
