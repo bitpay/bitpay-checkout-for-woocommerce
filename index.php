@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.43.2103
+ * Version: 3.44.2103
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -711,7 +711,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                     if ( $order_status == 'wc-completed' ) {
                         $order->payment_complete( );
                         $order->add_order_note( 'Payment Completed' );
-                        wc_reduce_stock_levels( $orderid );
+                        
                     } else {
                         $order->update_status( $order_status, __( 'BitPay payment ', 'woocommerce' ) );
                     }
@@ -735,13 +735,14 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                     $order->payment_complete( );
                     $order->add_order_note( 'Payment Completed' );
                     // Reduce stock levels
-                    wc_reduce_stock_levels( $orderid );
+                    
                 } else {
                     $order->update_status( $order_status, __( 'BitPay payment ', 'woocommerce' ) );
                 }
                 
                 // Remove cart
                 WC()->cart->empty_cart();
+                wc_reduce_stock_levels( $orderid );
                 else :
                     $order->add_order_note( 'BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink( $bitpay_checkout_endpoint, $invoiceID ) . '">' . $invoiceID . '</a> has changed to Completed.  The order status has not been updated due to your settings.' );
                 endif;

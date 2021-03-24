@@ -111,7 +111,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
- = 3.43.2103 =
+ = 3.44.2103 =
 * Updated Confirmed/Completed options with WooCommerce functionaity to complete an order in the system (if set)
 
  = 3.42.2103 =
