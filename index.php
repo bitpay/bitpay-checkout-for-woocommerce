@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.44.2103
+ * Version: 3.45.2104
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -720,6 +720,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 else :
                     $order->add_order_note( 'BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink( $bitpay_checkout_endpoint, $invoiceID ) . '">' . $invoiceID . '</a> has changed to Confirmed.  The order status has not been updated due to your settings.' );
                 endif;
+                http_response_code(200);
                 break;
 
             case 'invoice_completed':
@@ -746,12 +747,14 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 else :
                     $order->add_order_note( 'BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink( $bitpay_checkout_endpoint, $invoiceID ) . '">' . $invoiceID . '</a> has changed to Completed.  The order status has not been updated due to your settings.' );
                 endif;
+                http_response_code(200);
                 break;
             case 'invoice_failedToConfirm':
                 if ($orderStatus->data->status == 'invalid'):
                     $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has become invalid because of network congestion.  Order will automatically update when the status changes.');
                     $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
                 endif;
+                http_response_code(200);
             break;
 
             case 'invoice_expired':
@@ -764,6 +767,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                     if($bitpay_checkout_order_expired_status == 1):
                          $order->update_status($order_status, __('BitPay payment invalid', 'woocommerce'));
                     endif;
+                    http_response_code(200);                    
                 endif;
                 
                
@@ -771,12 +775,11 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 
             break;
 
-            case 'invoice_refundComplete':
-
-               
+            case 'invoice_refundComplete':             
                 $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . ' </a> has been refunded.');
                 $order->update_status('refunded', __('BitPay payment refunded', 'woocommerce'));
                 break;
+                http_response_code(200);
             default:
             break;
         }
