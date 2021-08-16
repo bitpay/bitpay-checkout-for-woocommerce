@@ -756,6 +756,13 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                 endif;
                 http_response_code(200);
             break;
+            case 'invoice_declined':
+                if ($orderStatus->data->status == 'declined'):
+                    $order->add_order_note('BitPay Invoice ID: <a target = "_blank" href = "' . BPC_getBitPayDashboardLink($bitpay_checkout_endpoint, $invoiceID) . '">' . $invoiceID . '</a> has been declined.');
+                    $order->update_status('failed', __('BitPay payment invalid', 'woocommerce'));
+                endif;
+                http_response_code(200);
+            break;
 
             case 'invoice_expired':
                 if(property_exists($orderStatus->data,'underpaidAmount')):
