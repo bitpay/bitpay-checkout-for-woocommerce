@@ -3,7 +3,7 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: Create Invoices and process through BitPay.  Configure in your <a href ="admin.php?page=wc-settings&tab=checkout&section=bitpay_checkout_gateway">WooCommerce->Payments plugin</a>.
- * Version: 3.46.0
+ * Version: 3.46.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -527,7 +527,7 @@ function bitpay_mini_checkout() {
     //widget_shopping_cart_content
     var obj = document.createElement("div");
     // obj.style.cssText = 'margin:0 auto;cursor:pointer';
-    obj.innerHTML = '<img style = "margin:0 auto;cursor:pointer;padding-bottom:10px;" onclick = "bpMiniCheckout()" src = "//bitpay.com/cdn/en_US/bp-btn-pay-currencies.svg">'
+    obj.innerHTML = '<img style = "margin:0 auto;cursor:pointer;padding-bottom:10px;" onclick = "bpMiniCheckout()" src = "//bitpay.com/cdn/merchant-resources/pay-with-bitpay-card-group.svg">'
 
     var miniCart = document.getElementsByClassName("widget_shopping_cart_content")[0];
     miniCart.appendChild(obj);
@@ -1121,7 +1121,7 @@ function bitpay_checkout_custom_message($order_id)
 function BPC_getBitPaymentIcon()
 {
 
-    $brand = esc_url( plugins_url( 'images/bitpay-currency-group.svg', __FILE__ ) );
+    $brand = "//bitpay.com/cdn/merchant-resources/pay-with-bitpay-card-group.svg";
     $icon = $brand . '" class="bitpay_logo"';
     return $icon;
 
@@ -1130,7 +1130,7 @@ function BPC_getBitPaymentIcon()
     $icon = null;
     if($bitpay_checkout_show_logo  != 2):
 
-    $brand = 'https://www.bitpay.com/cdn/en_US/bitpay-mark-std.svg';
+    $brand = '//bitpay.com/cdn/merchant-resources/pay-with-bitpay-card-group.svg';
     $icon = $brand . '" class="bitpay_logo"';
     endif;
     return $icon;

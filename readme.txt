@@ -111,6 +111,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 3.46.1 =
+* Logo update
+
 = 3.46.0 =
 * Added Declined state
 
