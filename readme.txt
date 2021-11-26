@@ -2,9 +2,10 @@
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 4.9
-Tested up to: 5.6
+Tested up to: 7.0
 Requires PHP: 5.5
-Stable tag: 3.46.0
+Recommended PHP: 5.6
+Stable tag: 4.0.2111
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -111,8 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
-= 3.46.1 =
+= 4.0.2111 =
 * Logo update
+* Moved to new VCS
 
 = 3.46.0 =
 * Added Declined state
