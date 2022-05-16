@@ -10,6 +10,21 @@
 if (!defined('ABSPATH')): exit;endif;
 add_action('wp_enqueue_scripts', 'enable_bitpayquickpay_js');
 global $current_user;
+function add_error_page() {
+    
+    $my_post = array(
+      'post_title'    => wp_strip_all_tags( 'Order Cancelled' ),
+      'post_content'  => 'Your order stands cancelled. Please go back to <a href="/shop">Shop page</a> and reorder.',
+      'post_status'   => 'publish',
+      'post_author'   => "Bitpay",
+      'post_type'     => 'page',
+    );
+
+    // Insert the post into the database
+    wp_insert_post( $my_post );
+}
+
+register_activation_hook(__FILE__, 'add_error_page');
 #autoloader
 function BPC_autoloader($class)
 {
@@ -332,7 +347,11 @@ function wc_bitpay_checkout_gateway_init()
                         'type' => 'text',
                         'description' => __('Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
                     ),
-
+					'bitpay_close_url' => array(
+                        'title' => __('Close URL', 'woocommerce'),
+                        'type' => 'text',
+                        'description' => __('Set the close url <br /><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
+                    ),
                     'bitpay_checkout_mini' => array(
                         'title' => __('Show in mini cart ', 'woocommerce'),
                         'type' => 'select',
@@ -367,6 +386,12 @@ function wc_bitpay_checkout_gateway_init()
                         'type' => 'text',
                         'description' => __('If there is an error with creating the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
                        
+                    ),
+					'bitpay_checkout_error_message' => array(
+                        'title' => __('Error Message', 'woocommerce'),
+                        'type' => 'textarea',
+                        'description' => __('Insert your custom message for the <b>Error</b> page, so the customer knows that there is some issue in paying the invoice', 'woocommerce'),
+                        'default' => 'Transaction Cancelled',
                     ),
                     'bitpay_checkout_order_process_confirmed_status' => array(
                         'title' => __('BitPay Confirmed Invoice Status', 'woocommerce'),
@@ -738,7 +763,7 @@ function bitpay_checkout_ipn(WP_REST_Request $request)
                     // Reduce stock levels
                     
                 } else {
-                    $order->update_status( $order_status, __( 'BitPay payment ', 'woocommerce' ) );
+                $order->update_status( $order_status, __( 'BitPay payment ', 'woocommerce' ) );
                 }
                 
                 // Remove cart
@@ -826,7 +851,7 @@ function woo_custom_redirect_after_purchase()
                 //sample values to create an item, should be passed as an object'
                 $params = new stdClass();
                 $current_user = wp_get_current_user();
-               
+
                 $params->extension_version = BPC_getBitPayVersionInfo();
                 $params->price = $order->get_total();
                 $params->currency = $order->get_currency(); //set as needed
@@ -868,7 +893,7 @@ function woo_custom_redirect_after_purchase()
                 $invoice->BPC_createInvoice();
                 #BPC_Logger(json_decode($invoice->BPC_getInvoiceData()), 'NEW BITPAY INVOICE',true);
 
-                $invoiceData = json_decode($invoice->BPC_getInvoiceData());
+                $invoiceData = json_decode($invoice->BPC_getInvoiceData());				
                 if (property_exists($invoiceData, 'error')):
                     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
                     $errorURL = get_home_url().'/'.$bitpay_checkout_options['bitpay_checkout_error'];
@@ -1110,7 +1135,16 @@ function bitpay_checkout_custom_message($order_id)
     $order = new WC_Order($order_id);
     if ($order->get_payment_method() == 'bitpay_checkout_gateway'):
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-        $checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
+		$checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
+		if ($order->get_status() == "pending") {    
+			$params = new stdClass();
+			if($bitpay_checkout_options['bitpay_close_url'] == "") {
+				$params->closeURL = $base_url . "/payment-cancel";
+            	wp_redirect($params->closeURL);	
+			} else {
+				wp_redirect($bitpay_checkout_options['bitpay_close_url']);
+			}
+        }
         if ($checkout_message != ''):
             echo '<hr><b>' . $checkout_message . '</b><br><br><hr>';
         endif;
