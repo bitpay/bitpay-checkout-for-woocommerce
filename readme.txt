@@ -5,7 +5,7 @@ Requires at least: 4.9
 Tested up to: 7.0
 Requires PHP: 5.5
 Recommended PHP: 5.6
-Stable tag: 4.0.2111
+Stable tag: 4.1.0
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
