@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 4.1.0 =
+* Corrected the cancel invoice flow
+
 = 4.0.2111 =
 * Logo update
 * Moved to new VCS
