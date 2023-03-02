@@ -902,23 +902,23 @@ function woo_custom_redirect_after_purchase()
                     if (empty($errorSlug)):
                         // If Error slug is left empty, redirect the customer his order checkout payment URL.
                         // This should be the default behaviour for better customer experience and better conversion. Noone wants to create his cart once again.
-                        $errorURL = $order->get_checkout_payment_url( $on_checkout = false );                
-                    endif;
-                    
-                    $order_status = "wc-cancelled";
-                    $order = new WC_Order($order_id);
-                    $items = $order->get_items();
-                    $order->update_status($order_status, __($invoiceData->error.'.', 'woocommerce'));
+                        $errorURL = $order->get_checkout_payment_url( $on_checkout = false );
+                    else :                    
+                        $order_status = "wc-cancelled";
+                        $order = new WC_Order($order_id);
+                        $items = $order->get_items();
+                        $order->update_status($order_status, __($invoiceData->error.'.', 'woocommerce'));
 
-                     //clear the cart first so things dont double up
-                    WC()->cart->empty_cart();
-                    foreach ($items as $item) {
-                        //now insert for each quantity
-                        $item_count = $item->get_quantity();
-                        for ($i = 0; $i < $item_count; $i++):
-                            WC()->cart->add_to_cart($item->get_product_id());
-                        endfor;
-                    }
+                        //clear the cart first so things dont double up
+                        WC()->cart->empty_cart();
+                        foreach ($items as $item) {
+                            //now insert for each quantity
+                            $item_count = $item->get_quantity();
+                            for ($i = 0; $i < $item_count; $i++):
+                                WC()->cart->add_to_cart($item->get_product_id());
+                            endfor;
+                        }
+                    endif;
                     wp_redirect($errorURL);
                     die();
                 endif;
