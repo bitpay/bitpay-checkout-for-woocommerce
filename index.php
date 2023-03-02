@@ -345,12 +345,12 @@ function wc_bitpay_checkout_gateway_init()
                     'bitpay_custom_redirect' => array(
                         'title' => __('Custom Redirect Page', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
+                        'description' => __('Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing the purchase.<br>Leave this empty to redirect customers to the default Woocommerce order completed page.<br><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
                     ),
 					'bitpay_close_url' => array(
                         'title' => __('Close URL', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('Set the close url <br /><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
+                        'description' => __('Set the close url.<br>Leave this empty to redirect customers to the default Woocommerce order payment failed page.<br /><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce'),
                     ),
                     'bitpay_checkout_mini' => array(
                         'title' => __('Show in mini cart ', 'woocommerce'),
@@ -384,7 +384,7 @@ function wc_bitpay_checkout_gateway_init()
                     'bitpay_checkout_error' => array(
                         'title' => __('Error handling', 'woocommerce'),
                         'type' => 'text',
-                        'description' => __('If there is an error with creating the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
+                        'description' => __('If there is an error with creating the invoice, enter the <b>page slug</b>.<br>Leave this empty to redirect customers to the default Woocommerce order payment failed page. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce'),
                        
                     ),
 					'bitpay_checkout_error_message' => array(
@@ -896,7 +896,15 @@ function woo_custom_redirect_after_purchase()
                 $invoiceData = json_decode($invoice->BPC_getInvoiceData());				
                 if (property_exists($invoiceData, 'error')):
                     $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-                    $errorURL = get_home_url().'/'.$bitpay_checkout_options['bitpay_checkout_error'];
+
+                    $errorSlug = $bitpay_checkout_options['bitpay_checkout_error'];
+                    $errorURL = get_home_url() . '/' . $errorSlug;
+                    if (empty($errorSlug)):
+                        // If Error slug is left empty, redirect the customer his order checkout payment URL.
+                        // This should be the default behaviour for better customer experience and better conversion. Noone wants to create his cart once again.
+                        $errorURL = $order->get_checkout_payment_url( $on_checkout = false );                
+                    endif;
+                    
                     $order_status = "wc-cancelled";
                     $order = new WC_Order($order_id);
                     $items = $order->get_items();
@@ -913,7 +921,7 @@ function woo_custom_redirect_after_purchase()
                     }
                     wp_redirect($errorURL);
                     die();
-                endif; 
+                endif;
               
                 BPC_Logger($invoiceData, 'NEW BITPAY INVOICE', true);
                 //now we have to append the invoice transaction id for the callback verification
@@ -1138,8 +1146,15 @@ function bitpay_checkout_custom_message($order_id)
 		$checkout_message = $bitpay_checkout_options['bitpay_checkout_checkout_message'];
 		if ($order->get_status() == "pending") {    
 			$params = new stdClass();
-			if($bitpay_checkout_options['bitpay_close_url'] == "") {
-				$params->closeURL = $base_url . "/payment-cancel";
+            if($bitpay_checkout_options['bitpay_close_url'] == "") {
+                $checkout_slug = $bitpay_checkout_options['bitpay_checkout_slug'];
+                if (empty($checkout_slug)):
+                    $checkout_slug = 'checkout';
+                endif;
+
+                // If close URL is left empty, redirect the customer his order checkout payment URL.
+                // This should be the default behaviour for better customer experience and better conversion. Noone wants to create his cart once again.
+                $params->closeURL = $order->get_checkout_payment_url( $on_checkout = false );
             	wp_redirect($params->closeURL);	
 			} else {
 				wp_redirect($bitpay_checkout_options['bitpay_close_url']);
