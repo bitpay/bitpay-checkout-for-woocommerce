@@ -1,0 +1,21 @@
+/bin/**
+/build/cache/
+/build/docs/
+/build/dist/
+/build/logs/
+/docs/_build/
+/node_modules/
+/vendor/
+/.settings/
+.project
+.buildpath
+composer.lock
+composer.phar
+.DS_Store
+build/.DS_Store
+docs/.DS_Store
+examples/.DS_Store
+
+# PHPUnit
+.phpunit.result.cache
+test/unit/_html

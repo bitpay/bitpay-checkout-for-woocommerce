@@ -1,0 +1,30 @@
+{
+  "name": "bitpay/key-utils",
+  "description": "BitPay Utils pack for cryptography",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Antonio Buedo",
+      "email": "sales-engineering@bitpay.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "require": {
+    "ext-bcmath": "*",
+    "ext-openssl": "*",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-iconv": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5 || ^9.0"
+  },
+  "suggest": {
+    "ext-gmp": "Required to use this package with GMP instead of BCMath"
+  }
+}

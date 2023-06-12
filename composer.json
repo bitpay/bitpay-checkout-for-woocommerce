@@ -1,0 +1,25 @@
+{
+  "name": "bitpay/bitpay-checkout-for-woocommerce",
+  "type": "library",
+  "repositories": [
+    {
+      "url": "https://github.com/bitpay/php-bitpay-client-v2.git",
+      "type": "git"
+    }
+  ],
+  "require": {
+    "php": "^8",
+    "bitpay/sdk": "dev-8.0.0-dev"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "dev-develop"
+  },
+  "autoload": {
+    "classmap": ["BitPayLib"]
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

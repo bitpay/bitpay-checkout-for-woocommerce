@@ -1,2 +1,0 @@
-//payment_method
-
