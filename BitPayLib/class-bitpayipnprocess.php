@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
-use BitPaySDK\Client;
 use BitPaySDK\Model\Facade;
 use BitPaySDK\Model\Invoice\Invoice;
 use WC_Order;
@@ -25,16 +24,16 @@ class BitPayIpnProcess {
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
 	private BitPayLogger $logger;
 	private array $gateway_settings = array();
-	private Client $pos_client;
+	private BitPayClientFactory $factory;
 
 	public function __construct(
 		BitPayCheckoutTransactions $bitpay_checkout_transactions,
-		Client $pos_client,
+		BitPayClientFactory $factory,
 		BitPayLogger $logger
 	) {
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
 		$this->logger                       = $logger;
-		$this->pos_client                   = $pos_client;
+		$this->factory                   = $factory;
 	}
 
 	public function execute( WP_REST_Request $request ): void {
@@ -51,7 +50,7 @@ class BitPayIpnProcess {
 		}
 
 		try {
-			$bitpay_invoice = $this->pos_client->getInvoice( $invoice_id, Facade::POS, false );
+			$bitpay_invoice = $this->factory->create()->getInvoice( $invoice_id, Facade::POS, false );
 			$order          = new WC_Order( $bitpay_invoice->getOrderId() );
 			$this->validate_order( $order, $invoice_id );
 			$this->process( $bitpay_invoice, $order, $event['name'] );

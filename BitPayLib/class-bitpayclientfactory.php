@@ -26,8 +26,14 @@ class BitPayClientFactory {
 	}
 
 	public function create(): Client {
+		$token = $this->bitpay_payment_settings->get_bitpay_token();
+		if (!$token) {
+			wc_add_notice( '<strong>' . esc_html( __('Missing BitPay Token' )  ), 'error' );
+			throw new \RuntimeException('Missing BitPay Token');
+		}
+
 		return new PosClient(
-			$this->bitpay_payment_settings->get_bitpay_token(),
+			$token,
 			$this->get_environment()
 		);
 	}

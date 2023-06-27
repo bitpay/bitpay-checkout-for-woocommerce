@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
-use BitPaySDK\Client;
 use BitPaySDK\Exceptions\BitPayException;
 use BitPaySDK\Model\Facade;
 use BitPaySDK\Model\Invoice\Buyer;
@@ -22,18 +21,18 @@ class BitPayInvoiceCreate {
 
 	private const COOKIE_INVOICE_ID_NAME = 'bitpay-invoice-id';
 
-	private Client $bitpay_client;
+	private BitPayClientFactory $client_factory;
 	private BitPayLogger $bitpay_logger;
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
 	private BitPayPaymentSettings $bitpay_payment_settings;
 
 	public function __construct(
-		Client $bitpay_client,
+		BitPayClientFactory $client_factory,
 		BitPayCheckoutTransactions $bitpay_checkout_transactions,
 		BitPayPaymentSettings $bitpay_payment_settings,
 		BitPayLogger $bitpay_logger
 	) {
-		$this->bitpay_client                = $bitpay_client;
+		$this->client_factory                = $client_factory;
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
 		$this->bitpay_payment_settings      = $bitpay_payment_settings;
 		$this->bitpay_logger                = $bitpay_logger;
@@ -71,7 +70,7 @@ class BitPayInvoiceCreate {
 			$this->add_buyer_to_invoice( $bitpay_invoice );
 			$this->add_redirect_url( $order, $bitpay_invoice );
 
-			$bitpay_invoice = $this->bitpay_client->createInvoice( $bitpay_invoice, Facade::POS, false );
+			$bitpay_invoice = $this->client_factory->create()->createInvoice( $bitpay_invoice, Facade::POS, false );
 
 			$this->bitpay_logger->execute( $bitpay_invoice->toArray(), 'NEW BITPAY INVOICE', true );
 

@@ -252,10 +252,11 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 		$bitpay_checkout_options  = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
 		$bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'];
 
+		$test = 'https://test.bitpay.com/dashboard/settings/edit/order';
+
 		return match ($bitpay_checkout_endpoint) {
-			'test' => 'https://test.bitpay.com/dashboard/settings/edit/order',
 			'production' => 'https://www.bitpay.com/dashboard/settings/edit/order',
-			default => throw new \RuntimeException( 'Invalid environment' )
+			default => $test
 		};
 	}
 
