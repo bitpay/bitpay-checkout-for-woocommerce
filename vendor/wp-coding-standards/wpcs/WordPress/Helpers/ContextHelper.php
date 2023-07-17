@@ -23,6 +23,8 @@ use PHPCSUtils\Utils\PassedParameters;
  * This also means that it has no promise of backward compatibility. Use at your own risk.
  * ---------------------------------------------------------------------------------------------
  *
+ * @internal
+ *
  * @package WPCS\WordPressCodingStandards
  * @since   3.0.0 The methods in this class were previously contained in the
  *                `WordPressCS\WordPress\Sniff` class and have been moved here.
@@ -34,11 +36,11 @@ final class ContextHelper {
 	 *
 	 * @since 1.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
-	 *              - The property visibility was changed from `protected` to `public static`.
+	 *              - The property visibility was changed from `protected` to `private static`.
 	 *
 	 * @var array
 	 */
-	public static $safe_casts = array(
+	private static $safe_casts = array(
 		\T_INT_CAST    => true,
 		\T_DOUBLE_CAST => true,
 		\T_BOOL_CAST   => true,
@@ -115,12 +117,14 @@ final class ContextHelper {
 	/**
 	 * Check if a particular token acts - statically or non-statically - on an object.
 	 *
-	 * @internal Note: this may still mistake a namespaced function imported via a `use` statement for
-	 * a global function!
+	 * {@internal Note: this may still mistake a namespaced function imported via a `use` statement for
+	 * a global function!}
 	 *
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
+	 *              - The method was renamed from `is_class_object_call() to `has_object_operator_before()`.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.
@@ -129,6 +133,10 @@ final class ContextHelper {
 	 */
 	public static function has_object_operator_before( File $phpcsFile, $stackPtr ) {
 		$tokens = $phpcsFile->getTokens();
+		if ( isset( $tokens[ $stackPtr ] ) === false ) {
+			return false;
+		}
+
 		$before = $phpcsFile->findPrevious( Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
 
 		return isset( Collections::objectOperators()[ $tokens[ $before ]['code'] ] );
@@ -137,12 +145,13 @@ final class ContextHelper {
 	/**
 	 * Check if a particular token is prefixed with a namespace.
 	 *
-	 * @internal This will give a false positive if the file is not namespaced and the token is prefixed
-	 * with `namespace\`.
+	 * {@internal This will give a false positive if the file is not namespaced and the token is prefixed
+	 * with `namespace\`.}
 	 *
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.
@@ -151,7 +160,11 @@ final class ContextHelper {
 	 */
 	public static function is_token_namespaced( File $phpcsFile, $stackPtr ) {
 		$tokens = $phpcsFile->getTokens();
-		$prev   = $phpcsFile->findPrevious( Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
+		if ( isset( $tokens[ $stackPtr ] ) === false ) {
+			return false;
+		}
+
+		$prev = $phpcsFile->findPrevious( Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
 
 		if ( \T_NS_SEPARATOR !== $tokens[ $prev ]['code'] ) {
 			return false;
@@ -181,6 +194,8 @@ final class ContextHelper {
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
+	 *              - The `$global` parameter was renamed to `$global_function`.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile       The file being scanned.
 	 * @param int                         $stackPtr        The index of the token in the stack.
@@ -255,6 +270,7 @@ final class ContextHelper {
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.
@@ -278,6 +294,7 @@ final class ContextHelper {
 	 *              in function calls to array_key_exists() and key_exists() as well.
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.
@@ -307,11 +324,23 @@ final class ContextHelper {
 	}
 
 	/**
+	 * Retrieve a list of the tokens which are regarded as "safe casts".
+	 *
+	 * @since 3.0.0
+	 *
+	 * @return array<string, bool>
+	 */
+	public static function get_safe_cast_tokens() {
+		return self::$safe_casts;
+	}
+
+	/**
 	 * Check if something is being casted to a safe value.
 	 *
 	 * @since 0.5.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.
@@ -320,7 +349,11 @@ final class ContextHelper {
 	 */
 	public static function is_safe_casted( File $phpcsFile, $stackPtr ) {
 		$tokens = $phpcsFile->getTokens();
-		$prev   = $phpcsFile->findPrevious( Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
+		if ( isset( $tokens[ $stackPtr ] ) === false ) {
+			return false;
+		}
+
+		$prev = $phpcsFile->findPrevious( Tokens::$emptyTokens, ( $stackPtr - 1 ), null, true );
 
 		return isset( self::$safe_casts[ $tokens[ $prev ]['code'] ] );
 	}
@@ -331,6 +364,7 @@ final class ContextHelper {
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The index of the token in the stack.

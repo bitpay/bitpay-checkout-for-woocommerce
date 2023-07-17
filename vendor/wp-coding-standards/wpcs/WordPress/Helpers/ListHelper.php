@@ -25,6 +25,8 @@ use PHPCSUtils\Utils\Lists;
  * {@internal The functionality in this class will likely be replaced at some point in
  * the future by functions from PHPCSUtils.}
  *
+ * @internal
+ *
  * @package WPCS\WordPressCodingStandards
  * @since   3.0.0 The method in this class was previously contained in the
  *                `WordPressCS\WordPress\Sniff` class and has been moved here.
@@ -34,12 +36,13 @@ final class ListHelper {
 	/**
 	 * Get a list of the token pointers to the variables being assigned to in a list statement.
 	 *
-	 * @internal No need to take special measures for nested lists. Nested or not,
-	 * each list part can only contain one variable being written to.
+	 * {@internal No need to take special measures for nested lists. Nested or not,
+	 * each list part can only contain one variable being written to.}
 	 *
 	 * @since 2.2.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method visibility was changed from `protected` to `public static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *              - The `$list_open_close` parameter was dropped.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
@@ -53,7 +56,7 @@ final class ListHelper {
 		$tokens = $phpcsFile->getTokens();
 
 		// Is this one of the tokens this function handles ?
-		if ( isset( Collections::listOpenTokensBC()[ $tokens[ $stackPtr ]['code'] ] ) === false ) {
+		if ( isset( $tokens[ $stackPtr ], Collections::listOpenTokensBC()[ $tokens[ $stackPtr ]['code'] ] ) === false ) {
 			return array();
 		}
 

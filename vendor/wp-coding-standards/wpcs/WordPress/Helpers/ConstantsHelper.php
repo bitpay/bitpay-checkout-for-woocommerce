@@ -26,6 +26,8 @@ use WordPressCS\WordPress\Helpers\ContextHelper;
  * {@internal The functionality in this class will likely be replaced at some point in
  * the future by functions from PHPCSUtils.}
  *
+ * @internal
+ *
  * @package WPCS\WordPressCodingStandards
  * @since   3.0.0 The method in this class was previously contained in the
  *                `WordPressCS\WordPress\Sniff` class and has been moved here.
@@ -38,6 +40,7 @@ final class ConstantsHelper {
 	 * @since 1.0.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - The method was changed to be `static`.
+	 *              - The `$phpcsFile` parameter was added.
 	 *
 	 * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
 	 * @param int                         $stackPtr  The position of the function call token.
@@ -77,7 +80,6 @@ final class ConstantsHelper {
 			\T_INSTANCEOF      => true,
 			\T_INSTEADOF       => true,
 			\T_GOTO            => true,
-			\T_AS              => true,
 		);
 		$tokens_to_ignore += Tokens::$ooScopeTokens;
 		$tokens_to_ignore += Collections::objectOperators();

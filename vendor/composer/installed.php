@@ -3,7 +3,7 @@
         'name' => 'bitpay/bitpay-checkout-for-woocommerce',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '901a8b6ae9183866032d5b795b246fd970a67815',
+        'reference' => '3fcd4db8afe2dbb91e959dc62939343d8946e91c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'bitpay/bitpay-checkout-for-woocommerce' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '901a8b6ae9183866032d5b795b246fd970a67815',
+            'reference' => '3fcd4db8afe2dbb91e959dc62939343d8946e91c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'bitpay/sdk' => array(
-            'pretty_version' => 'dev-8.0.0-dev',
-            'version' => 'dev-8.0.0-dev',
-            'reference' => '2d3db28192bca8104c204150ef9d3c54b077195d',
+            'pretty_version' => '8.0.0',
+            'version' => '8.0.0.0',
+            'reference' => '73c9184fec5f7518953e24b7c6e9f0d5f771c815',
             'type' => 'library',
             'install_path' => __DIR__ . '/../bitpay/sdk',
             'aliases' => array(),
@@ -92,9 +92,9 @@
             'dev_requirement' => true,
         ),
         'phpcsstandards/phpcsutils' => array(
-            'pretty_version' => '1.0.6',
-            'version' => '1.0.6.0',
-            'reference' => 'ba259eaaefac118648e1263919b9530667ffcf01',
+            'pretty_version' => '1.0.8',
+            'version' => '1.0.8.0',
+            'reference' => '69465cab9d12454e5e7767b9041af0cd8cd13be7',
             'type' => 'phpcodesniffer-standard',
             'install_path' => __DIR__ . '/../phpcsstandards/phpcsutils',
             'aliases' => array(),
@@ -193,7 +193,7 @@
         'wp-coding-standards/wpcs' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => 'f2b63051f08cf6d51360896bb1647eabc6911bf2',
+            'reference' => '0734364f65df0cfb9e8d858b47f9c98fb0743372',
             'type' => 'phpcodesniffer-standard',
             'install_path' => __DIR__ . '/../wp-coding-standards/wpcs',
             'aliases' => array(

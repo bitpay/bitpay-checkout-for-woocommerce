@@ -34,6 +34,7 @@ final class ArrayWalkingFunctionsHelper {
 	 * @since 2.1.0
 	 * @since 3.0.0 - Moved from the Sniff class to this class.
 	 *              - Visibility changed from protected to private and property made static.
+	 *                Use the `get_functions()` method for access.
 	 *              - The value has changed from an integer to an array containing the integer
 	 *                parameter position + its name.
 	 *
@@ -57,7 +58,7 @@ final class ArrayWalkingFunctionsHelper {
 	 *
 	 * @return array<string, bool>
 	 */
-	public static function get_array_walking_functions() {
+	public static function get_functions() {
 		return \array_fill_keys( \array_keys( self::$arrayWalkingFunctions ), true );
 	}
 
@@ -71,7 +72,7 @@ final class ArrayWalkingFunctionsHelper {
 	 * @return bool
 	 */
 	public static function is_array_walking_function( $functionName ) {
-		return isset( self::$arrayWalkingFunctions[ $functionName ] );
+		return isset( self::$arrayWalkingFunctions[ strtolower( $functionName ) ] );
 	}
 
 	/**
@@ -93,7 +94,7 @@ final class ArrayWalkingFunctionsHelper {
 			return false;
 		}
 
-		$functionName = $tokens[ $stackPtr ]['content'];
+		$functionName = strtolower( $tokens[ $stackPtr ]['content'] );
 		if ( isset( self::$arrayWalkingFunctions[ $functionName ] ) === false ) {
 			return false;
 		}
