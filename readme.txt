@@ -19,7 +19,7 @@ The most secure and fastest way to accept crypto payments.
 
 * Accept cryptocurrency payments from your customers, such as Bitcoin, Ether, Ripple, Bitcoin Cash and USD stable coins.
 * Price in your local currency.
-* Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://bitpay.com/docs/settlement)), BTC, BCH, XRP or USD stable coins (GUSD, USDC, BUSD, PAX)
+* Get settled via Bank transfer (EUR, USD, GBP or any of the supported [fiat currencies](https://developer.bitpay.com/docs/settlement)), BTC, BCH, XRP or USD stable coins (GUSD, USDC, BUSD, PAX)
 * No chargebacks
 * View all incoming payments and have the possibility to refund orders via your [BitPay merchant dashboard](https://bitpay.com/dashboard/payments)
 
