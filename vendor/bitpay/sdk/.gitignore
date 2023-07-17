@@ -1,0 +1,13 @@
+# IDE
+.idea
+
+# Compose
+/vendor/
+composer.phar
+
+# phpDocumentor
+.phpdoc
+
+# PHPUnit
+.phpunit.result.cache
+test/unit/_html

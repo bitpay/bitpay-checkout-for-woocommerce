@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+  push:
+    branches-ignore:
+      - 'master'
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [ 8.0, 8.1, 8.2 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run WordPress code standard
+        run: |
+          ./vendor/bin/phpcs -v --ignore=vendor,wpcs --standard=./phpcs.xml ./
