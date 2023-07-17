@@ -97,18 +97,17 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 1. BitPay merchant dashboard - create a new POS token
 2. BitPay merchant dashboard - Point of Sale token created
-3. WordPress WooCommerce admin dashboard - BitPay plugin settings (1)
-4. WordPress WooCommerce admin dashboard - BitPay plugin settings (2)
-5. WordPress website - BitPay checkout option
-6. BitPay hosted invoice - modal option. Displayed to the user after he clicked the "Pay with BitPay" button
-7. BitPay hosted invoice - wallet selected. Displayed to the user after he clicked the "Pay with BitPay" button
-8. BitPay hosted invoice - cryptocurrency selected
-9. BitPay hosted invoice - Customer clicked on the "pay in wallet", this opens the compatible wallet installed on the device which automatically retrieves the payment information.
-10. The customer confirmed the payment via his compatible wallet. The BitPay invoice is then marked as paid.
-11. WordPress website - payment successful
-12. Wordpress WooCommerce admin dashboard - order view
-13. BitPay merchant dashboard - the invoice previously paid is recorded under the "Payments" section
-14. BitPay merchant dashboard - detailed invoice view
+3. WordPress WooCommerce admin dashboard - BitPay plugin settings
+4. WordPress website - BitPay checkout option
+5. BitPay hosted invoice - modal option. Displayed to the user after he clicked the "Pay with BitPay" button
+6. BitPay hosted invoice - wallet selected. Displayed to the user after he clicked the "Pay with BitPay" button
+7. BitPay hosted invoice - cryptocurrency selected
+8. BitPay hosted invoice - Customer clicked on the "pay in wallet", this opens the compatible wallet installed on the device which automatically retrieves the payment information.
+9. The customer confirmed the payment via his compatible wallet. The BitPay invoice is then marked as paid.
+10. WordPress website - payment successful
+11. Wordpress WooCommerce admin dashboard - order view
+12. BitPay merchant dashboard - the invoice previously paid is recorded under the "Payments" section
+13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
 
