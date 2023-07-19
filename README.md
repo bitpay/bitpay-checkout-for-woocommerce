@@ -1,10 +1,6 @@
 BitPay Checkout for Woocommerce
 ===============================
 
-## Build Status
-
-[![Build Status](https://travis-ci.org/bitpay/bitpay-checkout-for-woocommerce.svg?branch=master)](https://travis-ci.org/bitpay/bitpay-checkout-for-woocommerce)
-
 This plugin allows stores using the WooCommerce shopping cart system to accept cryptocurrency payments via the BitPay gateway. It only takes a few minutes to configure.
 
 # Requirements
@@ -30,17 +26,15 @@ Visit the [Releases](https://github.com/bitpay/bitpay-checkout-for-woocommerce/r
 
 **BitPay Support:**
 
-* Last Cart Version Tested: Wordpress 5.0.4
+* Last Cart Version Tested: Wordpress 6.2.2
 * [GitHub Issues](https://github.com/bitpay/bitpay-checkout-for-woocommerce/issues)
-  * Open an issue if you are having troubles with this plugin.
 * [Support](https://support.bitpay.com/hc/en-us)
-  * BitPay merchant support documentation
 
 ## Troubleshooting
 
 The latest version of this plugin can always be downloaded from the official BitPay repository located here: https://github.com/bitpay/bitpay-checkout-for-woocommerce
 
-* This plugin requires PHP 5.5 or higher to function correctly. Contact your webhosting provider or server administrator if you are unsure which version is installed on your web server.
+* This plugin requires PHP 8.0 or higher to function correctly. Contact your webhosting provider or server administrator if you are unsure which version is installed on your web server.
 * Ensure a valid SSL certificate is installed on your server. Also ensure your root CA cert is updated. If your CA cert is not current, you will see curl SSL verification errors.
 * Verify that your web server is not blocking POSTs from servers it may not recognize. Double check this on your firewall as well, if one is being used.
 * Check the system error log file (usually the web server error log) for any errors during BitPay payment attempts. If you contact BitPay support, they will ask to see the log file to help diagnose the problem.
@@ -53,7 +47,7 @@ The latest version of this plugin can always be downloaded from the official Bit
 * Other plugins you have installed
 * Configuration settings for the plugin (Most merchants take screen grabs)
 * Any log files that will help
-  * Web server error logs
+* Web server error logs
 * Screen grabs of error message if applicable.
 
 ## Contribute
