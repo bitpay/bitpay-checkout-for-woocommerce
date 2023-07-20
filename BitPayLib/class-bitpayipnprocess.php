@@ -33,7 +33,7 @@ class BitPayIpnProcess {
 	) {
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
 		$this->logger                       = $logger;
-		$this->factory                   = $factory;
+		$this->factory                      = $factory;
 	}
 
 	public function execute( WP_REST_Request $request ): void {

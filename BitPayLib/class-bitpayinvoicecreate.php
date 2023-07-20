@@ -32,7 +32,7 @@ class BitPayInvoiceCreate {
 		BitPayPaymentSettings $bitpay_payment_settings,
 		BitPayLogger $bitpay_logger
 	) {
-		$this->client_factory                = $client_factory;
+		$this->client_factory               = $client_factory;
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
 		$this->bitpay_payment_settings      = $bitpay_payment_settings;
 		$this->bitpay_logger                = $bitpay_logger;
