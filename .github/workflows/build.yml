@@ -1,11 +1,6 @@
 name: Build
 
-on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-  push:
+on: [push, pull_request]
 
 jobs:
   phpcs:
