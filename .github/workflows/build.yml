@@ -1,17 +1,10 @@
 name: Build
 
-on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-  push:
-    branches-ignore:
-      - 'master'
+on: [push, pull_request]
 
 jobs:
   phpcs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       matrix:

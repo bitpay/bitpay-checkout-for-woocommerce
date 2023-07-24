@@ -31,7 +31,7 @@ class BitPayPluginSetup {
 		$this->bitpay_ipn_process           = new BitPayIpnProcess( $this->bitpay_checkout_transactions, $factory, $logger );
 		$this->bitpay_cancel_order          = new BitPayCancelOrder( $cart, $this->bitpay_checkout_transactions, $logger );
 		$this->bitpay_invoice_create        = new BitPayInvoiceCreate(
-            $factory,
+			$factory,
 			$this->bitpay_checkout_transactions,
 			$this->bitpay_payment_settings,
 			$logger
