@@ -116,7 +116,7 @@ class BitPayPluginSetup {
 	}
 
 	public function validate_wc_payment_gateway(): void {
-		if ( class_exists( 'WC_Payment_Gateway' ) ) {
+		if ( class_exists( '\WC_Payment_Gateway' ) ) {
 			return;
 		}
 

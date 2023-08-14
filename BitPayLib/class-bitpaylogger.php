@@ -16,7 +16,8 @@ class BitPayLogger {
 
 	public function execute( $msg, string $type, bool $is_array = false, $error = false ): void {
 		$bitpay_checkout_options = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
-		$log_directory           = plugin_dir_path( __FILE__ ) . '..' . DIRECTORY_SEPARATOR . 'logs/';
+		$log_directory           = plugin_dir_path( __FILE__ ) . '..' . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . 'logs/';
 		if ( ! file_exists( $log_directory ) && ! mkdir( $log_directory ) && ! is_dir( $log_directory ) ) {
 			throw new \RuntimeException( sprintf( 'Directory "%s" was not created', $log_directory ) );
 		}

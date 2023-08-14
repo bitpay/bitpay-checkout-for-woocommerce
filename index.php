@@ -8,9 +8,10 @@
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendorPrefixed/vendor/autoload.php';
+require_once __DIR__ . '/vendorPrefixed/vendor/netresearch/jsonmapper/src/JsonMapper.php';
 
-use BitPayLib\BitPayPluginSetup;
+use BitPayVendor\BitPayLib\BitPayPluginSetup;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
