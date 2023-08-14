@@ -9,11 +9,11 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\NamingConventions;
 
-use BitPayVendor\PHPCSUtils\BackCompat\BCTokens;
-use BitPayVendor\PHPCSUtils\Utils\FunctionDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\NamingConventions;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
+use PHPCSUtils\BackCompat\BCTokens;
+use PHPCSUtils\Utils\FunctionDeclarations;
+use PHPCSUtils\Utils\NamingConventions;
+use PHPCSUtils\Utils\ObjectDeclarations;
+use PHPCSUtils\Utils\Scopes;
 use BitPayVendor\WordPressCS\WordPress\Helpers\DeprecationHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\SnakeCaseHelper;
 use BitPayVendor\WordPressCS\WordPress\Sniff;

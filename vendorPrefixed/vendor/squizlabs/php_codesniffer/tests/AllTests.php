@@ -7,7 +7,7 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests;
+namespace PHP_CodeSniffer\Tests;
 
 if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === \false) {
     include_once 'Core/AllTests.php';
@@ -45,9 +45,9 @@ class PHP_CodeSniffer_AllTests
         $GLOBALS['PHP_CODESNIFFER_TEST_DIRS'] = [];
         // Use a special PHP_CodeSniffer test suite so that we can
         // unset our autoload function after the run.
-        $suite = new TestSuite('PHP CodeSniffer');
-        $suite->addTest(Core\AllTests::suite());
-        $suite->addTest(Standards\AllSniffs::suite());
+        $suite = new \PHP_CodeSniffer\Tests\TestSuite('PHP CodeSniffer');
+        $suite->addTest(\PHP_CodeSniffer\Tests\Core\AllTests::suite());
+        $suite->addTest(\PHP_CodeSniffer\Tests\Standards\AllSniffs::suite());
         return $suite;
     }
     //end suite()

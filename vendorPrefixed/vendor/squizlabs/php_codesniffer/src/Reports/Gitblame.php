@@ -8,10 +8,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Reports;
+namespace PHP_CodeSniffer\Reports;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\DeepExitException;
-class Gitblame extends VersionControl
+use PHP_CodeSniffer\Exceptions\DeepExitException;
+class Gitblame extends \PHP_CodeSniffer\Reports\VersionControl
 {
     /**
      * The name of the report we want in the output

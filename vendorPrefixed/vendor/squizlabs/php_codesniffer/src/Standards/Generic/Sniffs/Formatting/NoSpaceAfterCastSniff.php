@@ -10,11 +10,11 @@
  * @deprecated 3.4.0 Use the Generic.Formatting.SpaceAfterCast sniff with
  *                   the $spacing property set to 0 instead.
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 class NoSpaceAfterCastSniff implements Sniff
 {
     /**

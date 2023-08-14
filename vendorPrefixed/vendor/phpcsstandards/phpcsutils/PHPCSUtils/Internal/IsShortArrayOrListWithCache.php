@@ -8,12 +8,12 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Internal;
+namespace PHPCSUtils\Internal;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHPCSUtils\Internal\Cache;
-use BitPayVendor\PHPCSUtils\Internal\IsShortArrayOrList;
-use BitPayVendor\PHPCSUtils\Internal\StableCollections;
+use PHP_CodeSniffer\Files\File;
+use PHPCSUtils\Internal\Cache;
+use PHPCSUtils\Internal\IsShortArrayOrList;
+use PHPCSUtils\Internal\StableCollections;
 /**
  * Determination of short array vs short list vs square brackets.
  *

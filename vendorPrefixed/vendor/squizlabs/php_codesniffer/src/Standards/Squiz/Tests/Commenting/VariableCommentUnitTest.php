@@ -7,9 +7,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Squiz\Tests\Commenting;
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Commenting;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class VariableCommentUnitTest extends AbstractSniffUnitTest
 {
     /**

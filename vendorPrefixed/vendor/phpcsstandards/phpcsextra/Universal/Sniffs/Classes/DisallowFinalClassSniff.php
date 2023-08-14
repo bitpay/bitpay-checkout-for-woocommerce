@@ -10,11 +10,11 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Classes;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\GetTokensAsString;
+use PHPCSUtils\Utils\ObjectDeclarations;
 /**
  * Forbids classes from being declared as "final".
  *

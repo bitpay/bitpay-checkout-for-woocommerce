@@ -7,9 +7,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tokenizers;
+namespace PHP_CodeSniffer\Tokenizers;
 
-use BitPayVendor\PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util;
 class Comment
 {
     /**

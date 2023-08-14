@@ -10,12 +10,12 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Operators;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\BCFile;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\BCFile;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\GetTokensAsString;
 /**
  * Disallow the use of post-in/decrements in stand-alone statements and discourage the use of
  * multiple increment/decrement operators in a stand-alone statement.

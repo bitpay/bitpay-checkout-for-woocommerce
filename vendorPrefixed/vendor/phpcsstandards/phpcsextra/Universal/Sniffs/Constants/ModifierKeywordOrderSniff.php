@@ -10,11 +10,11 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Constants;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Scopes;
 /**
  * Standardize the modifier keyword order for OO constant declarations.
  *

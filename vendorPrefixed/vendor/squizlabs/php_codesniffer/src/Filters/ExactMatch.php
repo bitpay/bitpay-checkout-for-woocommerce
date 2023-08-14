@@ -9,10 +9,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Filters;
+namespace PHP_CodeSniffer\Filters;
 
-use BitPayVendor\PHP_CodeSniffer\Util;
-abstract class ExactMatch extends Filter
+use PHP_CodeSniffer\Util;
+abstract class ExactMatch extends \PHP_CodeSniffer\Filters\Filter
 {
     /**
      * A list of files to exclude.

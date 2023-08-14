@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\CodeAnalysis;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\BCFile;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\BCFile;
+use PHPCSUtils\Utils\Parentheses;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 /**
  * Detects variable assignments being made within conditions.

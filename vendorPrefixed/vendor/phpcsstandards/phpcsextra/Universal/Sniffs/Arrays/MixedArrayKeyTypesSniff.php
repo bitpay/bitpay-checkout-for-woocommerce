@@ -10,9 +10,9 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Arrays;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\AbstractSniffs\AbstractArrayDeclarationSniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\AbstractSniffs\AbstractArrayDeclarationSniff;
 /**
  * Forbid arrays which contain both array items with numeric keys as well as array items with string keys.
  *

@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Filters;
+namespace PHP_CodeSniffer\Filters;
 
-use BitPayVendor\PHP_CodeSniffer\Util;
-class GitModified extends ExactMatch
+use PHP_CodeSniffer\Util;
+class GitModified extends \PHP_CodeSniffer\Filters\ExactMatch
 {
     /**
      * Get a list of blacklisted file paths.

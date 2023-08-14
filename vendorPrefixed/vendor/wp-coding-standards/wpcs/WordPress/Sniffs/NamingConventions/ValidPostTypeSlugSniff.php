@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * Validates post type names.

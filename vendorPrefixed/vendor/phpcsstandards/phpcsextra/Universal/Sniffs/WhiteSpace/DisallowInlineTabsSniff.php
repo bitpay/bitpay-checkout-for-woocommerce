@@ -10,12 +10,12 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 use BitPayVendor\PHPCSExtra\Universal\Helpers\DummyTokenizer;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Tokens\Collections;
 /**
  * Enforces using spaces for mid-line alignment.
  *

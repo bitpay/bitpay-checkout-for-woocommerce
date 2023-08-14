@@ -8,17 +8,17 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\AbstractSniffs;
+namespace PHPCSUtils\AbstractSniffs;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Arrays;
-use BitPayVendor\PHPCSUtils\Utils\Numbers;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Arrays;
+use PHPCSUtils\Utils\Numbers;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\TextStrings;
 /**
  * Abstract sniff to easily examine all parts of an array declaration.
  *

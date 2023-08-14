@@ -9,10 +9,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer;
+namespace PHP_CodeSniffer;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util;
 class Ruleset
 {
     /**
@@ -111,7 +111,7 @@ class Ruleset
      * @return void
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If no sniffs were registered.
      */
-    public function __construct(Config $config)
+    public function __construct(\PHP_CodeSniffer\Config $config)
     {
         $this->config = $config;
         $restrictions = $config->sniffs;
@@ -144,7 +144,7 @@ class Ruleset
                 } else {
                     $namespace = \basename(\dirname($standard));
                 }
-                Autoload::addSearchPath(\dirname($standard), $namespace);
+                \PHP_CodeSniffer\Autoload::addSearchPath(\dirname($standard), $namespace);
             }
             if (\defined('PHP_CODESNIFFER_IN_TESTS') === \true && empty($restrictions) === \false) {
                 // In unit tests, only register the sniffs that the test wants and not the entire standard.
@@ -327,7 +327,7 @@ class Ruleset
             if ($this->shouldProcessElement($config) === \false) {
                 continue;
             }
-            Config::setConfigData((string) $config['name'], (string) $config['value'], \true);
+            \PHP_CodeSniffer\Config::setConfigData((string) $config['name'], (string) $config['value'], \true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo \str_repeat("\t", $depth);
                 echo "\t=> set config value " . (string) $config['name'] . ': ' . (string) $config['value'] . \PHP_EOL;
@@ -988,7 +988,7 @@ class Ruleset
             if ($slashPos === \false) {
                 continue;
             }
-            $className = Autoload::loadFile($file);
+            $className = \PHP_CodeSniffer\Autoload::loadFile($file);
             $compareName = Util\Common::cleanSniffClass($className);
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.

@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
+namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 
-use BitPayVendor\PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\FunctionDeclarationSniff as PEARFunctionDeclarationSniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\FunctionDeclarationSniff as PEARFunctionDeclarationSniff;
+use PHP_CodeSniffer\Util\Tokens;
 class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 {
     /**

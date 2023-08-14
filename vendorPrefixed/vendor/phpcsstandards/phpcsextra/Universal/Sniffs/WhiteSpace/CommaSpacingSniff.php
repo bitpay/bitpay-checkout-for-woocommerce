@@ -10,13 +10,13 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Fixers\SpacesFixer;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Fixers\SpacesFixer;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Parentheses;
 /**
  * Check spacing around commas.
  *

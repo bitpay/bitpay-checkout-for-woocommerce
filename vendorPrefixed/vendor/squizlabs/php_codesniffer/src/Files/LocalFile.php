@@ -7,13 +7,13 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Files;
+namespace PHP_CodeSniffer\Files;
 
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Util\Cache;
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
-class LocalFile extends File
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Util\Cache;
+use PHP_CodeSniffer\Util\Common;
+class LocalFile extends \PHP_CodeSniffer\Files\File
 {
     /**
      * Creates a LocalFile object and sets the content.

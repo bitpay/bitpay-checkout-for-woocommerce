@@ -8,10 +8,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Reports;
+namespace PHP_CodeSniffer\Reports;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-class Json implements Report
+use PHP_CodeSniffer\Files\File;
+class Json implements \PHP_CodeSniffer\Reports\Report
 {
     /**
      * Generate a partial report for a single processed file.

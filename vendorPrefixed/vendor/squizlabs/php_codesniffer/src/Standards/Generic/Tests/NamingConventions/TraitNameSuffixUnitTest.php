@@ -6,9 +6,9 @@
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class TraitNameSuffixUnitTest extends AbstractSniffUnitTest
 {
     /**

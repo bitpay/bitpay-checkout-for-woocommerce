@@ -10,8 +10,8 @@
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\CodeAnalysis;
 
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\GetTokensAsString;
 /**
  * Flag calls to escaping functions which look like they may have been intended
  * as calls to the "translate + escape" sister-function due to the presence of

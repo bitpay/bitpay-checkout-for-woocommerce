@@ -10,12 +10,12 @@
  */
 namespace BitPayVendor\PHPCSExtra\Modernize\Sniffs\FunctionCalls;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Context;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Context;
+use PHPCSUtils\Utils\PassedParameters;
 /**
  * Detect `dirname(__FILE__)` and nested uses of `dirname()`.
  *

@@ -10,17 +10,17 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\CodeAnalysis;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\BCFile;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\FunctionDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
-use BitPayVendor\PHPCSUtils\Utils\NamingConventions;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\BCFile;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\FunctionDeclarations;
+use PHPCSUtils\Utils\GetTokensAsString;
+use PHPCSUtils\Utils\NamingConventions;
+use PHPCSUtils\Utils\ObjectDeclarations;
+use PHPCSUtils\Utils\Scopes;
 /**
  * Verify that a class constructor/destructor does not return anything, nor has a
  * return type declaration (fatal error).

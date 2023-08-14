@@ -7,12 +7,12 @@
  * @copyright 2020 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core\Tokenizer;
+namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Files\DummyFile;
-use BitPayVendor\PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 /**
  * Heredoc/nowdoc closer token test.
  *

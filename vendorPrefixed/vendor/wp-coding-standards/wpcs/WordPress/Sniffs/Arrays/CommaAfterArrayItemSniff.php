@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Arrays;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Arrays;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Arrays;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 /**
  * Enforces a comma after each array item and the spacing around it.

@@ -8,7 +8,7 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Tokens;
+namespace PHPCSUtils\Tokens;
 
 /**
  * Helpers for working with tokens.

@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Security;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * Warn about __FILE__ for page registration.

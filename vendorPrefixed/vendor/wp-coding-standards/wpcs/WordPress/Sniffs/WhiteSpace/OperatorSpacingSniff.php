@@ -9,8 +9,8 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\OperatorSpacingSniff as PHPCS_Squiz_OperatorSpacingSniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\OperatorSpacingSniff as PHPCS_Squiz_OperatorSpacingSniff;
+use PHP_CodeSniffer\Util\Tokens;
 /**
  * Verify operator spacing, uses the Squiz sniff, but additionally also sniffs for the
  * `!` (boolean not) and the boolean and logical and/or operators.

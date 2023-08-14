@@ -7,11 +7,11 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core;
+namespace PHP_CodeSniffer\Tests\Core;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Files\DummyFile;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
 use BitPayVendor\PHPUnit\Framework\TestCase;
 class ErrorSuppressionTest extends TestCase
 {

@@ -8,13 +8,13 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Utils;
+namespace PHPCSUtils\Utils;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\Parentheses;
 /**
  * Utility functions for use when examining token scopes.
  *

@@ -7,10 +7,10 @@
  * @copyright 2014 Arroba IT
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Generators;
+namespace PHP_CodeSniffer\Generators;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
-class Markdown extends Generator
+use PHP_CodeSniffer\Config;
+class Markdown extends \PHP_CodeSniffer\Generators\Generator
 {
     /**
      * Generates the documentation for a standard.

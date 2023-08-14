@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tokenizers;
+namespace PHP_CodeSniffer\Tokenizers;
 
-use BitPayVendor\PHP_CodeSniffer\Util;
-class PHP extends Tokenizer
+use PHP_CodeSniffer\Util;
+class PHP extends \PHP_CodeSniffer\Tokenizers\Tokenizer
 {
     /**
      * A list of tokens that are allowed to open a scope.
@@ -78,7 +78,7 @@ class PHP extends Tokenizer
         $lastNotEmptyToken = 0;
         $insideInlineIf = [];
         $insideUseGroup = \false;
-        $commentTokenizer = new Comment();
+        $commentTokenizer = new \PHP_CodeSniffer\Tokenizers\Comment();
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             // Special case for tokens we have needed to blank out.
             if ($tokens[$stackPtr] === null) {

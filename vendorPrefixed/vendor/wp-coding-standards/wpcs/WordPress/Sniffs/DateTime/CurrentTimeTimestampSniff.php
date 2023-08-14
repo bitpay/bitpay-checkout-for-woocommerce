@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\DateTime;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * Don't use current_time() to get a (timezone corrected) "timestamp".

@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\BackCompat\Helper;
 /**
  * Helper utilities for checking if a name is in snake_case.
  *

@@ -7,13 +7,13 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Sniffs;
+namespace PHP_CodeSniffer\Sniffs;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHP_CodeSniffer\Tokenizers\PHP;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-abstract class AbstractPatternSniff implements Sniff
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Tokenizers\PHP;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+abstract class AbstractPatternSniff implements \PHP_CodeSniffer\Sniffs\Sniff
 {
     /**
      * If true, comments will be ignored if they are found in the code.

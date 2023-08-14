@@ -9,8 +9,8 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionRestrictionsSniff;
 use BitPayVendor\WordPressCS\WordPress\Helpers\MinimumWPVersionTrait;
 /**

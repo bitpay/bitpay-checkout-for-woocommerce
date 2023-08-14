@@ -10,10 +10,10 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\FunctionDeclarations;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\FunctionDeclarations;
 /**
  * Verifies that parameters in function declarations do not use PHP reserved keywords
  * as this can lead to confusing code when using PHP 8.0+ named parameters in function calls.

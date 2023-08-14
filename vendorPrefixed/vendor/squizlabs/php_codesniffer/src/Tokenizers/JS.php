@@ -7,12 +7,12 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tokenizers;
+namespace PHP_CodeSniffer\Tokenizers;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\TokenizerException;
-use BitPayVendor\PHP_CodeSniffer\Util;
-class JS extends Tokenizer
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Exceptions\TokenizerException;
+use PHP_CodeSniffer\Util;
+class JS extends \PHP_CodeSniffer\Tokenizers\Tokenizer
 {
     /**
      * A list of tokens that are allowed to open a scope.
@@ -98,7 +98,7 @@ class JS extends Tokenizer
         $buffer = '';
         $preStringBuffer = '';
         $cleanBuffer = \false;
-        $commentTokenizer = new Comment();
+        $commentTokenizer = new \PHP_CodeSniffer\Tokenizers\Comment();
         $tokens[] = ['code' => \T_OPEN_TAG, 'type' => 'T_OPEN_TAG', 'content' => ''];
         // Convert newlines to single characters for ease of
         // processing. We will change them back later.

@@ -10,10 +10,10 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Arrays;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\AbstractSniffs\AbstractArrayDeclarationSniff;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\AbstractSniffs\AbstractArrayDeclarationSniff;
+use PHPCSUtils\BackCompat\Helper;
 /**
  * Detect duplicate array keys in array declarations.
  *

@@ -7,7 +7,7 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests;
+namespace PHP_CodeSniffer\Tests;
 
 use BitPayVendor\PHPUnit\Framework\TestSuite as PHPUnit_TestSuite;
 use BitPayVendor\PHPUnit\Framework\TestResult;

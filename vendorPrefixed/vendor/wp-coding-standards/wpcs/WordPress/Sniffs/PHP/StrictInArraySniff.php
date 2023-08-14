@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\PHP;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * Flag calling in_array(), array_search() and array_keys() without true as the third parameter.

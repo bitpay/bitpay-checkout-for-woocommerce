@@ -8,7 +8,7 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Utils;
+namespace PHPCSUtils\Utils;
 
 /**
  * Utility functions for working with identifier names.

@@ -10,10 +10,10 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Fixers\SpacesFixer;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Fixers\SpacesFixer;
 /**
  * Checks the spacing between the "class" keyword and the open parenthesis for anonymous classes with parentheses.
  *

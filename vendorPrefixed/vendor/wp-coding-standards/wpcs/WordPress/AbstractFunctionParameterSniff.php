@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionRestrictionsSniff;
 /**
  * Advises about parameters used in function calls.

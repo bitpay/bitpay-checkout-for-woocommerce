@@ -12,11 +12,11 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Files;
+namespace PHP_CodeSniffer\Files;
 
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Config;
-class DummyFile extends File
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Config;
+class DummyFile extends \PHP_CodeSniffer\Files\File
 {
     /**
      * Creates a DummyFile object and sets the content.

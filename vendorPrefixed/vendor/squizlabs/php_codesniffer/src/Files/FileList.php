@@ -9,13 +9,13 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Files;
+namespace PHP_CodeSniffer\Files;
 
-use BitPayVendor\PHP_CodeSniffer\Autoload;
-use BitPayVendor\PHP_CodeSniffer\Util;
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Autoload;
+use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 use ReturnTypeWillChange;
 class FileList implements \Iterator, \Countable
 {
@@ -125,7 +125,7 @@ class FileList implements \Iterator, \Countable
     {
         $filterType = $this->config->filter;
         if ($filterType === null) {
-            $filterClass = 'BitPayVendor\\PHP_CodeSniffer\\Filters\\Filter';
+            $filterClass = '\\PHP_CodeSniffer\\Filters\\Filter';
         } else {
             if (\strpos($filterType, '.') !== \false) {
                 // This is a path to a custom filter class.
@@ -163,7 +163,7 @@ class FileList implements \Iterator, \Countable
     {
         $path = \key($this->files);
         if (isset($this->files[$path]) === \false) {
-            $this->files[$path] = new LocalFile($path, $this->ruleset, $this->config);
+            $this->files[$path] = new \PHP_CodeSniffer\Files\LocalFile($path, $this->ruleset, $this->config);
         }
         return $this->files[$path];
     }

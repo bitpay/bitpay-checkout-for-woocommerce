@@ -8,9 +8,9 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Utils;
+namespace PHPCSUtils\Utils;
 
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\BackCompat\Helper;
 /**
  * Utility functions for checking the orthography of arbitrary text strings.
  *

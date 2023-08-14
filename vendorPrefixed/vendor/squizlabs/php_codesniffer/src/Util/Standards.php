@@ -7,9 +7,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Util;
+namespace PHP_CodeSniffer\Util;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Config;
 class Standards
 {
     /**
@@ -30,7 +30,7 @@ class Standards
         $resolvedInstalledPaths = [];
         foreach ($installedPaths as $installedPath) {
             if (\substr($installedPath, 0, 1) === '.') {
-                $installedPath = Common::realPath(__DIR__ . $ds . '..' . $ds . '..' . $ds . $installedPath);
+                $installedPath = \PHP_CodeSniffer\Util\Common::realPath(__DIR__ . $ds . '..' . $ds . '..' . $ds . $installedPath);
                 if ($installedPath === \false) {
                     continue;
                 }
@@ -200,7 +200,7 @@ class Standards
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
-            $standard = Common::realPath($standard);
+            $standard = \PHP_CodeSniffer\Util\Common::realPath($standard);
             if ($standard === \false) {
                 return \false;
             }
@@ -245,12 +245,12 @@ class Standards
                 }
                 $standardPath = $installedPath;
             }
-            $path = Common::realpath($standardPath . \DIRECTORY_SEPARATOR . 'ruleset.xml');
+            $path = \PHP_CodeSniffer\Util\Common::realpath($standardPath . \DIRECTORY_SEPARATOR . 'ruleset.xml');
             if ($path !== \false && \is_file($path) === \true) {
                 return $path;
             } else {
-                if (Common::isPharFile($standardPath) === \true) {
-                    $path = Common::realpath($standardPath);
+                if (\PHP_CodeSniffer\Util\Common::isPharFile($standardPath) === \true) {
+                    $path = \PHP_CodeSniffer\Util\Common::realpath($standardPath);
                     if ($path !== \false) {
                         return $path;
                     }

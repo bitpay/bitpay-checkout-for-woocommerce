@@ -8,14 +8,14 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\TestUtils;
+namespace PHPCSUtils\TestUtils;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\TokenizerException;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Exceptions\TestFileNotFound;
-use BitPayVendor\PHPCSUtils\Exceptions\TestMarkerNotFound;
-use BitPayVendor\PHPCSUtils\Exceptions\TestTargetNotFound;
+use PHP_CodeSniffer\Exceptions\TokenizerException;
+use PHP_CodeSniffer\Files\File;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Exceptions\TestFileNotFound;
+use PHPCSUtils\Exceptions\TestMarkerNotFound;
+use PHPCSUtils\Exceptions\TestTargetNotFound;
 use BitPayVendor\PHPUnit\Framework\TestCase;
 use ReflectionClass;
 /**
@@ -195,7 +195,7 @@ abstract class UtilityMethodTestCase extends TestCase
             parent::fail("Test case file missing. Expected case file location: {$caseFile}");
         }
         $contents = \file_get_contents($caseFile);
-        $config = new \BitPayVendor\PHP_CodeSniffer\Config();
+        $config = new \PHP_CodeSniffer\Config();
         /*
          * We just need to provide a standard so PHPCS will tokenize the file.
          * The standard itself doesn't actually matter for testing utility methods,
@@ -211,10 +211,10 @@ abstract class UtilityMethodTestCase extends TestCase
         $config->cache = \false;
         // Also set a tab-width to enable testing tab-replaced vs `orig_content`.
         $config->tabWidth = static::$tabWidth;
-        $ruleset = new \BitPayVendor\PHP_CodeSniffer\Ruleset($config);
+        $ruleset = new \PHP_CodeSniffer\Ruleset($config);
         // Make sure the file gets parsed correctly based on the file type.
         $contents = 'phpcs_input_file: ' . $caseFile . \PHP_EOL . $contents;
-        self::$phpcsFile = new \BitPayVendor\PHP_CodeSniffer\Files\DummyFile($contents, $ruleset, $config);
+        self::$phpcsFile = new \PHP_CodeSniffer\Files\DummyFile($contents, $ruleset, $config);
         // Only tokenize the file, do not process it.
         try {
             self::$phpcsFile->parse();
@@ -353,9 +353,9 @@ abstract class UtilityMethodTestCase extends TestCase
      */
     public function expectPhpcsException($msg, $type = 'runtime')
     {
-        $exception = 'BitPayVendor\\PHP_CodeSniffer\\Exceptions\\RuntimeException';
+        $exception = 'PHP_CodeSniffer\\Exceptions\\RuntimeException';
         if ($type === 'tokenizer') {
-            $exception = 'BitPayVendor\\PHP_CodeSniffer\\Exceptions\\TokenizerException';
+            $exception = 'PHP_CodeSniffer\\Exceptions\\TokenizerException';
         }
         if (\method_exists($this, 'expectException')) {
             // PHPUnit 5+.

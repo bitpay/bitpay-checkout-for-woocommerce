@@ -9,12 +9,12 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\AbstractVariableSniff as PHPCS_AbstractVariableSniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
-use BitPayVendor\PHPCSUtils\Utils\Variables;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\AbstractVariableSniff as PHPCS_AbstractVariableSniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\Scopes;
+use PHPCSUtils\Utils\TextStrings;
+use PHPCSUtils\Utils\Variables;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\SnakeCaseHelper;

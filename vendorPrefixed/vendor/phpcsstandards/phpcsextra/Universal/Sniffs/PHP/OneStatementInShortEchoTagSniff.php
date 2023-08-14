@@ -10,9 +10,9 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\PHP;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 /**
  * Disallows multiple statements when PHP is opened with a short open echo tag.
  *

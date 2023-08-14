@@ -10,14 +10,14 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\CodeAnalysis;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\FunctionDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\FunctionDeclarations;
+use PHPCSUtils\Utils\GetTokensAsString;
+use PHPCSUtils\Utils\ObjectDeclarations;
+use PHPCSUtils\Utils\Scopes;
 /**
  * Forbid the use of the `static` keyword for late static binding in OO constructs which are final.
  *

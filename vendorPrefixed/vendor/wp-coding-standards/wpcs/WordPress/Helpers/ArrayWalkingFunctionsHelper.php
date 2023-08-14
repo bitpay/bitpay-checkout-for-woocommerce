@@ -9,8 +9,8 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHP_CodeSniffer\Files\File;
+use PHPCSUtils\Utils\PassedParameters;
 /**
  * Helper functions and function lists for checking whether a function applies a callback to an array.
  *

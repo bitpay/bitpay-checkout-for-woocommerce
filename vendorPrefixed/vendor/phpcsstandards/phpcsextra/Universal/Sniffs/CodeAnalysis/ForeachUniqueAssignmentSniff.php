@@ -10,12 +10,12 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\CodeAnalysis;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
-use BitPayVendor\PHPCSUtils\Utils\Lists;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\GetTokensAsString;
+use PHPCSUtils\Utils\Lists;
 /**
  * Detects using the same variable for both the key as well as the value in a foreach assignment.
  *

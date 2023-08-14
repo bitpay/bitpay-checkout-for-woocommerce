@@ -9,14 +9,14 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\Context;
-use BitPayVendor\PHPCSUtils\Utils\Lists;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\Context;
+use PHPCSUtils\Utils\Lists;
+use PHPCSUtils\Utils\Parentheses;
+use PHPCSUtils\Utils\Scopes;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\IsUnitTestTrait;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ListHelper;

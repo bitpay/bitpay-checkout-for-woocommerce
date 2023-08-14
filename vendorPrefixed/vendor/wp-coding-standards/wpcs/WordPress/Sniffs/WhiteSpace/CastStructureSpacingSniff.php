@@ -10,7 +10,7 @@
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WhiteSpace;
 
 use BitPayVendor\WordPressCS\WordPress\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Tokens;
 /**
  * Ensure cast statements are preceded by whitespace.
  *

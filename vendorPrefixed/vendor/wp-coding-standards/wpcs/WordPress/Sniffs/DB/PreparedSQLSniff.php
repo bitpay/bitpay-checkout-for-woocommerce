@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\DB;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\FormattingFunctionsHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\WPDBTrait;

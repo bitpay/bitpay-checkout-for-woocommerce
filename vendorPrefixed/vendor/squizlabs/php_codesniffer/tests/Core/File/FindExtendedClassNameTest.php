@@ -7,9 +7,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\File;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 class FindExtendedClassNameTest extends AbstractMethodUnitTest
 {
     /**
@@ -39,7 +39,7 @@ class FindExtendedClassNameTest extends AbstractMethodUnitTest
      */
     public function dataExtendedClass()
     {
-        return [['/* testExtendedClass */', 'testFECNClass'], ['/* testNamespacedClass */', 'BitPayVendor\\PHP_CodeSniffer\\Tests\\Core\\File\\testFECNClass'], ['/* testNonExtendedClass */', \false], ['/* testInterface */', \false], ['/* testInterfaceThatExtendsInterface */', 'testFECNInterface'], ['/* testInterfaceThatExtendsFQCNInterface */', 'BitPayVendor\\PHP_CodeSniffer\\Tests\\Core\\File\\testFECNInterface'], ['/* testNestedExtendedClass */', \false], ['/* testNestedExtendedAnonClass */', 'testFECNAnonClass'], ['/* testClassThatExtendsAndImplements */', 'testFECNClass'], ['/* testClassThatImplementsAndExtends */', 'testFECNClass']];
+        return [['/* testExtendedClass */', 'testFECNClass'], ['/* testNamespacedClass */', '\\PHP_CodeSniffer\\Tests\\Core\\File\\testFECNClass'], ['/* testNonExtendedClass */', \false], ['/* testInterface */', \false], ['/* testInterfaceThatExtendsInterface */', 'testFECNInterface'], ['/* testInterfaceThatExtendsFQCNInterface */', '\\PHP_CodeSniffer\\Tests\\Core\\File\\testFECNInterface'], ['/* testNestedExtendedClass */', \false], ['/* testNestedExtendedAnonClass */', 'testFECNAnonClass'], ['/* testClassThatExtendsAndImplements */', 'testFECNClass'], ['/* testClassThatImplementsAndExtends */', 'testFECNClass']];
     }
     //end dataExtendedClass()
 }

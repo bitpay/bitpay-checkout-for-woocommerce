@@ -9,11 +9,11 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Utils\MessageHelper;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Utils\MessageHelper;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\TextStrings;
 use XMLReader;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;

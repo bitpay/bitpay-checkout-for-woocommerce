@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\AbstractArraySniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Sniffs\AbstractArraySniff;
+use PHP_CodeSniffer\Util\Tokens;
 class ArrayIndentSniff extends AbstractArraySniff
 {
     /**

@@ -10,11 +10,11 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Tokens\Collections;
 /**
  * Detects when the indentation is not a multiple of a tab-width, i.e. when precision alignment is used.
  *

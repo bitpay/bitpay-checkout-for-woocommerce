@@ -7,9 +7,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core;
+namespace PHP_CodeSniffer\Tests\Core;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Common;
 use BitPayVendor\PHPUnit\Framework\TestCase;
 class IsCamelCapsTest extends TestCase
 {

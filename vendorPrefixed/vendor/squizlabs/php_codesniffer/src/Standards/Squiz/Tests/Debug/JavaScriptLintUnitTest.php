@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Squiz\Tests\Debug;
+namespace PHP_CodeSniffer\Standards\Squiz\Tests\Debug;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-use BitPayVendor\PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Config;
 class JavaScriptLintUnitTest extends AbstractSniffUnitTest
 {
     /**

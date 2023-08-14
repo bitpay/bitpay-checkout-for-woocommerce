@@ -9,8 +9,8 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Security;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ValidationHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\VariableHelper;

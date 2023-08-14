@@ -10,8 +10,8 @@
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\PHP;
 
 use BitPayVendor\WordPressCS\WordPress\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
 /**
  * Enforces Yoda conditional statements.
  *

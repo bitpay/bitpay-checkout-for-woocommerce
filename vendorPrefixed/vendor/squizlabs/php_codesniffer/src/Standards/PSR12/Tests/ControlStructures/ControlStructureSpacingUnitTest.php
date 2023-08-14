@@ -7,9 +7,9 @@
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\PSR12\Tests\ControlStructures;
+namespace PHP_CodeSniffer\Standards\PSR12\Tests\ControlStructures;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
 {
     /**

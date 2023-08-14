@@ -9,11 +9,11 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Parentheses;
+use PHPCSUtils\Utils\PassedParameters;
 /**
  * Helper utilities for checking the context in which a token is used.
  *

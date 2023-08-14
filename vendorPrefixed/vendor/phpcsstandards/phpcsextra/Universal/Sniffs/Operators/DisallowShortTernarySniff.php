@@ -10,9 +10,9 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Operators;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHPCSUtils\Utils\Operators;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHPCSUtils\Utils\Operators;
 /**
  * Disallow the use of short ternaries.
  *

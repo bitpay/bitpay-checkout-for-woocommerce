@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHPCSUtils\Utils\MessageHelper;
+use PHPCSUtils\Utils\MessageHelper;
 use BitPayVendor\WordPressCS\WordPress\AbstractClassRestrictionsSniff;
 use BitPayVendor\WordPressCS\WordPress\Helpers\MinimumWPVersionTrait;
 /**

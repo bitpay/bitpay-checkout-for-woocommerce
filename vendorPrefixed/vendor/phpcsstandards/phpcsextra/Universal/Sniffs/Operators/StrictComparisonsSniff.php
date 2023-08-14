@@ -10,8 +10,8 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Operators;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 /**
  * Enforce the use of strict comparisons.
  *

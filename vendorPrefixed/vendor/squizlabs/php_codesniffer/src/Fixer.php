@@ -10,10 +10,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer;
+namespace PHP_CodeSniffer;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Common;
 class Fixer
 {
     /**
@@ -309,7 +309,7 @@ class Fixer
             if ($bt[1]['class'] === __CLASS__) {
                 $sniff = 'Fixer';
             } else {
-                $sniff = Util\Common::getSniffCode($bt[1]['class']);
+                $sniff = \PHP_CodeSniffer\Util\Common::getSniffCode($bt[1]['class']);
             }
             $line = $bt[0]['line'];
             @\ob_end_clean();
@@ -382,7 +382,7 @@ class Fixer
                     $sniff = $bt[1]['class'];
                     $line = $bt[0]['line'];
                 }
-                $sniff = Util\Common::getSniffCode($sniff);
+                $sniff = \PHP_CodeSniffer\Util\Common::getSniffCode($sniff);
                 $numChanges = \count($this->changeset);
                 @\ob_end_clean();
                 echo "\t\tR: {$sniff}:{$line} rolled back the changeset ({$numChanges} changes)" . \PHP_EOL;
@@ -428,7 +428,7 @@ class Fixer
                 $sniff = $bt[1]['class'];
                 $line = $bt[0]['line'];
             }
-            $sniff = Util\Common::getSniffCode($sniff);
+            $sniff = \PHP_CodeSniffer\Util\Common::getSniffCode($sniff);
             $tokens = $this->currentFile->getTokens();
             $type = $tokens[$stackPtr]['type'];
             $tokenLine = $tokens[$stackPtr]['line'];
@@ -520,7 +520,7 @@ class Fixer
                 $sniff = $bt[1]['class'];
                 $line = $bt[0]['line'];
             }
-            $sniff = Util\Common::getSniffCode($sniff);
+            $sniff = \PHP_CodeSniffer\Util\Common::getSniffCode($sniff);
             $tokens = $this->currentFile->getTokens();
             $type = $tokens[$stackPtr]['type'];
             $tokenLine = $tokens[$stackPtr]['line'];

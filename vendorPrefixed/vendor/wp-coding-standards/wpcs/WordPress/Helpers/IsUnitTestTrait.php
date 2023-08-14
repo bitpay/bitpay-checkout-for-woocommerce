@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\Namespaces;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\Namespaces;
+use PHPCSUtils\Utils\ObjectDeclarations;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;
 /**
  * Helper utilities for sniffs which need to take into account whether the

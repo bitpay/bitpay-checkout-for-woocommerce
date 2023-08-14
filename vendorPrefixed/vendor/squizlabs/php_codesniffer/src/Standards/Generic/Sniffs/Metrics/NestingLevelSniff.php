@@ -8,10 +8,10 @@
  * @copyright 2007-2014 Mayflower GmbH
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 class NestingLevelSniff implements Sniff
 {
     /**

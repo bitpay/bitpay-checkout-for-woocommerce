@@ -6,10 +6,10 @@
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 class TraitNameSuffixSniff implements Sniff
 {
     /**

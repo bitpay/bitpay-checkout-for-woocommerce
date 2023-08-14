@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\Numbers;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\Numbers;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * This checks the enqueued 4th and 5th parameters to make sure the version and in_footer are set.

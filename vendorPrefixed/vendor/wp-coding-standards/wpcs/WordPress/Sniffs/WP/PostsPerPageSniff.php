@@ -9,8 +9,8 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WP;
 
-use BitPayVendor\PHPCSUtils\Utils\Numbers;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHPCSUtils\Utils\Numbers;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\AbstractArrayAssignmentRestrictionsSniff;
 /**
  * Flag returning high or infinite posts_per_page.

@@ -10,16 +10,16 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer;
+namespace PHP_CodeSniffer;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\DeepExitException;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Files\DummyFile;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Files\FileList;
-use BitPayVendor\PHP_CodeSniffer\Util\Cache;
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
-use BitPayVendor\PHP_CodeSniffer\Util\Standards;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\DummyFile;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Files\FileList;
+use PHP_CodeSniffer\Util\Cache;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Standards;
 class Runner
 {
     /**
@@ -49,15 +49,15 @@ class Runner
     {
         $this->registerOutOfMemoryShutdownMessage('phpcs');
         try {
-            Util\Timing::startTiming();
-            Runner::checkRequirements();
+            \PHP_CodeSniffer\Util\Timing::startTiming();
+            \PHP_CodeSniffer\Runner::checkRequirements();
             if (\defined('PHP_CODESNIFFER_CBF') === \false) {
                 \define('PHP_CODESNIFFER_CBF', \false);
             }
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new \PHP_CodeSniffer\Config();
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
             // Print a list of sniffs in each of the supplied standards.
@@ -66,7 +66,7 @@ class Runner
                 $standards = $this->config->standards;
                 foreach ($standards as $standard) {
                     $this->config->standards = [$standard];
-                    $ruleset = new Ruleset($this->config);
+                    $ruleset = new \PHP_CodeSniffer\Ruleset($this->config);
                     $ruleset->explain();
                 }
                 return 0;
@@ -76,7 +76,7 @@ class Runner
                 $standards = $this->config->standards;
                 foreach ($standards as $standard) {
                     $this->config->standards = [$standard];
-                    $ruleset = new Ruleset($this->config);
+                    $ruleset = new \PHP_CodeSniffer\Ruleset($this->config);
                     $class = 'PHP_CodeSniffer\\Generators\\' . $this->config->generator;
                     $generator = new $class($ruleset);
                     $generator->generate();
@@ -105,7 +105,7 @@ class Runner
             // the report types would have already worked out who should
             // print the timer info.
             if ($this->config->interactive === \false && ($toScreen === \false || $this->reporter->totalErrors + $this->reporter->totalWarnings === 0 && $this->config->showProgress === \true)) {
-                Util\Timing::printRunTime();
+                \PHP_CodeSniffer\Util\Timing::printRunTime();
             }
         } catch (DeepExitException $e) {
             echo $e->getMessage();
@@ -138,12 +138,12 @@ class Runner
             \define('PHP_CODESNIFFER_CBF', \true);
         }
         try {
-            Util\Timing::startTiming();
-            Runner::checkRequirements();
+            \PHP_CodeSniffer\Util\Timing::startTiming();
+            \PHP_CodeSniffer\Runner::checkRequirements();
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new \PHP_CodeSniffer\Config();
             // When processing STDIN, we can't output anything to the screen
             // or it will end up mixed in with the file output.
             if ($this->config->stdin === \true) {
@@ -173,7 +173,7 @@ class Runner
             $this->run();
             $this->reporter->printReports();
             echo \PHP_EOL;
-            Util\Timing::printRunTime();
+            \PHP_CodeSniffer\Util\Timing::printRunTime();
         } catch (DeepExitException $e) {
             echo $e->getMessage();
             return $e->getCode();
@@ -252,12 +252,12 @@ class Runner
         \ini_set('pcre.jit', \false);
         // Check that the standards are valid.
         foreach ($this->config->standards as $standard) {
-            if (Util\Standards::isInstalledStandard($standard) === \false) {
+            if (\PHP_CodeSniffer\Util\Standards::isInstalledStandard($standard) === \false) {
                 // They didn't select a valid coding standard, so help them
                 // out by letting them know which standards are installed.
                 $error = 'ERROR: the "' . $standard . '" coding standard is not installed. ';
                 \ob_start();
-                Util\Standards::printInstalledStandards();
+                \PHP_CodeSniffer\Util\Standards::printInstalledStandards();
                 $error .= \ob_get_contents();
                 \ob_end_clean();
                 throw new DeepExitException($error, 3);
@@ -270,16 +270,16 @@ class Runner
         }
         // Create this class so it is autoloaded and sets up a bunch
         // of PHP_CodeSniffer-specific token type constants.
-        $tokens = new Util\Tokens();
+        $tokens = new \PHP_CodeSniffer\Util\Tokens();
         // Allow autoloading of custom files inside installed standards.
         $installedStandards = Standards::getInstalledStandardDetails();
         foreach ($installedStandards as $name => $details) {
-            Autoload::addSearchPath($details['path'], $details['namespace']);
+            \PHP_CodeSniffer\Autoload::addSearchPath($details['path'], $details['namespace']);
         }
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.
         try {
-            $this->ruleset = new Ruleset($this->config);
+            $this->ruleset = new \PHP_CodeSniffer\Ruleset($this->config);
         } catch (RuntimeException $e) {
             $error = 'ERROR: ' . $e->getMessage() . \PHP_EOL . \PHP_EOL;
             $error .= $this->config->printShortUsage(\true);
@@ -297,7 +297,7 @@ class Runner
     private function run()
     {
         // The class that manages all reporters for the run.
-        $this->reporter = new Reporter($this->config);
+        $this->reporter = new \PHP_CodeSniffer\Reporter($this->config);
         // Include bootstrap files.
         foreach ($this->config->bootstrap as $bootstrap) {
             include $bootstrap;
@@ -466,8 +466,8 @@ class Runner
         if ($this->config->cache === \true) {
             Cache::save();
         }
-        $ignoreWarnings = Config::getConfigData('ignore_warnings_on_exit');
-        $ignoreErrors = Config::getConfigData('ignore_errors_on_exit');
+        $ignoreWarnings = \PHP_CodeSniffer\Config::getConfigData('ignore_warnings_on_exit');
+        $ignoreErrors = \PHP_CodeSniffer\Config::getConfigData('ignore_errors_on_exit');
         $return = $this->reporter->totalErrors + $this->reporter->totalWarnings;
         if ($ignoreErrors !== null) {
             $ignoreErrors = (bool) $ignoreErrors;

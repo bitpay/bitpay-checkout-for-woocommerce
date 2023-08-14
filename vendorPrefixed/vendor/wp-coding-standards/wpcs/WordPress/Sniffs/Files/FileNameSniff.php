@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Files;
 
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\ObjectDeclarations;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 use BitPayVendor\WordPressCS\WordPress\Helpers\IsUnitTestTrait;
 /**

@@ -10,9 +10,9 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\ControlStructures;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 /**
  * Verifies that `else(if)` statements with braces are on a new line.
  *

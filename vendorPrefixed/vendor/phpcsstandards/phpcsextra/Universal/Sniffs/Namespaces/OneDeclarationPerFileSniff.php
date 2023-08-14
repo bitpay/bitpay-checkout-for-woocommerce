@@ -10,9 +10,9 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\Namespaces;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHPCSUtils\Utils\Namespaces;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHPCSUtils\Utils\Namespaces;
 /**
  * Disallow having more than one namespace declaration in a file.
  *

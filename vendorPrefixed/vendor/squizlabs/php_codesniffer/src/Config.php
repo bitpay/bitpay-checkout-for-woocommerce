@@ -10,11 +10,11 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer;
+namespace PHP_CodeSniffer;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\DeepExitException;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util\Common;
 /**
  * Stores the configuration used to run PHPCS and PHPCBF.
  *
@@ -180,7 +180,7 @@ class Config
             case 'standards':
                 $cleaned = [];
                 // Check if the standard name is valid, or if the case is invalid.
-                $installedStandards = Util\Standards::getInstalledStandards();
+                $installedStandards = \PHP_CodeSniffer\Util\Standards::getInstalledStandards();
                 foreach ($value as $standard) {
                     foreach ($installedStandards as $validStandard) {
                         if (\strtolower($standard) === \strtolower($validStandard)) {
@@ -293,7 +293,7 @@ class Config
         }
         $handle = \fopen('php://stdin', 'r');
         // Check for content on STDIN.
-        if ($this->stdin === \true || Util\Common::isStdinATTY() === \false && \feof($handle) === \false) {
+        if ($this->stdin === \true || \PHP_CodeSniffer\Util\Common::isStdinATTY() === \false && \feof($handle) === \false) {
             $readStreams = [$handle];
             $writeSteams = null;
             $fileContents = '';
@@ -488,7 +488,7 @@ class Config
                 throw new DeepExitException($output, 0);
             case 'i':
                 \ob_start();
-                Util\Standards::printInstalledStandards();
+                \PHP_CodeSniffer\Util\Standards::printInstalledStandards();
                 $output = \ob_get_contents();
                 \ob_end_clean();
                 throw new DeepExitException($output, 0);
@@ -730,7 +730,7 @@ class Config
                             // Turn caching on.
                             $this->cache = \true;
                             self::$overriddenDefaults['cache'] = \true;
-                            $this->cacheFile = Util\Common::realpath(\substr($arg, 6));
+                            $this->cacheFile = \PHP_CodeSniffer\Util\Common::realpath(\substr($arg, 6));
                             // It may not exist and return false instead.
                             if ($this->cacheFile === \false) {
                                 $this->cacheFile = \substr($arg, 6);
@@ -746,9 +746,9 @@ class Config
                                 } else {
                                     if ($dir[0] === '/') {
                                         // An absolute path.
-                                        $dir = Util\Common::realpath($dir);
+                                        $dir = \PHP_CodeSniffer\Util\Common::realpath($dir);
                                     } else {
-                                        $dir = Util\Common::realpath(\getcwd() . '/' . $dir);
+                                        $dir = \PHP_CodeSniffer\Util\Common::realpath(\getcwd() . '/' . $dir);
                                     }
                                     if ($dir !== \false) {
                                         // Cache file path is relative.
@@ -768,7 +768,7 @@ class Config
                                 $files = \explode(',', \substr($arg, 10));
                                 $bootstrap = [];
                                 foreach ($files as $file) {
-                                    $path = Util\Common::realpath($file);
+                                    $path = \PHP_CodeSniffer\Util\Common::realpath($file);
                                     if ($path === \false) {
                                         $error = 'ERROR: The specified bootstrap file "' . $file . '" does not exist' . \PHP_EOL . \PHP_EOL;
                                         $error .= $this->printShortUsage(\true);
@@ -781,7 +781,7 @@ class Config
                             } else {
                                 if (\substr($arg, 0, 10) === 'file-list=') {
                                     $fileList = \substr($arg, 10);
-                                    $path = Util\Common::realpath($fileList);
+                                    $path = \PHP_CodeSniffer\Util\Common::realpath($fileList);
                                     if ($path === \false) {
                                         $error = 'ERROR: The specified file list "' . $fileList . '" does not exist' . \PHP_EOL . \PHP_EOL;
                                         $error .= $this->printShortUsage(\true);
@@ -801,7 +801,7 @@ class Config
                                         if (isset(self::$overriddenDefaults['stdinPath']) === \true) {
                                             break;
                                         }
-                                        $this->stdinPath = Util\Common::realpath(\substr($arg, 11));
+                                        $this->stdinPath = \PHP_CodeSniffer\Util\Common::realpath(\substr($arg, 11));
                                         // It may not exist and return false instead, so use whatever they gave us.
                                         if ($this->stdinPath === \false) {
                                             $this->stdinPath = \trim(\substr($arg, 11));
@@ -812,11 +812,11 @@ class Config
                                             if (isset(self::$overriddenDefaults['reportFile']) === \true) {
                                                 break;
                                             }
-                                            $this->reportFile = Util\Common::realpath(\substr($arg, 12));
+                                            $this->reportFile = \PHP_CodeSniffer\Util\Common::realpath(\substr($arg, 12));
                                             // It may not exist and return false instead.
                                             if ($this->reportFile === \false) {
                                                 $this->reportFile = \substr($arg, 12);
-                                                $dir = Util\Common::realpath(\dirname($this->reportFile));
+                                                $dir = \PHP_CodeSniffer\Util\Common::realpath(\dirname($this->reportFile));
                                                 if (\is_dir($dir) === \false) {
                                                     $error = 'ERROR: The specified report file path "' . $this->reportFile . '" points to a non-existent directory' . \PHP_EOL . \PHP_EOL;
                                                     $error .= $this->printShortUsage(\true);
@@ -848,7 +848,7 @@ class Config
                                                         $this->basepath = null;
                                                         break;
                                                     }
-                                                    $this->basepath = Util\Common::realpath(\substr($arg, 9));
+                                                    $this->basepath = \PHP_CodeSniffer\Util\Common::realpath(\substr($arg, 9));
                                                     // It may not exist and return false instead.
                                                     if ($this->basepath === \false) {
                                                         $this->basepath = \substr($arg, 9);
@@ -873,7 +873,7 @@ class Config
                                                                 if ($output === \false) {
                                                                     $output = null;
                                                                 } else {
-                                                                    $dir = Util\Common::realpath(\dirname($output));
+                                                                    $dir = \PHP_CodeSniffer\Util\Common::realpath(\dirname($output));
                                                                     if (\is_dir($dir) === \false) {
                                                                         $error = 'ERROR: The specified ' . $report . ' report file path "' . $output . '" points to a non-existent directory' . \PHP_EOL . \PHP_EOL;
                                                                         $error .= $this->printShortUsage(\true);
@@ -1106,7 +1106,7 @@ class Config
         if ($this->stdin === \true) {
             return;
         }
-        $file = Util\Common::realpath($path);
+        $file = \PHP_CodeSniffer\Util\Common::realpath($path);
         if (\file_exists($file) === \false) {
             if ($this->dieOnUnknownArg === \false) {
                 return;
@@ -1406,9 +1406,9 @@ class Config
         // If the installed paths are being set, make sure all known
         // standards paths are added to the autoloader.
         if ($key === 'installed_paths') {
-            $installedStandards = Util\Standards::getInstalledStandardDetails();
+            $installedStandards = \PHP_CodeSniffer\Util\Standards::getInstalledStandardDetails();
             foreach ($installedStandards as $name => $details) {
-                Autoload::addSearchPath($details['path'], $details['namespace']);
+                \PHP_CodeSniffer\Autoload::addSearchPath($details['path'], $details['namespace']);
             }
         }
         return \true;

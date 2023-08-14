@@ -7,10 +7,10 @@
  * @copyright 2019 Juliette Reinders Folmer. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Tests\Debug;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Debug;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-use BitPayVendor\PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Config;
 class JSHintUnitTest extends AbstractSniffUnitTest
 {
     /**

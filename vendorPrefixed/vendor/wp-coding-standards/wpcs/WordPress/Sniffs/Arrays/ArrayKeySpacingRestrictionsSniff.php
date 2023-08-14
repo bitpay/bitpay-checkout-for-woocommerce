@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Arrays;
 
-use BitPayVendor\PHPCSUtils\Fixers\SpacesFixer;
+use PHPCSUtils\Fixers\SpacesFixer;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 /**
  * Check for proper spacing in array key references.

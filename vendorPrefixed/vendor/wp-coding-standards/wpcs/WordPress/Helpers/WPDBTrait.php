@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\BCFile;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\BCFile;
+use PHPCSUtils\Tokens\Collections;
 /**
  * Helper utilities for sniffs which examine WPDB method calls.
  *

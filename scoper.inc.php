@@ -15,7 +15,7 @@ return [
             ->ignoreVCS(true)
             ->notName('/LICENSE|.*\\.md|.*\\.dist|Makefile|composer\\.json|composer\\.lock/')
             ->exclude([
-                'humbug',
+                'humbug'
             ]),
         Finder::create()->append([
             'composer.json',
@@ -31,7 +31,9 @@ return [
         },
     ],
     'exclude-namespaces' => [
-        'Humbug\PhpScoper'
+        'Humbug\PhpScoper',
+        'PHP_CodeSniffer',
+        'PHPCSUtils'
     ],
     'exclude-classes' => [
         'WC',

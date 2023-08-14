@@ -10,10 +10,10 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\UseStatements;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\UseStatements;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\UseStatements;
 /**
  * Verify that the `function` and `const` keyword in import `use` statements are lowercase.
  *

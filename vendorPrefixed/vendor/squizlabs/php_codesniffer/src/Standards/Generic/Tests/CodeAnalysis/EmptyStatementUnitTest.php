@@ -7,9 +7,9 @@
  * @copyright 2007-2014 Manuel Pichler. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Tests\CodeAnalysis;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\CodeAnalysis;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class EmptyStatementUnitTest extends AbstractSniffUnitTest
 {
     /**

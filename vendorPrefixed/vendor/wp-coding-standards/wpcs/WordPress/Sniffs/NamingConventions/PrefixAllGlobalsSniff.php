@@ -9,21 +9,21 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\NamingConventions;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\Context;
-use BitPayVendor\PHPCSUtils\Utils\FunctionDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\Lists;
-use BitPayVendor\PHPCSUtils\Utils\MessageHelper;
-use BitPayVendor\PHPCSUtils\Utils\ObjectDeclarations;
-use BitPayVendor\PHPCSUtils\Utils\Namespaces;
-use BitPayVendor\PHPCSUtils\Utils\Parentheses;
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
-use BitPayVendor\PHPCSUtils\Utils\Variables;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\Context;
+use PHPCSUtils\Utils\FunctionDeclarations;
+use PHPCSUtils\Utils\Lists;
+use PHPCSUtils\Utils\MessageHelper;
+use PHPCSUtils\Utils\ObjectDeclarations;
+use PHPCSUtils\Utils\Namespaces;
+use PHPCSUtils\Utils\Parentheses;
+use PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\Scopes;
+use PHPCSUtils\Utils\TextStrings;
+use PHPCSUtils\Utils\Variables;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 use BitPayVendor\WordPressCS\WordPress\Helpers\DeprecationHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\IsUnitTestTrait;

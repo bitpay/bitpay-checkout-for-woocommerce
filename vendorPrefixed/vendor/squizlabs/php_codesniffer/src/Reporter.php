@@ -7,13 +7,13 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer;
+namespace PHP_CodeSniffer;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\DeepExitException;
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Reports\Report;
-use BitPayVendor\PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Reports\Report;
+use PHP_CodeSniffer\Util\Common;
 class Reporter
 {
     /**
@@ -83,7 +83,7 @@ class Reporter
      * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If a custom report class could not be found.
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException  If a report class is incorrectly set up.
      */
-    public function __construct(Config $config)
+    public function __construct(\PHP_CodeSniffer\Config $config)
     {
         $this->config = $config;
         foreach ($config->reports as $type => $output) {
@@ -98,7 +98,7 @@ class Reporter
                     $error = "ERROR: Custom report \"{$type}\" not found" . \PHP_EOL;
                     throw new DeepExitException($error, 3);
                 }
-                $reportClassName = Autoload::loadFile($filename);
+                $reportClassName = \PHP_CodeSniffer\Autoload::loadFile($filename);
             } else {
                 if (\class_exists('PHP_CodeSniffer\\Reports\\' . \ucfirst($type)) === \true) {
                     // PHPCS native report.
@@ -109,7 +109,7 @@ class Reporter
                         $reportClassName = $type;
                     } else {
                         // OK, so not a FQN, try and find the report using the registered namespaces.
-                        $registeredNamespaces = Autoload::getSearchPaths();
+                        $registeredNamespaces = \PHP_CodeSniffer\Autoload::getSearchPaths();
                         $trimmedType = \ltrim($type, '\\');
                         foreach ($registeredNamespaces as $nsPrefix) {
                             if ($nsPrefix === '') {

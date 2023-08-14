@@ -7,11 +7,11 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Util;
+namespace PHP_CodeSniffer\Util;
 
-use BitPayVendor\PHP_CodeSniffer\Autoload;
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Autoload;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
 class Cache
 {
     /**
@@ -93,7 +93,7 @@ class Cache
             if ($file->isFile() === \true && \substr($filename, -4) !== '.php') {
                 return \false;
             }
-            $filePath = Common::realpath($key);
+            $filePath = \PHP_CodeSniffer\Util\Common::realpath($key);
             if ($filePath === \false) {
                 return \false;
             }
@@ -152,7 +152,7 @@ class Cache
             }
             $paths = [];
             foreach ($config->files as $file) {
-                $file = Common::realpath($file);
+                $file = \PHP_CodeSniffer\Util\Common::realpath($file);
                 while ($file !== \DIRECTORY_SEPARATOR) {
                     if (isset($paths[$file]) === \false) {
                         $paths[$file] = 1;

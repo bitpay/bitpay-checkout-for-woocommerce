@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\PassedParameters;
 /**
  * Helper utilities for recognizing functions related to the WP Hook mechanism.
  *

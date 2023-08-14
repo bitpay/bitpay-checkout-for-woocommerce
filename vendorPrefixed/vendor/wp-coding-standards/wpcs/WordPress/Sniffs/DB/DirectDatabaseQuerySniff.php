@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\DB;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 /**

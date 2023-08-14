@@ -10,11 +10,11 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\ControlStructures;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\ControlStructures;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\ControlStructures;
+use PHPCSUtils\Utils\GetTokensAsString;
 /**
  * Disallow `if` statements as the only statement in an `else` block.
  *

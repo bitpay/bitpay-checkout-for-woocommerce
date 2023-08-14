@@ -7,9 +7,9 @@
  * @copyright 2019 Matthew Peveler
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Tests\Files;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Files;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class ExecutableFileUnitTest extends AbstractSniffUnitTest
 {
     /**

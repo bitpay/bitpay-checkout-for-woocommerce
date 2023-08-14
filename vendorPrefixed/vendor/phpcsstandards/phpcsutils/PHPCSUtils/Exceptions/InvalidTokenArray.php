@@ -8,9 +8,9 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Exceptions;
+namespace PHPCSUtils\Exceptions;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 /**
  * Exception thrown when an non-existent token array is requested.
  *

@@ -8,10 +8,10 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Tokens;
+namespace PHPCSUtils\Tokens;
 
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
-use BitPayVendor\PHPCSUtils\Exceptions\InvalidTokenArray;
+use PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\Exceptions\InvalidTokenArray;
 /**
  * Collections of related tokens as often used and needed for sniffs.
  *

@@ -9,10 +9,10 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress;
 
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff as PHPCS_Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\TextStrings;
+use PHP_CodeSniffer\Sniffs\Sniff as PHPCS_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\TextStrings;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ArrayWalkingFunctionsHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\SanitizingFunctionsTrait;

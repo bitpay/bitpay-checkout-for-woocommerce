@@ -8,7 +8,7 @@
  * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
  * @link      https://github.com/PHPCSStandards/PHPCSUtils
  */
-namespace BitPayVendor\PHPCSUtils\Internal;
+namespace PHPCSUtils\Internal;
 
 /**
  * Cache for function results which are not directly related to a $phpcsFile.

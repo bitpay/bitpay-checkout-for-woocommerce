@@ -10,12 +10,12 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Sniffs\UseStatements;
 
-use BitPayVendor\PHP_CodeSniffer\Exceptions\RuntimeException;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\Namespaces;
-use BitPayVendor\PHPCSUtils\Utils\UseStatements;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\Namespaces;
+use PHPCSUtils\Utils\UseStatements;
 /**
  * Disallow function import `use` statements.
  *

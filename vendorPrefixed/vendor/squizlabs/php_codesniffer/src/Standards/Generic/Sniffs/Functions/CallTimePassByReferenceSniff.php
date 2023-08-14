@@ -7,11 +7,11 @@
  * @copyright 2009-2014 Florian Grandel
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-use BitPayVendor\PHP_CodeSniffer\Sniffs\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 class CallTimePassByReferenceSniff implements Sniff
 {
     /**

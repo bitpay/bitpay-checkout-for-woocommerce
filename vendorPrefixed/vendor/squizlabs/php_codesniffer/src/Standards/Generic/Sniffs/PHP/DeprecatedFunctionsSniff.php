@@ -8,9 +8,9 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
-class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
+class DeprecatedFunctionsSniff extends \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff
 {
     /**
      * A list of forbidden functions with their alternatives.

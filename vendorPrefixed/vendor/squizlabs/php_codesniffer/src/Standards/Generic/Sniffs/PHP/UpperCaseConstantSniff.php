@@ -7,10 +7,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
-use BitPayVendor\PHP_CodeSniffer\Files\File;
-class UpperCaseConstantSniff extends LowerCaseConstantSniff
+use PHP_CodeSniffer\Files\File;
+class UpperCaseConstantSniff extends \PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\LowerCaseConstantSniff
 {
     /**
      * Processes a non-type declaration constant.

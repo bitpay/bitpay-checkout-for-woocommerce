@@ -10,8 +10,8 @@
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\WhiteSpace;
 
 use BitPayVendor\WordPressCS\WordPress\Sniff;
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\Utils\UseStatements;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\Utils\UseStatements;
 /**
  * Enforces spacing around logical operators and assignments, based upon Squiz code.
  *

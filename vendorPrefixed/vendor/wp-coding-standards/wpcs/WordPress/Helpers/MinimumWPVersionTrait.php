@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Helpers;
 
-use BitPayVendor\PHPCSUtils\BackCompat\Helper;
+use PHPCSUtils\BackCompat\Helper;
 /**
  * Helper utilities for sniffs which take the minimum supported WP version of the
  * code under examination into account.

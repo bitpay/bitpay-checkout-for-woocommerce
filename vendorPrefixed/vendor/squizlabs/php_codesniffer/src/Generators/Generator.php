@@ -10,10 +10,10 @@
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Generators;
+namespace PHP_CodeSniffer\Generators;
 
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
-use BitPayVendor\PHP_CodeSniffer\Autoload;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Autoload;
 abstract class Generator
 {
     /**

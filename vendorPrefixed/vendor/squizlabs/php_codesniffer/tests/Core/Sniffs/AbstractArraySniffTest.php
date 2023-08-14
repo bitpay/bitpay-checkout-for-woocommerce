@@ -7,9 +7,9 @@
  * @copyright 2006-2020 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core\Sniffs;
+namespace PHP_CodeSniffer\Tests\Core\Sniffs;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 class AbstractArraySniffTest extends AbstractMethodUnitTest
 {
     /**
@@ -31,7 +31,7 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
      */
     public static function setUpBeforeClass()
     {
-        self::$sniff = new AbstractArraySniffTestable();
+        self::$sniff = new \PHP_CodeSniffer\Tests\Core\Sniffs\AbstractArraySniffTestable();
         parent::setUpBeforeClass();
     }
     //end setUpBeforeClass()

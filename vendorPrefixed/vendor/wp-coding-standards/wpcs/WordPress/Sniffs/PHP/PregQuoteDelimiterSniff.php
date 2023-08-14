@@ -9,7 +9,7 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\PHP;
 
-use BitPayVendor\PHPCSUtils\Utils\PassedParameters;
+use PHPCSUtils\Utils\PassedParameters;
 use BitPayVendor\WordPressCS\WordPress\AbstractFunctionParameterSniff;
 /**
  * Flag calling preg_quote() without the second ($delimiter) parameter.

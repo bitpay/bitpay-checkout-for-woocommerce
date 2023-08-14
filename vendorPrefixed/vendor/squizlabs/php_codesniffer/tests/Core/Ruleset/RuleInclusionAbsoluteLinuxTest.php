@@ -7,10 +7,10 @@
  * @copyright 2019 Juliette Reinders Folmer. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Tests\Core\Ruleset;
+namespace PHP_CodeSniffer\Tests\Core\Ruleset;
 
-use BitPayVendor\PHP_CodeSniffer\Config;
-use BitPayVendor\PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
 use BitPayVendor\PHPUnit\Framework\TestCase;
 class RuleInclusionAbsoluteLinuxTest extends TestCase
 {
@@ -85,7 +85,7 @@ class RuleInclusionAbsoluteLinuxTest extends TestCase
         $this->assertObjectHasAttribute('sniffCodes', $this->ruleset);
         $this->assertCount(1, $this->ruleset->sniffCodes);
         $this->assertArrayHasKey('Generic.Formatting.SpaceAfterNot', $this->ruleset->sniffCodes);
-        $this->assertSame('BitPayVendor\\PHP_CodeSniffer\\Standards\\Generic\\Sniffs\\Formatting\\SpaceAfterNotSniff', $this->ruleset->sniffCodes['Generic.Formatting.SpaceAfterNot']);
+        $this->assertSame('PHP_CodeSniffer\\Standards\\Generic\\Sniffs\\Formatting\\SpaceAfterNotSniff', $this->ruleset->sniffCodes['Generic.Formatting.SpaceAfterNot']);
         // Test that the sniff properties are correctly set.
         $this->assertSame('10', $this->ruleset->sniffs['PHP_CodeSniffer\\Standards\\Generic\\Sniffs\\Formatting\\SpaceAfterNotSniff']->spacing);
     }

@@ -9,9 +9,9 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\PHP;
 
-use BitPayVendor\PHP_CodeSniffer\Util\Tokens;
-use BitPayVendor\PHPCSUtils\BackCompat\BCFile;
-use BitPayVendor\PHPCSUtils\Utils\GetTokensAsString;
+use PHP_CodeSniffer\Util\Tokens;
+use PHPCSUtils\BackCompat\BCFile;
+use PHPCSUtils\Utils\GetTokensAsString;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;
 use BitPayVendor\WordPressCS\WordPress\Sniff;
 /**

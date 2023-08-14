@@ -10,7 +10,7 @@
  */
 namespace BitPayVendor\PHPCSExtra\Universal\Helpers;
 
-use BitPayVendor\PHP_CodeSniffer\Tokenizers\Tokenizer;
+use PHP_CodeSniffer\Tokenizers\Tokenizer;
 /**
  * Dummy tokenizer class to allow for accessing the replaceTabsInToken() method.
  *

@@ -7,9 +7,9 @@
  * @copyright 2006-2017 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Standards\Generic\Tests\WhiteSpace;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\WhiteSpace;
 
-use BitPayVendor\PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class LanguageConstructSpacingUnitTest extends AbstractSniffUnitTest
 {
     /**

@@ -23,7 +23,7 @@ if (\is_file(__DIR__ . '/../autoload.php') === \true) {
 } else {
     include_once 'PHP/CodeSniffer/autoload.php';
 }
-$tokens = new \BitPayVendor\PHP_CodeSniffer\Util\Tokens();
+$tokens = new \PHP_CodeSniffer\Util\Tokens();
 // Compatibility for PHPUnit < 6 and PHPUnit 6+.
 if (\class_exists('BitPayVendor\\PHPUnit_Framework_TestSuite') === \true && \class_exists('BitPayVendor\\PHPUnit\\Framework\\TestSuite') === \false) {
     \class_alias('BitPayVendor\\PHPUnit_Framework_TestSuite', 'PHPUnit' . '\\Framework\\TestSuite');

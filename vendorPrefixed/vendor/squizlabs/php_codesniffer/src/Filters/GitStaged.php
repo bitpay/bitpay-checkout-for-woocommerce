@@ -9,10 +9,10 @@
  * @copyright 2018 Juliette Reinders Folmer. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
-namespace BitPayVendor\PHP_CodeSniffer\Filters;
+namespace PHP_CodeSniffer\Filters;
 
-use BitPayVendor\PHP_CodeSniffer\Util;
-class GitStaged extends ExactMatch
+use PHP_CodeSniffer\Util;
+class GitStaged extends \PHP_CodeSniffer\Filters\ExactMatch
 {
     /**
      * Get a list of blacklisted file paths.

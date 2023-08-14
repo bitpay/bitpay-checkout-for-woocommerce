@@ -9,12 +9,12 @@
  */
 namespace BitPayVendor\WordPressCS\WordPress\Sniffs\Security;
 
-use BitPayVendor\PHPCSUtils\Tokens\Collections;
-use BitPayVendor\PHPCSUtils\Utils\Conditions;
-use BitPayVendor\PHPCSUtils\Utils\Context;
-use BitPayVendor\PHPCSUtils\Utils\Lists;
-use BitPayVendor\PHPCSUtils\Utils\MessageHelper;
-use BitPayVendor\PHPCSUtils\Utils\Scopes;
+use PHPCSUtils\Tokens\Collections;
+use PHPCSUtils\Utils\Conditions;
+use PHPCSUtils\Utils\Context;
+use PHPCSUtils\Utils\Lists;
+use PHPCSUtils\Utils\MessageHelper;
+use PHPCSUtils\Utils\Scopes;
 use BitPayVendor\WordPressCS\WordPress\Helpers\ContextHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\RulesetPropertyHelper;
 use BitPayVendor\WordPressCS\WordPress\Helpers\UnslashingFunctionsHelper;
