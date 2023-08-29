@@ -84,13 +84,13 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => 'BitPay-Accepted-CardGroup',
 			),
-			'bitpay_logo_image_white'                    => array(
+			'bitpay_logo_image_white'              => array(
 				'id'          => 'bitpay_logo',
 				'description' => '<img src="' . $settings->get_payment_logo_url()
 					. '" style="background-color: white;"/>',
 				'type'        => 'title',
 			),
-			'bitpay_logo_image_dark'                    => array(
+			'bitpay_logo_image_dark'               => array(
 				'id'          => 'bitpay_logo',
 				'description' => '<img src="' . $settings->get_payment_logo_url()
 					. '" style="background-color: black;"/>',

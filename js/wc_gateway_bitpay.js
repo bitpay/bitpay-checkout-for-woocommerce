@@ -9,7 +9,7 @@ jQuery( document ).ready(
 			"change",
 			function () {
 				const white = jQuery( "#woocommerce_bitpay_checkout_gateway_bitpay_logo_image_white" ).next();
-				const dark = jQuery( "#woocommerce_bitpay_checkout_gateway_bitpay_logo_image_dark" ).next();
+				const dark  = jQuery( "#woocommerce_bitpay_checkout_gateway_bitpay_logo_image_dark" ).next();
 				const url   = window.location.origin + '/wp-content/plugins/bitpay-checkout-for-woocommerce/images/'
 				+ this.value + '.svg'
 
