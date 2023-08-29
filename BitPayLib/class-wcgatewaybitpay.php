@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.0.0
+ * Version: 5.2.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -28,7 +28,6 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 		if ( empty( $_GET['woo-bitpay-return'] ) ) { // phpcs:ignore
 			$this->order_button_text = __( 'Pay with BitPay', 'woocommerce-gateway-bitpay_checkout_gateway' );
-
 		}
 
 		$this->init_form_fields();
@@ -40,6 +39,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_email_before_order_table', array( $this, 'email_instructions' ), 10, 3 );
+		wp_enqueue_script( 'bitpay_wc_gateway', plugins_url( '../../js/wc_gateway_bitpay.js', __FILE__ ), null, 1, false );
 	}
 	public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
 		if ( $this->instructions && ! $sent_to_admin && 'bitpay_checkout_gateway' === $order->get_payment_method() && $order->has_status( 'processing' ) ) {
@@ -47,6 +47,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 		}
 	}
 	public function init_form_fields() {
+		$settings        = new BitPayPaymentSettings();
 		$wc_statuses_arr = wc_get_order_statuses();
 		unset( $wc_statuses_arr['wc-cancelled'] );
 		unset( $wc_statuses_arr['wc-refunded'] );
@@ -61,6 +62,39 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'type'        => 'checkbox',
 				'description' => '',
 				'default'     => 'no',
+			),
+			'bitpay_logo'                          => array(
+				'title'       => __( 'BitPay Logo', 'woocommerce' ),
+				'type'        => 'select',
+				'description' => '',
+				'options'     => array(
+					'BitPay-Accepted-CardGroup'          => 'BitPay Accepted',
+					'BitPay-Accepted-CardGroup-DarkMode' => 'BitPay Accepted (Dark mode)',
+					'Pay-with-BitPay-CardGroup'          => 'Pay with BitPay',
+					'Pay-with-BitPay-CardGroup-DarkMode' => 'Pay with BitPay (Dark mode)',
+					'BitPay-Accepted-Card-Alt'           => 'BitPay Accepted Card - Alt',
+					'BitPay-Accepted-Card-Alt-DarkMode'  => 'BitPay Accepted Card - Alt (Dark mode)',
+					'BitPay-Accepted-Card'               => 'BitPay Accepted Card',
+					'BitPay-Accepted-Card-DarkMode'      => 'BitPay Accepted Card (Dark mode)',
+					'BitPay-Accepted-Card-GrayScale'     => 'BitPay Accepted Card - Grayscale',
+					'PayWith-BitPay-Card2x'              => 'Pay with BitPay Card',
+					'PayWith-BitPay-Card-Alt'            => 'Pay with BitPay Card - Alt',
+					'PayWith-BitPay-Card-GrayScale'      => 'Pay with BitPay Card - Grayscale',
+					'PayWith-BitPay-Card-DarkMode'       => 'Pay with BitPay Card (Dark mode)',
+				),
+				'default'     => 'BitPay-Accepted-CardGroup',
+			),
+			'bitpay_logo_image_white'                    => array(
+				'id'          => 'bitpay_logo',
+				'description' => '<img src="' . $settings->get_payment_logo_url()
+					. '" style="background-color: white;"/>',
+				'type'        => 'title',
+			),
+			'bitpay_logo_image_dark'                    => array(
+				'id'          => 'bitpay_logo',
+				'description' => '<img src="' . $settings->get_payment_logo_url()
+					. '" style="background-color: black;"/>',
+				'type'        => 'title',
 			),
 			'bitpay_checkout_info'                 => array(
 				'description' => __( 'You should not ship any products until BitPay has finalized your transaction.<br>The order will stay in a <b>Hold</b> and/or <b>Processing</b> state, and will automatically change to <b>Completed</b> after the payment has been confirmed.', 'woocommerce' ),
@@ -244,8 +278,9 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 	}
 
 	private function get_icon_on_payment_page(): string {
-		$brand = '//bitpay.com/cdn/merchant-resources/pay-with-bitpay-card-group.svg';
-		return $brand . '" class="bitpay_logo"';
+		$settings = new BitPayPaymentSettings();
+
+		return $settings->get_payment_logo_url() . '" id="bitpay_logo';
 	}
 
 	private function get_processing_link(): string {

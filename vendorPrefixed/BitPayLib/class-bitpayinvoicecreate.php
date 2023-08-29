@@ -11,7 +11,7 @@ use BitPayVendor\BitPaySDK\Model\Invoice\Invoice;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.0.0
+ * Version: 5.2.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -71,6 +71,7 @@ class BitPayInvoiceCreate
             // phpcs:ignore
             exit;
         } catch (BitPayException $e) {
+            $this->bitpay_logger->execute($e->getMessage(), 'NEW BITPAY INVOICE', \false, \true);
             $error_url = get_home_url() . '/' . $bitpay_checkout_options['bitpay_checkout_error'];
             $order = new \WC_Order($order_id);
             $items = $order->get_items();
@@ -89,6 +90,7 @@ class BitPayInvoiceCreate
             // phpcs:ignore
             die;
         } catch (\Exception $e) {
+            $this->bitpay_logger->execute($e->getMessage(), 'NEW BITPAY INVOICE', \false, \true);
             global $woocommerce;
             $cart_url = $woocommerce->cart->get_cart_url();
             wp_redirect($cart_url);

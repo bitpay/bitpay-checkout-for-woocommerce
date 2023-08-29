@@ -30,7 +30,7 @@ if (!function_exists('humbug_phpscoper_expose_class')) {
 }
 humbug_phpscoper_expose_class('JsonMapper', 'BitPayVendor\JsonMapper');
 humbug_phpscoper_expose_class('JsonMapper_Exception', 'BitPayVendor\JsonMapper_Exception');
-humbug_phpscoper_expose_class('ComposerAutoloaderInitcf583310376124902e9ac538bdad4c87', 'BitPayVendor\ComposerAutoloaderInitcf583310376124902e9ac538bdad4c87');
+humbug_phpscoper_expose_class('ComposerAutoloaderInite162ea33b4500611893693c28524b1e9', 'BitPayVendor\ComposerAutoloaderInite162ea33b4500611893693c28524b1e9');
 humbug_phpscoper_expose_class('ErrorTest', 'BitPayVendor\ErrorTest');
 humbug_phpscoper_expose_class('SecureRandomTest', 'BitPayVendor\SecureRandomTest');
 humbug_phpscoper_expose_class('Base58Test', 'BitPayVendor\Base58Test');
