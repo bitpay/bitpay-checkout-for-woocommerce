@@ -2,8 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.1.0
+* Generate vendors to avoid potential conflicts between plugins (inconsistent version of same vendor)
+
 # 5.0.1
 * Fix support for PHP 8.0
+
 # 5.0.0
 * Improve code quality
 * Use BitPay SDK
