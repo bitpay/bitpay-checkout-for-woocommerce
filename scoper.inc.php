@@ -22,7 +22,6 @@ return [
         ]),
     ],
     'exclude-files' => [
-        // 'src/an-excluded-file.php',
         ...$excludedFiles,
     ],
     'patchers' => [
