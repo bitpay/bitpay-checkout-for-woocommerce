@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.1.1
+* Removed dead code that caused notice
+
 # 5.1.0
 * Generate vendors to avoid potential conflicts between plugins (inconsistent version of same vendor)
 

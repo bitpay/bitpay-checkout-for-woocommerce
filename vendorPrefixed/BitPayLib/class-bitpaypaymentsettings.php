@@ -7,25 +7,12 @@ namespace BitPayVendor\BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.1.0
+ * Version: 5.1.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayPaymentSettings
 {
-    public function define_payment_gateway() : void
-    {
-        if (is_checkout() && !is_wc_endpoint_url()) {
-            global $woocommerce;
-            $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
-            $bitpay_checkout_product = $bitpay_checkout_options['bitpay_checkout_product'];
-            $default_payment_id = 'bitpay_checkout_gateway';
-            if ((int) $bitpay_checkout_product === 1 && isset($_GET['payment']) && $_GET['payment'] === 'bitpay') {
-                // phpcs:ignore
-                WC()->session->set('chosen_payment_method', $default_payment_id);
-            }
-        }
-    }
     public function wc_bitpay_checkout_add_to_gateways(array $gateways) : array
     {
         $gateways[] = new WcGatewayBitpay();

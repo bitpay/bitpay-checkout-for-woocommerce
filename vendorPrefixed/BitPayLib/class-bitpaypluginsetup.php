@@ -8,7 +8,7 @@ use WP_REST_Request;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.1.0
+ * Version: 5.1.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -35,7 +35,6 @@ class BitPayPluginSetup
         register_activation_hook(__FILE__, array($this, 'setup_plugin'));
         register_activation_hook(__FILE__, array($this, 'add_error_page'));
         add_action('plugins_loaded', array($this, 'validate_wc_payment_gateway'), 11);
-        add_action('template_redirect', array($this, 'bitpay_default_payment_gateway'));
         add_action('woocommerce_widget_shopping_cart_buttons', array($this, 'bitpay_mini_checkout'), 20);
         add_action('template_redirect', array($this, 'create_bitpay_invoice'));
         add_action('admin_notices', array($this, 'update_db'));
@@ -100,10 +99,6 @@ class BitPayPluginSetup
                 // phpcs:ignore
             }
         }
-    }
-    public function bitpay_default_payment_gateway() : void
-    {
-        $this->bitpay_payment_settings->define_payment_gateway();
     }
     public function bitpay_mini_checkout() : void
     {

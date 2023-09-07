@@ -111,6 +111,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 5.1.1 =
+* Removed dead code that caused notice
+
 = 5.1.0 =
 * Generate vendors to avoid potential conflicts between plugins (inconsistent version of same vendor)
 
