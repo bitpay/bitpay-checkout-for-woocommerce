@@ -4,15 +4,15 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Invoice;
 
 /**
  * For a refunded invoice, this object will contain the details of executed refunds for the corresponding invoice.
- * @see <a href="https://bitpay.readme.io/reference/invoices">REST API Invoices</a>
+ *
+ * @package BitPaySDK\Model\Invoice
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/invoices REST API Invoices
  */
 class RefundInfo
 {

@@ -11,7 +11,7 @@ use BitPayVendor\BitPaySDK\Model\Currency;
 use BitPayVendor\BitPaySDK\Model\Invoice\Buyer;
 use BitPayVendor\BitPaySDK\Model\Invoice\Invoice;
 use BitPayVendor\BitPaySDK\Model\Invoice\Refund;
-class RefundClientTest extends AbstractClientTest
+class RefundClientTest extends AbstractClientTestCase
 {
     public function testCreateRefund() : void
     {

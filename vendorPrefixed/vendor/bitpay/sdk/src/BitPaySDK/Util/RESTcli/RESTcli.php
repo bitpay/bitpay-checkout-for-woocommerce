@@ -4,10 +4,6 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/**
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Util\RESTcli;
 
 use BitPayVendor\BitPayKeyUtils\KeyHelper\PrivateKey;
@@ -26,8 +22,9 @@ use BitPayVendor\GuzzleHttp\Exception\TooManyRedirectsException;
 use BitPayVendor\GuzzleHttp\Psr7\Response as Response;
 use BitPayVendor\GuzzleHttp\RequestOptions as RequestOptions;
 /**
- * Class RESTcli
- * @package BitPaySDK\Util\RESTcli
+ * @package BitPaySDK\Util
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
  */
 class RESTcli
 {

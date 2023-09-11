@@ -4,17 +4,15 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Invoice;
 
 use BitPayVendor\BitPaySDK\Exceptions\BitPayException;
 use BitPayVendor\BitPaySDK\Model\Currency;
 /**
- * @package Bitpay
- * @see <a href="https://bitpay.readme.io/reference/invoices">REST API Invoices</a>
+ * @package BitPaySDK\Model\Invoice
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/invoices REST API Invoices
  */
 class Invoice
 {
@@ -1454,7 +1452,7 @@ class Invoice
      * Gets shopper
      *
      * This object will be available on the invoice if a shopper signs in on an invoice using his BitPay ID.
-     * See the following <a href="https://blog.bitpay.com/bitpay-dashboard-id/">blogpost</a> for more information.
+     * @see https://blog.bitpay.com/bitpay-dashboard-id for more information.
      *
      * @return Shopper|null the shopper
      */
@@ -1466,7 +1464,7 @@ class Invoice
      * Sets shopper
      *
      * This object will be available on the invoice if a shopper signs in on an invoice using his BitPay ID.
-     * See the following <a href="https://blog.bitpay.com/bitpay-dashboard-id/">blogpost</a> for more information.
+     * @see https://blog.bitpay.com/bitpay-dashboard-id for more information.
      *
      * @param Shopper $shopper the shopper
      */
@@ -1477,8 +1475,8 @@ class Invoice
     /**
      * Gets billId
      *
-     * This field will be in the invoice object only if the invoice was generated from a bill, see the
-     * <a href="https://bitpay.com/api/#rest-api-resources-bills">Bills</a> resource for more information
+     * This field will be in the invoice object only if the invoice was generated from a bill,
+     * @see https://bitpay.com/api/#rest-api-resources-bills resource for more information
      *
      * @return string|null
      */
@@ -1489,8 +1487,8 @@ class Invoice
     /**
      * Sets billId
      *
-     * This field will be in the invoice object only if the invoice was generated from a bill, see the
-     * <a href="https://bitpay.com/api/#rest-api-resources-bills">Bills</a> resource for more information
+     * This field will be in the invoice object only if the invoice was generated from a bill,
+     * @see https://bitpay.com/api/#rest-api-resources-bills resource for more information
      *
      * @param string $billId the bill id
      */

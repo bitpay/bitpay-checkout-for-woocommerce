@@ -8,8 +8,11 @@ namespace BitPayVendor\BitPaySDK\Model\Invoice;
 
 /**
  * Class RefundWebhook
+ *
  * @package BitPaySDK\Model\Invoice
- * @see <a href="https://bitpay.readme.io/reference/refunds-1">Webhooks refunds</a>
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/refunds-1 Webhooks refunds
  */
 class RefundWebhook
 {

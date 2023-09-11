@@ -12,8 +12,10 @@ namespace BitPayVendor\BitPaySDK\Model\Payout;
 
 use BitPayVendor\BitPaySDK\Exceptions\PayoutRecipientException;
 /**
- * @package Bitpay
- * @see <a href="https://bitpay.readme.io/reference/payouts">REST API Payouts</a>
+ * @package BitPaySDK\Model\Payout
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/payouts REST API Payouts
  */
 class PayoutRecipients
 {
