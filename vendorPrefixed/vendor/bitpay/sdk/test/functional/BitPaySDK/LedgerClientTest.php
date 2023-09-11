@@ -7,7 +7,7 @@ declare (strict_types=1);
 namespace BitPayVendor\BitPaySDK\Functional;
 
 use BitPayVendor\BitPaySDK\Exceptions\LedgerQueryException;
-class LedgerClientTest extends AbstractClientTest
+class LedgerClientTest extends AbstractClientTestCase
 {
     public function testGetLedger() : void
     {

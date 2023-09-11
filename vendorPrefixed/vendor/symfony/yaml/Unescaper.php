@@ -41,9 +41,7 @@ class Unescaper
      */
     public function unescapeDoubleQuotedString(string $value) : string
     {
-        $callback = function ($match) {
-            return $this->unescapeCharacter($match[0]);
-        };
+        $callback = fn($match) => $this->unescapeCharacter($match[0]);
         // evaluate the string
         return \preg_replace_callback('/' . self::REGEX_ESCAPED_CHARACTER . '/u', $callback, $value);
     }
@@ -54,56 +52,34 @@ class Unescaper
      */
     private function unescapeCharacter(string $value) : string
     {
-        switch ($value[1]) {
-            case '0':
-                return "\x00";
-            case 'a':
-                return "\x07";
-            case 'b':
-                return "\x08";
-            case 't':
-                return "\t";
-            case "\t":
-                return "\t";
-            case 'n':
-                return "\n";
-            case 'v':
-                return "\v";
-            case 'f':
-                return "\f";
-            case 'r':
-                return "\r";
-            case 'e':
-                return "\x1b";
-            case ' ':
-                return ' ';
-            case '"':
-                return '"';
-            case '/':
-                return '/';
-            case '\\':
-                return '\\';
-            case 'N':
-                // U+0085 NEXT LINE
-                return "";
-            case '_':
-                // U+00A0 NO-BREAK SPACE
-                return " ";
-            case 'L':
-                // U+2028 LINE SEPARATOR
-                return " ";
-            case 'P':
-                // U+2029 PARAGRAPH SEPARATOR
-                return " ";
-            case 'x':
-                return self::utf8chr(\hexdec(\substr($value, 2, 2)));
-            case 'u':
-                return self::utf8chr(\hexdec(\substr($value, 2, 4)));
-            case 'U':
-                return self::utf8chr(\hexdec(\substr($value, 2, 8)));
-            default:
-                throw new ParseException(\sprintf('Found unknown escape character "%s".', $value));
-        }
+        return match ($value[1]) {
+            '0' => "\x00",
+            'a' => "\x07",
+            'b' => "\x08",
+            't' => "\t",
+            "\t" => "\t",
+            'n' => "\n",
+            'v' => "\v",
+            'f' => "\f",
+            'r' => "\r",
+            'e' => "\x1b",
+            ' ' => ' ',
+            '"' => '"',
+            '/' => '/',
+            '\\' => '\\',
+            // U+0085 NEXT LINE
+            'N' => "",
+            // U+00A0 NO-BREAK SPACE
+            '_' => " ",
+            // U+2028 LINE SEPARATOR
+            'L' => " ",
+            // U+2029 PARAGRAPH SEPARATOR
+            'P' => " ",
+            'x' => self::utf8chr(\hexdec(\substr($value, 2, 2))),
+            'u' => self::utf8chr(\hexdec(\substr($value, 2, 4))),
+            'U' => self::utf8chr(\hexdec(\substr($value, 2, 8))),
+            default => throw new ParseException(\sprintf('Found unknown escape character "%s".', $value)),
+        };
     }
     /**
      * Get the UTF-8 character for the given code point.

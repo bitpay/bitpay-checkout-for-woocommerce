@@ -10,7 +10,7 @@ use BitPayVendor\BitPaySDK\Exceptions\PayoutRecipientCreationException;
 use BitPayVendor\BitPaySDK\Exceptions\PayoutRecipientQueryException;
 use BitPayVendor\BitPaySDK\Model\Payout\PayoutRecipient;
 use BitPayVendor\BitPaySDK\Model\Payout\PayoutRecipients;
-class PayoutRecipientsClientTest extends AbstractClientTest
+class PayoutRecipientsClientTest extends AbstractClientTestCase
 {
     /**
      * @throws PayoutRecipientCreationException

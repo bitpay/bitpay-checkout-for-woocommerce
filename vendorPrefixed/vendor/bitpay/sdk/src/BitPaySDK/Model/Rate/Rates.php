@@ -4,10 +4,6 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Rate;
 
 use BitPayVendor\BitPaySDK\Client;
@@ -15,9 +11,10 @@ use BitPayVendor\BitPaySDK\Exceptions\BitPayException;
 use BitPayVendor\BitPaySDK\Exceptions\RateException;
 use BitPayVendor\BitPaySDK\Model\Currency;
 /**
- * Class Rates
  * @package BitPaySDK\Model\Rate
- * @see <a href="https://bitpay.readme.io/reference/rates">REST API Rates</a>
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/rates REST API Rates
  */
 class Rates
 {

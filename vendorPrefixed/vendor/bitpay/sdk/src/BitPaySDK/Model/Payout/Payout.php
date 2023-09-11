@@ -4,18 +4,16 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Payout;
 
 use BitPayVendor\BitPaySDK\Exceptions\BitPayException;
 use BitPayVendor\BitPaySDK\Exceptions\PayoutException;
 use BitPayVendor\BitPaySDK\Model\Currency;
 /**
- * @package Bitpay
- * @see <a href="https://bitpay.readme.io/reference/payouts">REST API Payouts</a>
+ * @package BitPaySDK\Model\Payout
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/payouts REST API Payouts
  */
 class Payout
 {
@@ -150,7 +148,7 @@ class Payout
      *
      * @return string|null
      *
-     * @see <a href="https://bitpay.com/api/#rest-api-resources-payouts">Supported ledger currency codes</a>
+     * @see https://bitpay.com/api/#rest-api-resources-payouts Supported ledger currency codes
      */
     public function getEffectiveDate() : ?string
     {
@@ -175,7 +173,7 @@ class Payout
      * e.g. your settlement currency.
      *
      * @return string|null
-     * @see <a href="https://bitpay.com/api/#rest-api-resources-payouts">Supported ledger currency codes</a>
+     * @see https://bitpay.com/api/#rest-api-resources-payouts Supported ledger currency codes
      *
      */
     public function getLedgerCurrency() : ?string
