@@ -12,6 +12,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install Composer Dependencies
+        run: composer install --dev
       - name: Run WordPress code standard
         run: |
           ./vendorPrefixed/vendor/bin/phpcs -v --ignore=vendor,vendorPrefixed,wpcs,scoper.inc.php --standard=./phpcs.xml ./

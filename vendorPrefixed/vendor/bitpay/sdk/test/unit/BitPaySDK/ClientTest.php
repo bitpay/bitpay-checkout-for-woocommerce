@@ -15,6 +15,7 @@ use BitPayVendor\BitPaySDK\Client\PayoutRecipientsClient;
 use BitPayVendor\BitPaySDK\Client\RateClient;
 use BitPayVendor\BitPaySDK\Client\RefundClient;
 use BitPayVendor\BitPaySDK\Client\SettlementClient;
+use BitPayVendor\BitPaySDK\Client\TokenClient;
 use BitPayVendor\BitPaySDK\Client\WalletClient;
 use BitPayVendor\BitPaySDK\Env;
 use BitPayVendor\BitPaySDK\Exceptions\BillCreationException;
@@ -1839,7 +1840,7 @@ class ClientTest extends TestCase
     /**
      * @dataProvider exceptionClassProvider
      */
-    public function testGetInvoiceShouldCatchRestCliExceptions(string $exceptionClass)
+    public function testGetInvoiceShouldCatchRestCliExceptions(string $exceptionClass) : void
     {
         $exampleInvoiceObject = \json_decode(\file_get_contents(__DIR__ . '/jsonResponse/getInvoice.json'));
         $restCliMock = $this->getRestCliMock();
@@ -2148,7 +2149,7 @@ class ClientTest extends TestCase
         $this->expectException(WalletQueryException::class);
         $testedObject->getSupportedWallets();
     }
-    public function exceptionClassProvider() : array
+    public static function exceptionClassProvider() : array
     {
         return [[BitPayException::class], [Exception::class]];
     }
@@ -2183,7 +2184,7 @@ class ClientTest extends TestCase
      */
     private function refreshResourceClients() : void
     {
-        $listOfClientsToClear = [BillClient::class, InvoiceClient::class, LedgerClient::class, PayoutClient::class, PayoutRecipientsClient::class, RateClient::class, RefundClient::class, SettlementClient::class, WalletClient::class];
+        $listOfClientsToClear = [BillClient::class, InvoiceClient::class, LedgerClient::class, PayoutClient::class, PayoutRecipientsClient::class, RateClient::class, RefundClient::class, SettlementClient::class, WalletClient::class, TokenClient::class];
         foreach ($listOfClientsToClear as $className) {
             $refProperty = new ReflectionProperty($className, 'instance');
             $refProperty->setAccessible(\true);

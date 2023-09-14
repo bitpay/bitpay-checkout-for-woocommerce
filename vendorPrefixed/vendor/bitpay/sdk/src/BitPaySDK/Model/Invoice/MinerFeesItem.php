@@ -8,8 +8,11 @@ namespace BitPayVendor\BitPaySDK\Model\Invoice;
 
 /**
  * Class MinerFeesItem
+ *
  * @package BitPaySDK\Model\Invoice
- * @see <a href="https://bitpay.readme.io/reference/invoices">REST API Invoices</a>
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/invoices REST API Invoices
  */
 class MinerFeesItem
 {

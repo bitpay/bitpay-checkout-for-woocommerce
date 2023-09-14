@@ -7,6 +7,13 @@ declare (strict_types=1);
 namespace BitPayVendor\BitPaySDK\Exceptions;
 
 use Exception;
+/**
+ * Generic payout batch exception.
+ *
+ * @package BitPaySDK\Exceptions
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ */
 class PayoutException extends BitPayException
 {
     private string $bitPayMessage = "An unexpected error occurred while trying to manage the payout";

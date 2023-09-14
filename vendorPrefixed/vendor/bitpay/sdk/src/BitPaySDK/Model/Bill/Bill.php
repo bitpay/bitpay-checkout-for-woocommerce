@@ -4,17 +4,14 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Bill;
 
 use BitPayVendor\BitPaySDK\Exceptions\BitPayException;
 use BitPayVendor\BitPaySDK\Model\Currency;
 /**
- * @package Bitpay
- * @see <a href="https://developer.bitpay.com/reference/bills">REST API Bills</a>
+ * @package BitPaySDK\Model\Bill
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
  */
 class Bill
 {

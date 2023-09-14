@@ -4,15 +4,15 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Settlement;
 
 /**
  * Object containing relevant information from the paid invoice.
- * @see <a href="https://bitpay.readme.io/reference/settlements">Settlements</a>
+ *
+ * @package BitPaySDK\Model\Settlement
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/settlements Settlements
  */
 class InvoiceData
 {

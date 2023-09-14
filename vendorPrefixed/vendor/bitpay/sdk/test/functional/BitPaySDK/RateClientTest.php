@@ -7,7 +7,7 @@ declare (strict_types=1);
 namespace BitPayVendor\BitPaySDK\Functional;
 
 use BitPayVendor\BitPaySDK\Model\Rate\Rate;
-class RateClientTest extends AbstractClientTest
+class RateClientTest extends AbstractClientTestCase
 {
     public function testGetRates() : void
     {

@@ -118,7 +118,7 @@ class BitPayIpnProcess {
 		if ( ! in_array( $status, $available_statuses, true ) ) {
 			$message = 'Wrong BitPay status. Status: ' . $status . ' available statuses: '
 				. print_r( $available_statuses, true ); // phpcs:ignore
-			throw new \RuntimeException( $message );
+			throw new \RuntimeException( esc_html( $message ) );
 		}
 	}
 
@@ -136,7 +136,7 @@ class BitPayIpnProcess {
 			return '//test.bitpay.com/dashboard/payments/' . $invoice_id;
 		}
 
-		throw new \RuntimeException( 'Wrong BitPay Environment ' . $env );
+		throw new \RuntimeException( 'Wrong BitPay Environment ' . esc_html( $env ) );
 	}
 
 	private function process_confirmed( Invoice $bitpay_invoice, WC_Order $order ): void {
