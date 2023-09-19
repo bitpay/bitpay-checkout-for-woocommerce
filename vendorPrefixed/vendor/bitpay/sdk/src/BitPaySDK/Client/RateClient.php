@@ -13,6 +13,13 @@ use BitPayVendor\BitPaySDK\Model\Rate\Rates;
 use BitPayVendor\BitPaySDK\Util\JsonMapperFactory;
 use BitPayVendor\BitPaySDK\Util\RESTcli\RESTcli;
 use Exception;
+/**
+ * Handles interactions with the rate endpoints.
+ *
+ * @package BitPaySDK\Client
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ */
 class RateClient
 {
     private static ?self $instance = null;

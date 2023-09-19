@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-            <title>Documentation</title>
+            <title>BitPay PHP SDK</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="../">
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,12 +19,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
 <body id="top">
     <header class="phpdocumentor-header phpdocumentor-section">
-    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">BitPay PHP SDK</a></h1>
     <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
     <label class="phpdocumentor-header__menu-icon" for="menu-button">
         <i class="fas fa-bars"></i>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -81,17 +82,17 @@
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Application.html" class="">Application</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Bitpay.html" class="">Bitpay</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/BitPaySDK.html" class="">BitPaySDK</a>
 </h4>
     <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/BitPaySDK-Client.html" class="">Client</a>
+                
+            </li>
+                    <li>
+                <a href="packages/BitPaySDK-Exceptions.html" class="">Exceptions</a>
+                
+            </li>
                     <li>
                 <a href="packages/BitPaySDK-Model.html" class="">Model</a>
                 
@@ -101,10 +102,6 @@
                 
             </li>
             </ul>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="packages/Bitpaylight.html" class="">Bitpaylight</a>
-</h4>
 
                         </section>
             
@@ -121,8 +118,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/bitpaysdk.html">BitPaySDK</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/bitpaysdk-model.html">Model</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/bitpaysdk-model-settlement.html">Settlement</a></li>
@@ -136,17 +134,24 @@
             <div class="phpdocumentor-element__package">
             in package
             <ul class="phpdocumentor-breadcrumbs">
-                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/BitPaySDK.html">BitPaySDK</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/BitPaySDK-Model.html">Model</a></li>
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/BitPaySDK-Model-Settlement.html">Settlement</a></li>
                             </ul>
         </div>
     
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">22</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
     </aside>
 
@@ -156,156 +161,177 @@
 
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">author</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
-                                                 <section class="phpdocumentor-description"><p><a href="https://bitpay.readme.io/reference/settlements">Settlements</a></p>
+                                                 <section class="phpdocumentor-description"><p>BitPay Integrations <a href="mailto:integrations@bitpay.com">integrations@bitpay.com</a></p>
 </section>
 
                                     </dd>
-                        </dl>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">license</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>http://www.opensource.org/licenses/mit-license.php MIT</p>
+</section>
 
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="https://bitpay.readme.io/reference/settlements">https://bitpay.readme.io/reference/settlements</a></span>
+                                        
+                                                 <section class="phpdocumentor-description"><p>Settlements</p>
+</section>
 
-
+                                    </dd>
+                                            </dl>
 
 
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_accountId">$accountId</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_closingDate">$closingDate</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_currency">$currency</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCompleted">$dateCompleted</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCreated">$dateCreated</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateExecuted">$dateExecuted</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_id">$id</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntries">$ledgerEntries</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntriesSum">$ledgerEntriesSum</a>
     <span>
                         &nbsp;: float|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingBalance">$openingBalance</a>
     <span>
                         &nbsp;: float|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingDate">$openingDate</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_payoutInfo">$payoutInfo</a>
     <span>
                         &nbsp;: <a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_status">$status</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_token">$token</a>
     <span>
                         &nbsp;: string|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_totalAmount">$totalAmount</a>
     <span>
                         &nbsp;: float|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldings">$withHoldings</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldingsSum">$withHoldingsSum</a>
     <span>
                         &nbsp;: float|null            </span>
 </dt>
-<dd></dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getAccountId">getAccountId()</a>
@@ -552,7 +578,8 @@
 </dt>
 <dd>Returns the Settlement object as array</dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -563,6 +590,7 @@
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -574,210 +602,7 @@
     <h4 class="phpdocumentor-element__name" id="property_accountId">
         $accountId
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_accountId" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">25</span>
 
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$accountId</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_closingDate">
-        $closingDate
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_closingDate" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">33</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$closingDate</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_currency">
-        $currency
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_currency" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">26</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$currency</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_dateCompleted">
-        $dateCompleted
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCompleted" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">31</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$dateCompleted</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_dateCreated">
-        $dateCreated
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCreated" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">29</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$dateCreated</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_dateExecuted">
-        $dateExecuted
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateExecuted" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">30</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$dateExecuted</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_id">
-        $id
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -792,13 +617,11 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$id</span>
+    <span class="phpdocumentor-signature__name">$accountId</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -809,111 +632,10 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_ledgerEntries">
-        $ledgerEntries
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntries" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <h4 class="phpdocumentor-element__name" id="property_closingDate">
+        $closingDate
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_closingDate" class="headerlink"><i class="fas fa-link"></i></a>
 
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$ledgerEntries</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_ledgerEntriesSum">
-        $ledgerEntriesSum
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntriesSum" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">35</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">float|null</span>
-    <span class="phpdocumentor-signature__name">$ledgerEntriesSum</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_openingBalance">
-        $openingBalance
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingBalance" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">34</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">float|null</span>
-    <span class="phpdocumentor-signature__name">$openingBalance</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_openingDate">
-        $openingDate
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingDate" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -928,13 +650,11 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$openingDate</span>
+    <span class="phpdocumentor-signature__name">$closingDate</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -945,30 +665,29 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_payoutInfo">
-        $payoutInfo
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_payoutInfo" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_currency">
+        $currency
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_currency" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">25</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null</span>
-    <span class="phpdocumentor-signature__name">$payoutInfo</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$currency</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -979,9 +698,43 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_status">
-        $status
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_status" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_dateCompleted">
+        $dateCompleted
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCompleted" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">30</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$dateCompleted</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_dateCreated">
+        $dateCreated
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCreated" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -996,13 +749,11 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$status</span>
+    <span class="phpdocumentor-signature__name">$dateCreated</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1013,16 +764,17 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_token">
-        $token
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_token" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_dateExecuted">
+        $dateExecuted
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateExecuted" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">29</span>
 
     </aside>
 
@@ -1030,13 +782,11 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string|null</span>
-    <span class="phpdocumentor-signature__name">$token</span>
+    <span class="phpdocumentor-signature__name">$dateExecuted</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1047,9 +797,43 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_totalAmount">
-        $totalAmount
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_totalAmount" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">23</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$id</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_ledgerEntries">
+        $ledgerEntries
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntries" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1063,14 +847,12 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">float|null</span>
-    <span class="phpdocumentor-signature__name">$totalAmount</span>
-     = <span class="phpdocumentor-signature__default-value">null</span></code>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$ledgerEntries</span>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1081,30 +863,29 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_withHoldings">
-        $withHoldings
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldings" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_ledgerEntriesSum">
+        $ledgerEntriesSum
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntriesSum" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
-    <span class="phpdocumentor-signature__name">$withHoldings</span>
-     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+        <span class="phpdocumentor-signature__type">float|null</span>
+    <span class="phpdocumentor-signature__name">$ledgerEntriesSum</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1115,9 +896,175 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_withHoldingsSum">
-        $withHoldingsSum
-        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldingsSum" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_openingBalance">
+        $openingBalance
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingBalance" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">float|null</span>
+    <span class="phpdocumentor-signature__name">$openingBalance</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_openingDate">
+        $openingDate
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingDate" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">31</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$openingDate</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_payoutInfo">
+        $payoutInfo
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_payoutInfo" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">26</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__name">$payoutInfo</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_status">
+        $status
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_status" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">27</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$status</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_token">
+        $token
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_token" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">39</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$token</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_totalAmount">
+        $totalAmount
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_totalAmount" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -1132,13 +1079,77 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">float|null</span>
+    <span class="phpdocumentor-signature__name">$totalAmount</span>
+     = <span class="phpdocumentor-signature__default-value">null</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_withHoldings">
+        $withHoldings
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldings" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">35</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$withHoldings</span>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
+
+    
+    
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_withHoldingsSum">
+        $withHoldingsSum
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldingsSum" class="headerlink"><i class="fas fa-link"></i></a>
+
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">float|null</span>
     <span class="phpdocumentor-signature__name">$withHoldingsSum</span>
      = <span class="phpdocumentor-signature__default-value">null</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
-        <section class="phpdocumentor-description"></section>
-
+    
+    
     
 
 </article>
@@ -1148,6 +1159,7 @@
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1158,11 +1170,12 @@
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -1171,15 +1184,12 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
+    
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1191,11 +1201,12 @@
     <h4 class="phpdocumentor-element__name" id="method_getAccountId">
         getAccountId()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getAccountId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">77</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
     </aside>
 
@@ -1205,17 +1216,19 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getAccountId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>String identifying the BitPay merchant. For internal use, this field can be ignored in merchant implementations.</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1226,11 +1239,12 @@
     <h4 class="phpdocumentor-element__name" id="method_getClosingDate">
         getClosingDate()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getClosingDate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">267</span>
+    <span class="phpdocumentor-element-found-in__line">266</span>
 
     </aside>
 
@@ -1240,17 +1254,19 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getClosingDate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Date &amp; time for last ledger entry used for the settlement. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1261,11 +1277,12 @@
     <h4 class="phpdocumentor-element__name" id="method_getCurrency">
         getCurrency()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getCurrency" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -1275,6 +1292,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getCurrency</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>ISO 4217 3-character currency code. This is the currency associated with the settlement.
 Supported settlement currencies are listed on https://bitpay.com/docs/settlement</p>
 </section>
@@ -1282,11 +1301,11 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1297,11 +1316,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_getDateCompleted">
         getDateCompleted()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateCompleted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">215</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -1311,17 +1331,19 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDateCompleted</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was completed. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1332,11 +1354,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_getDateCreated">
         getDateCreated()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateCreated" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">167</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -1346,17 +1369,19 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDateCreated</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was created. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1367,11 +1392,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_getDateExecuted">
         getDateExecuted()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateExecuted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">190</span>
 
     </aside>
 
@@ -1381,17 +1407,19 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getDateExecuted</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was executed. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1402,11 +1430,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_getId">
         getId()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">53</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
     </aside>
 
@@ -1416,17 +1445,19 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getId</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>String identifying the settlement; this id will also be in the description of the corresponding bank settlement.</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1437,11 +1468,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_getLedgerEntries">
         getLedgerEntries()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getLedgerEntries" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">415</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -1451,6 +1483,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getLedgerEntries</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-SettlementLedgerEntry.html"><abbr title="\BitPaySDK\Model\Settlement\SettlementLedgerEntry">SettlementLedgerEntry</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>The total sum of all ledger entries is reported in the field ledgerEntriesSum.
 A description of all ledger codes can be found</p>
 </section>
@@ -1458,11 +1492,11 @@ A description of all ledger codes can be found</p>
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-SettlementLedgerEntry.html"><abbr title="\BitPaySDK\Model\Settlement\SettlementLedgerEntry">SettlementLedgerEntry</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-SettlementLedgerEntry.html"><abbr title="\BitPaySDK\Model\Settlement\SettlementLedgerEntry">SettlementLedgerEntry</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1473,11 +1507,12 @@ A description of all ledger codes can be found</p>
     <h4 class="phpdocumentor-element__name" id="method_getLedgerEntriesSum">
         getLedgerEntriesSum()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getLedgerEntriesSum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">311</span>
 
     </aside>
 
@@ -1487,6 +1522,8 @@ A description of all ledger codes can be found</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getLedgerEntriesSum</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Sum of all ledger entries in the settlement, this means all the debits &amp; credits
 which happened between openingDate and closingDate</p>
 </section>
@@ -1494,11 +1531,11 @@ which happened between openingDate and closingDate</p>
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">float|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">float|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1509,11 +1546,12 @@ which happened between openingDate and closingDate</p>
     <h4 class="phpdocumentor-element__name" id="method_getOpeningBalance">
         getOpeningBalance()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getOpeningBalance" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -1523,15 +1561,17 @@ which happened between openingDate and closingDate</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getOpeningBalance</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">float|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">float|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1542,11 +1582,12 @@ which happened between openingDate and closingDate</p>
     <h4 class="phpdocumentor-element__name" id="method_getOpeningDate">
         getOpeningDate()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getOpeningDate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">240</span>
 
     </aside>
 
@@ -1556,6 +1597,8 @@ which happened between openingDate and closingDate</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getOpeningDate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>corresponds to the closingDate of the previous settlement executed.
 For the first settlement of an account the value will be the BitPay merchant account creation date.
 UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
@@ -1564,11 +1607,11 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1579,11 +1622,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_getPayoutInfo">
         getPayoutInfo()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getPayoutInfo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">125</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -1593,15 +1637,17 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getPayoutInfo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1612,11 +1658,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_getStatus">
         getStatus()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">145</span>
+    <span class="phpdocumentor-element-found-in__line">144</span>
 
     </aside>
 
@@ -1626,15 +1673,17 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getStatus</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1645,11 +1694,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_getToken">
         getToken()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getToken" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">447</span>
+    <span class="phpdocumentor-element-found-in__line">446</span>
 
     </aside>
 
@@ -1659,6 +1709,8 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getToken</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>This token is actually derived from the merchant facade token used during the query.
 This token is required to fetch the reconciliation report</p>
 </section>
@@ -1666,11 +1718,11 @@ This token is required to fetch the reconciliation report</p>
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1681,11 +1733,12 @@ This token is required to fetch the reconciliation report</p>
     <h4 class="phpdocumentor-element__name" id="method_getTotalAmount">
         getTotalAmount()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getTotalAmount" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">390</span>
+    <span class="phpdocumentor-element-found-in__line">389</span>
 
     </aside>
 
@@ -1695,17 +1748,19 @@ This token is required to fetch the reconciliation report</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getTotalAmount</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>totalAmount = openingBalance + ledgerEntriesSum - withholdingsSum</p>
 </section>
 
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">float|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">float|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1716,11 +1771,12 @@ This token is required to fetch the reconciliation report</p>
     <h4 class="phpdocumentor-element__name" id="method_getWithHoldings">
         getWithHoldings()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getWithHoldings" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">337</span>
 
     </aside>
 
@@ -1730,6 +1786,8 @@ This token is required to fetch the reconciliation report</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getWithHoldings</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-WithHoldings.html"><abbr title="\BitPaySDK\Model\Settlement\WithHoldings">WithHoldings</abbr></a>&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Array of withholdings. Withholdings are kept on the ledger to be used later and thus withheld
 from this settlement. Each withholding is a JSON object containing a code, amount and description field.</p>
 </section>
@@ -1737,11 +1795,11 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-WithHoldings.html"><abbr title="\BitPaySDK\Model\Settlement\WithHoldings">WithHoldings</abbr></a>&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-WithHoldings.html"><abbr title="\BitPaySDK\Model\Settlement\WithHoldings">WithHoldings</abbr></a>&gt;</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1752,11 +1810,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_getWithHoldingsSum">
         getWithHoldingsSum()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getWithHoldingsSum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">367</span>
 
     </aside>
 
@@ -1766,15 +1825,17 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getWithHoldingsSum</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float|null</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">float|null</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">float|null</span>
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1785,11 +1846,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_setAccountId">
         setAccountId()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setAccountId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">88</span>
 
     </aside>
 
@@ -1799,6 +1861,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setAccountId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$accountId</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>String identifying the BitPay merchant. For internal use, this field can be ignored in merchant implementations.</p>
 </section>
 
@@ -1815,10 +1879,6 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1830,11 +1890,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_setClosingDate">
         setClosingDate()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setClosingDate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -1844,6 +1905,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setClosingDate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$closingDate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Date &amp; time for last ledger entry used for the settlement. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
@@ -1860,10 +1923,6 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1875,11 +1934,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_setCurrency">
         setCurrency()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setCurrency" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">114</span>
 
     </aside>
 
@@ -1889,6 +1949,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setCurrency</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$currency</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>ISO 4217 3-character currency code. This is the currency associated with the settlement.
 Supported settlement currencies are listed on https://bitpay.com/docs/settlement</p>
 </section>
@@ -1906,10 +1968,6 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1921,11 +1979,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_setDateCompleted">
         setDateCompleted()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateCompleted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">227</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -1935,6 +1994,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDateCompleted</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dateCompleted</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was completed. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
@@ -1951,10 +2012,6 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -1966,11 +2023,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_setDateCreated">
         setDateCreated()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateCreated" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">179</span>
+    <span class="phpdocumentor-element-found-in__line">178</span>
 
     </aside>
 
@@ -1980,6 +2038,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDateCreated</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dateCreated</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was created. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
@@ -1996,10 +2056,6 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2011,11 +2067,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_setDateExecuted">
         setDateExecuted()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateExecuted" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">203</span>
+    <span class="phpdocumentor-element-found-in__line">202</span>
 
     </aside>
 
@@ -2025,6 +2082,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDateExecuted</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dateExecuted</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Timestamp when the settlement was executed. UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 </section>
 
@@ -2041,10 +2100,6 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2056,11 +2111,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_setId">
         setId()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setId" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">65</span>
+    <span class="phpdocumentor-element-found-in__line">64</span>
 
     </aside>
 
@@ -2070,6 +2126,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setId</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>String identifying the settlement; this id will also be in the description of the corresponding bank settlement.</p>
 </section>
 
@@ -2086,10 +2144,6 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2101,11 +2155,12 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <h4 class="phpdocumentor-element__name" id="method_setLedgerEntries">
         setLedgerEntries()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setLedgerEntries" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">428</span>
 
     </aside>
 
@@ -2115,6 +2170,8 @@ Supported settlement currencies are listed on https://bitpay.com/docs/settlement
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setLedgerEntries</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-SettlementLedgerEntry.html"><abbr title="\BitPaySDK\Model\Settlement\SettlementLedgerEntry">SettlementLedgerEntry</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ledgerEntries</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>The total sum of all ledger entries is reported in the field ledgerEntriesSum.
 A description of all ledger codes can be found</p>
 </section>
@@ -2133,7 +2190,8 @@ A description of all ledger codes can be found</p>
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setLedgerEntries#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -2144,12 +2202,8 @@ A description of all ledger codes can be found</p>
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2161,11 +2215,12 @@ A description of all ledger codes can be found</p>
     <h4 class="phpdocumentor-element__name" id="method_setLedgerEntriesSum">
         setLedgerEntriesSum()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setLedgerEntriesSum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">325</span>
+    <span class="phpdocumentor-element-found-in__line">324</span>
 
     </aside>
 
@@ -2175,6 +2230,8 @@ A description of all ledger codes can be found</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setLedgerEntriesSum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ledgerEntriesSum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Sum of all ledger entries in the settlement, this means all the debits &amp; credits
 which happened between openingDate and closingDate</p>
 </section>
@@ -2192,10 +2249,6 @@ which happened between openingDate and closingDate</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2207,11 +2260,12 @@ which happened between openingDate and closingDate</p>
     <h4 class="phpdocumentor-element__name" id="method_setOpeningBalance">
         setOpeningBalance()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setOpeningBalance" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -2221,6 +2275,8 @@ which happened between openingDate and closingDate</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setOpeningBalance</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$openingBalance</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2235,10 +2291,6 @@ which happened between openingDate and closingDate</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2250,11 +2302,12 @@ which happened between openingDate and closingDate</p>
     <h4 class="phpdocumentor-element__name" id="method_setOpeningDate">
         setOpeningDate()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setOpeningDate" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">255</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
     </aside>
 
@@ -2264,6 +2317,8 @@ which happened between openingDate and closingDate</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setOpeningDate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$openingDate</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>corresponds to the closingDate of the previous settlement executed.
 For the first settlement of an account the value will be the BitPay merchant account creation date.
 UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
@@ -2282,10 +2337,6 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2297,11 +2348,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_setPayoutInfo">
         setPayoutInfo()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setPayoutInfo" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -2311,6 +2363,8 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setPayoutInfo</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/BitPaySDK-Model-Settlement-PayoutInfo.html"><abbr title="\BitPaySDK\Model\Settlement\PayoutInfo">PayoutInfo</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$payoutInfo</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2325,10 +2379,6 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2340,11 +2390,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_setStatus">
         setStatus()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">154</span>
 
     </aside>
 
@@ -2354,6 +2405,8 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setStatus</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2368,10 +2421,6 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2383,11 +2432,12 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <h4 class="phpdocumentor-element__name" id="method_setToken">
         setToken()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setToken" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">460</span>
+    <span class="phpdocumentor-element-found-in__line">459</span>
 
     </aside>
 
@@ -2397,6 +2447,8 @@ UTC date, ISO-8601 format yyyy-mm-ddThh:mm:ssZ</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setToken</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>This token is actually derived from the merchant facade token used during the query.
 This token is required to fetch the reconciliation report</p>
 </section>
@@ -2414,10 +2466,6 @@ This token is required to fetch the reconciliation report</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2429,11 +2477,12 @@ This token is required to fetch the reconciliation report</p>
     <h4 class="phpdocumentor-element__name" id="method_setTotalAmount">
         setTotalAmount()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setTotalAmount" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">402</span>
+    <span class="phpdocumentor-element-found-in__line">401</span>
 
     </aside>
 
@@ -2443,6 +2492,8 @@ This token is required to fetch the reconciliation report</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setTotalAmount</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$totalAmount</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>totalAmount = openingBalance + ledgerEntriesSum - withholdingsSum</p>
 </section>
 
@@ -2459,10 +2510,6 @@ This token is required to fetch the reconciliation report</p>
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2474,11 +2521,12 @@ This token is required to fetch the reconciliation report</p>
     <h4 class="phpdocumentor-element__name" id="method_setWithHoldings">
         setWithHoldings()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setWithHoldings" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">351</span>
 
     </aside>
 
@@ -2488,6 +2536,8 @@ This token is required to fetch the reconciliation report</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setWithHoldings</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/BitPaySDK-Model-Settlement-WithHoldings.html"><abbr title="\BitPaySDK\Model\Settlement\WithHoldings">WithHoldings</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$withHoldings</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
         <section class="phpdocumentor-description"><p>Array of withholdings. Withholdings are kept on the ledger to be used later and thus withheld
 from this settlement. Each withholding is a JSON object containing a code, amount and description field.</p>
 </section>
@@ -2506,7 +2556,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setWithHoldings#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -2517,12 +2568,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
                                                             
                                              
                                     </dd>
-                        </dl>
+                                            </dl>
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2534,11 +2581,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_setWithHoldingsSum">
         setWithHoldingsSum()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setWithHoldingsSum" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">378</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -2548,6 +2596,8 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setWithHoldingsSum</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$withHoldingsSum</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -2562,10 +2612,6 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
                     <article
@@ -2577,11 +2623,12 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <h4 class="phpdocumentor-element__name" id="method_toArray">
         toArray()
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_toArray" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/BitPaySDK/Model/Settlement/Settlement.php"><a href="files/src-bitpaysdk-model-settlement-settlement.html"><abbr title="src/BitPaySDK/Model/Settlement/Settlement.php">Settlement.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">469</span>
 
     </aside>
 
@@ -2591,82 +2638,198 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">toArray</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            &mdash;
-        
-    
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+            </section>
+
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/BitPaySDK/Model/Settlement/Settlement.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_accountId">$accountId<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_closingDate">$closingDate<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_currency">$currency<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCompleted">$dateCompleted<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateCreated">$dateCreated<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_dateExecuted">$dateExecuted<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_id">$id<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntries">$ledgerEntries<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_ledgerEntriesSum">$ledgerEntriesSum<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingBalance">$openingBalance<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_openingDate">$openingDate<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_payoutInfo">$payoutInfo<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_status">$status<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_token">$token<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_totalAmount">$totalAmount<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldings">$withHoldings<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                                    <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#property_withHoldingsSum">$withHoldingsSum<a href="classes/BitPaySDK-Model-Settlement-Settlement.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method___construct">__construct()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getAccountId">getAccountId()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getClosingDate">getClosingDate()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getCurrency">getCurrency()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateCompleted">getDateCompleted()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateCreated">getDateCreated()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getDateExecuted">getDateExecuted()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getId">getId()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getLedgerEntries">getLedgerEntries()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getLedgerEntriesSum">getLedgerEntriesSum()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getOpeningBalance">getOpeningBalance()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getOpeningDate">getOpeningDate()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getPayoutInfo">getPayoutInfo()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getStatus">getStatus()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getToken">getToken()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getTotalAmount">getTotalAmount()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getWithHoldings">getWithHoldings()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_getWithHoldingsSum">getWithHoldingsSum()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setAccountId">setAccountId()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setClosingDate">setClosingDate()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setCurrency">setCurrency()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateCompleted">setDateCompleted()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateCreated">setDateCreated()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setDateExecuted">setDateExecuted()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setId">setId()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setLedgerEntries">setLedgerEntries()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setLedgerEntriesSum">setLedgerEntriesSum()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setOpeningBalance">setOpeningBalance()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setOpeningDate">setOpeningDate()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setPayoutInfo">setPayoutInfo()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setStatus">setStatus()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setToken">setToken()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setTotalAmount">setTotalAmount()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setWithHoldings">setWithHoldings()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_setWithHoldingsSum">setWithHoldingsSum()</a></li>
+                                            <li><a href="classes/BitPaySDK-Model-Settlement-Settlement.html#method_toArray">toArray()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -2677,7 +2840,6 @@ from this settlement. Each withholding is a JSON object containing a code, amoun
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/BitPaySDK-Model-Settlement-Settlement.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 

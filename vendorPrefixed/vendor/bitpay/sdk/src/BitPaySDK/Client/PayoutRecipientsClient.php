@@ -21,6 +21,13 @@ use BitPayVendor\BitPaySDK\Tokens;
 use BitPayVendor\BitPaySDK\Util\JsonMapperFactory;
 use BitPayVendor\BitPaySDK\Util\RESTcli\RESTcli;
 use Exception;
+/**
+ * Handles interactions with the recipients endpoints.
+ *
+ * @package BitPaySDK\Client
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ */
 class PayoutRecipientsClient
 {
     private static ?self $instance = null;

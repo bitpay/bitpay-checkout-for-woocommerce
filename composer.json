@@ -9,8 +9,7 @@
   ],
   "require": {
     "php": "^8",
-    "bitpay/sdk": "^8.0.0",
-    "humbug/php-scoper": "^0.18.3"
+    "bitpay/sdk": "^8.0.0"
   },
   "require-dev": {
     "wp-coding-standards/wpcs": "dev-develop"
@@ -20,7 +19,7 @@
   },
   "scripts": {
     "add-prefix": [
-      "php ./vendor/bin/php-scoper add-prefix --force --quiet",
+      "php php-scoper.phar add-prefix --force --quiet",
       "composer dump-autoload --working-dir vendorPrefixed"
     ],
     "dump-prefixed-vendor": "composer dump-autoload --working-dir vendorPrefixed --classmap-authoritative",

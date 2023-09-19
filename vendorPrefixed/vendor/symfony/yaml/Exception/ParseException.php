@@ -45,6 +45,8 @@ class ParseException extends RuntimeException
     }
     /**
      * Sets the snippet of code near the error.
+     *
+     * @return void
      */
     public function setSnippet(string $snippet)
     {
@@ -62,6 +64,8 @@ class ParseException extends RuntimeException
     }
     /**
      * Sets the filename where the error occurred.
+     *
+     * @return void
      */
     public function setParsedFile(string $parsedFile)
     {
@@ -77,17 +81,19 @@ class ParseException extends RuntimeException
     }
     /**
      * Sets the line where the error occurred.
+     *
+     * @return void
      */
     public function setParsedLine(int $parsedLine)
     {
         $this->parsedLine = $parsedLine;
         $this->updateRepr();
     }
-    private function updateRepr()
+    private function updateRepr() : void
     {
         $this->message = $this->rawMessage;
         $dot = \false;
-        if ('.' === \substr($this->message, -1)) {
+        if (\str_ends_with($this->message, '.')) {
             $this->message = \substr($this->message, 0, -1);
             $dot = \true;
         }

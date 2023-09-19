@@ -6,7 +6,7 @@
 declare (strict_types=1);
 namespace BitPayVendor\BitPaySDK\Functional;
 
-class TokenClientTest extends AbstractClientTest
+class TokenClientTest extends AbstractClientTestCase
 {
     public function testGetTokens() : void
     {

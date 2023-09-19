@@ -289,7 +289,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 		$test = 'https://test.bitpay.com/dashboard/settings/edit/order';
 
-		return match ($bitpay_checkout_endpoint) {
+		return match ( $bitpay_checkout_endpoint ) {
 			'production' => 'https://www.bitpay.com/dashboard/settings/edit/order',
 			default => $test
 		};

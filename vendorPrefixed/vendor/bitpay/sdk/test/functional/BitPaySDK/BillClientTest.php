@@ -9,7 +9,7 @@ namespace BitPayVendor\BitPaySDK\Functional;
 use BitPayVendor\BitPaySDK\Model\Bill\Bill;
 use BitPayVendor\BitPaySDK\Model\Bill\Item;
 use BitPayVendor\BitPaySDK\Model\Currency;
-class BillClientTest extends AbstractClientTest
+class BillClientTest extends AbstractClientTestCase
 {
     public function testCreate() : void
     {

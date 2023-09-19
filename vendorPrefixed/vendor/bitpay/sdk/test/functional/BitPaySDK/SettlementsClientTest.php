@@ -7,7 +7,7 @@ declare (strict_types=1);
 namespace BitPayVendor\BitPaySDK\Functional;
 
 use BitPayVendor\BitPaySDK\Model\Settlement\Settlement;
-class SettlementsClientTest extends AbstractClientTest
+class SettlementsClientTest extends AbstractClientTestCase
 {
     public function testGetSettlements() : void
     {

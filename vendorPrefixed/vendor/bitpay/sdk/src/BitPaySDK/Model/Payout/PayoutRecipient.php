@@ -4,15 +4,13 @@
  * Copyright (c) 2019 BitPay
  **/
 declare (strict_types=1);
-/*
- * @author BitPay Integrations <integrations@bitpay.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
 namespace BitPayVendor\BitPaySDK\Model\Payout;
 
 /**
- * @package Bitpay
- * @see <a href="https://bitpay.readme.io/reference/payouts">REST API Payouts</a>
+ * @package BitPaySDK\Model\Payout
+ * @author BitPay Integrations <integrations@bitpay.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @see https://bitpay.readme.io/reference/payouts REST API Payouts
  */
 class PayoutRecipient
 {
