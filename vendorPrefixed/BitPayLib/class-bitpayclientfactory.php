@@ -40,6 +40,6 @@ class BitPayClientFactory
         if ('production' === \strtolower($environment)) {
             return Env::PROD;
         }
-        throw new \RuntimeException('Wrong environment ' . $environment);
+        throw new \RuntimeException('Wrong environment ' . esc_html($environment));
     }
 }
