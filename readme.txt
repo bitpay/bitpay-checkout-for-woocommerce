@@ -111,6 +111,10 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 5.2.0 =
+* Add admin option to allow users to select their BitPay button
+* log create invoice issues
+
 = 5.1.0 =
 * Generate vendors to avoid potential conflicts between plugins (inconsistent version of same vendor)
 

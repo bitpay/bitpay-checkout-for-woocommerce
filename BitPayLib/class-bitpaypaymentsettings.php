@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.1.0
+ * Version: 5.2.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -137,14 +137,6 @@ class BitPayPaymentSettings {
 		return $this->get_bitpay_gateway_setting( 'bitpay_checkout_checkout_message', '' );
 	}
 
-	private function get_bitpay_gateway_setting( string $setting_name, $default_value = null ): ?string {
-		return $this->get_bitpay_gateway_settings()[ $setting_name ] ?? $default_value;
-	}
-
-	private function get_bitpay_gateway_settings(): array {
-		return get_option( 'woocommerce_bitpay_checkout_gateway_settings', array() );
-	}
-
 	public function get_close_url(): ?string {
 		return $this->get_bitpay_gateway_setting( 'bitpay_close_url', null );
 	}
@@ -169,5 +161,19 @@ class BitPayPaymentSettings {
 		}
 
 		return $slug;
+	}
+
+	public function get_payment_logo_url(): string {
+		$logo = $this->get_bitpay_gateway_setting( 'bitpay_logo', 'BitPay-Accepted-CardGroup' );
+
+		return plugins_url( '../../images/', __FILE__ ) . $logo . '.svg';
+	}
+
+	private function get_bitpay_gateway_setting( string $setting_name, $default_value = null ): ?string {
+		return $this->get_bitpay_gateway_settings()[ $setting_name ] ?? $default_value;
+	}
+
+	private function get_bitpay_gateway_settings(): array {
+		return get_option( 'woocommerce_bitpay_checkout_gateway_settings', array() );
 	}
 }

@@ -11,7 +11,7 @@ use BitPayVendor\BitPaySDK\PosClient;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.1.0
+ * Version: 5.2.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -40,6 +40,6 @@ class BitPayClientFactory
         if ('production' === \strtolower($environment)) {
             return Env::PROD;
         }
-        throw new \RuntimeException('Wrong environment ' . $environment);
+        throw new \RuntimeException('Wrong environment ' . esc_html($environment));
     }
 }

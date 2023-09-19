@@ -7,7 +7,7 @@ namespace BitPayVendor\BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.1.0
+ * Version: 5.2.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -18,7 +18,7 @@ class BitPayLogger
         $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
         $log_directory = plugin_dir_path(__FILE__) . '..' . \DIRECTORY_SEPARATOR . '..' . \DIRECTORY_SEPARATOR . 'logs/';
         if (!\file_exists($log_directory) && !\mkdir($log_directory) && !\is_dir($log_directory)) {
-            throw new \RuntimeException(\sprintf('Directory "%s" was not created', $log_directory));
+            throw new \RuntimeException(\sprintf('Directory "%s" was not created', esc_html($log_directory)));
         }
         $transaction_log = $log_directory . \date('Ymd') . '_transactions.log';
         // phpcs:ignore
