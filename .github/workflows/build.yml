@@ -16,4 +16,4 @@ jobs:
         run: composer install --dev
       - name: Run WordPress code standard
         run: |
-          ./vendorPrefixed/vendor/bin/phpcs -v --ignore=vendor,vendorPrefixed,wpcs,scoper.inc.php --standard=./phpcs.xml ./
+          ./build/vendor/bin/phpcs -v --ignore=vendor,build,wpcs,scoper.inc.php --standard=./phpcs.xml ./
