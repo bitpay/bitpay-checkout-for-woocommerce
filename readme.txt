@@ -111,6 +111,10 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 5.3.0 =
+* Removed dead code that caused notice
+* Downgrade & adapt php-scoper for PHP 8.0
+
 = 5.2.0 =
 * Add admin option to allow users to select their BitPay button
 * log create invoice issues
