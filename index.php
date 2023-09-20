@@ -3,13 +3,13 @@
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.2.0
+ * Version: 5.3.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 
-require_once __DIR__ . '/vendorPrefixed/vendor/autoload.php';
-require_once __DIR__ . '/vendorPrefixed/vendor/netresearch/jsonmapper/src/JsonMapper.php';
+require_once __DIR__ . '/build/vendor/autoload.php';
+require_once __DIR__ . '/build/vendor/netresearch/jsonmapper/src/JsonMapper.php';
 
 use BitPayVendor\BitPayLib\BitPayPluginSetup;
 

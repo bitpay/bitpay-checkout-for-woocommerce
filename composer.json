@@ -20,9 +20,9 @@
   "scripts": {
     "add-prefix": [
       "php php-scoper.phar add-prefix --force --quiet",
-      "composer dump-autoload --working-dir vendorPrefixed"
+      "composer dump-autoload --working-dir build"
     ],
-    "dump-prefixed-vendor": "composer dump-autoload --working-dir vendorPrefixed --classmap-authoritative",
+    "dump-prefixed-vendor": "composer dump-autoload --working-dir build --classmap-authoritative",
     "post-install-cmd": [
       "composer add-prefix"
     ],

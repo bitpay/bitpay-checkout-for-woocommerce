@@ -8,7 +8,6 @@ $excludedFiles = [];
 
 return [
     'prefix' => 'BitPayVendor',
-    'output-dir' => 'vendorPrefixed',
     'finders' => [
         Finder::create()->files()->in('BitPayLib'),
         Finder::create()->files()->in('vendor')
