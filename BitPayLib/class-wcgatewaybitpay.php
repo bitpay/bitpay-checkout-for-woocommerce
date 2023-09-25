@@ -286,13 +286,13 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 	private function get_processing_link(): string {
 		$test = 'https://test.bitpay.com/dashboard/settings/edit/order';
 
-		$bitpay_checkout_options  = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
-		if (!$bitpay_checkout_options) { // not configured settings
+		$bitpay_checkout_options = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
+		if ( ! $bitpay_checkout_options ) { // not configured settings.
 			return $test;
 		}
 
 		$bitpay_checkout_endpoint = $bitpay_checkout_options['bitpay_checkout_endpoint'] ?? null;
-		if (!$bitpay_checkout_endpoint) {
+		if ( ! $bitpay_checkout_endpoint ) {
 			return $test;
 		}
 
