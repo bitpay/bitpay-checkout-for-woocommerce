@@ -14,7 +14,6 @@ GITHUB_REF=${GITHUB_REF#refs/tags/} # refs/tags/v1.0.0 -> v1.0.0
 VERSION="${GITHUB_REF#v}" # v1.0.0 -> 1.0.0
 
 rm -rf .git
-rm -rf vendor
 
 SVN_URL="https://plugins.svn.wordpress.org/${SLUG}/"
 SVN_DIR="${HOME}/svn-${SLUG}"
@@ -25,10 +24,6 @@ if [[ -d "tags/$VERSION" ]]; then
   echo "ℹ︎ Version $VERSION of plugin $SLUG was already published";
   exit
 fi
-
-git config --global --add safe.directory "$GITHUB_WORKSPACE"
-git config --global user.email ""
-git config --global user.name "GitHub Actions"
 
 mkdir $SVN_DIR/tags/$VERSION -p
 
