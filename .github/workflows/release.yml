@@ -17,6 +17,7 @@ jobs:
         run: |
           composer install --no-dev
           rm -rf vendor/ -R
+          rm -rf .git/ -R
 
       - name: Change permissions for release.sh
         run: chmod 755 .github/workflows/release.sh
