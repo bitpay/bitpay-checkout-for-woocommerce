@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  check-release:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          composer install --no-dev
+          rm -rf vendor/ -R
+          rm -rf .git/ -R
+
+      - name: Change permissions for release.sh
+        run: chmod 755 .github/workflows/release.sh
+
+      - name: Create Release Artifact
+        run: |
+          VERSION=${{ github.ref }}
+          VERSION=${VERSION#"refs/tags/v"}
+          mkdir /home/runner/work/release
+          zip -r home/runner/work/release/${VERSION}.zip ./
+          echo "::set-output name=artifact_name::${VERSION}.zip"
+        shell: bash
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.create_artifact.outputs.artifact_name }}
+          path: /home/runner/work/release/${{ steps.create_artifact.outputs.artifact_name }}
+
+      - name: Copy the files directory with the Git repository to a new subversion tag
+        env:
+          SLUG: bitpay-checkout-for-woocommerce
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        run: $GITHUB_WORKSPACE/.github/workflows/release.sh
+        shell: bash
