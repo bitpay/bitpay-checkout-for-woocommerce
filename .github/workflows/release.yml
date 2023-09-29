@@ -27,7 +27,7 @@ jobs:
           VERSION=${{ github.ref }}
           VERSION=${VERSION#"refs/tags/v"}
           mkdir /home/runner/work/release
-          zip -r home/runner/work/release/${VERSION}.zip ./
+          zip -r /home/runner/work/release/${VERSION}.zip ./
           echo "::set-output name=artifact_name::${VERSION}.zip"
         shell: bash
 
