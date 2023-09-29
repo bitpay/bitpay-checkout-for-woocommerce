@@ -3,3 +3,4 @@ BitPayLib/.DS_Store
 logs/*.*
 /.idea/
 /vendor
+/build
