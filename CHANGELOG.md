@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.3.1
+* Deploy to WooCommerce WordPress.org when released
+
 # 5.3.0
 * Removed dead code that caused notice
 * Downgrade & adapt php-scoper for PHP 8.0
