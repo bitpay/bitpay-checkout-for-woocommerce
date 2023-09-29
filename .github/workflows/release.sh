@@ -33,4 +33,4 @@ echo "Add version to tags"
 svn add tags/$VERSION
 
 echo "Commit"
-svn commit -m "Tagging version $VERSION" --no-auth-cache --non-interactive --force-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+#svn commit -m "Tagging version $VERSION" --no-auth-cache --non-interactive --force-interactive --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
