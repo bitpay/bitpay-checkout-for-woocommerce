@@ -28,7 +28,7 @@ jobs:
           VERSION=${VERSION#refs/tags/}
           mkdir /home/runner/work/release
           zip -r /home/runner/work/release/${VERSION}.zip $GITHUB_WORKSPACE
-          echo "::set-output name=artifact_name::${VERSION}.zip"
+          echo "{artifact_name}=${VERSION}.zip" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Upload Release Artifact
