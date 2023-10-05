@@ -8,6 +8,7 @@ on:
 jobs:
   check-release:
     runs-on: ubuntu-20.04
+    permissions: write-all
 
     steps:
       - name: Check out code
@@ -17,25 +18,26 @@ jobs:
         run: |
           composer install --no-dev
           rm -rf vendor/ -R
-          rm -rf .git/ -R
 
       - name: Change permissions for release.sh
         run: chmod 755 .github/workflows/release.sh
 
-      - name: Create Release Artifact
+      - name: Create Release Assets
         run: |
-          VERSION=${{ github.ref }}
-          VERSION=${VERSION#refs/tags/}
+          FILE_NAME=bitpay-checkout-for-woocommerce
           mkdir /home/runner/work/release
-          zip -r /home/runner/work/release/${VERSION}.zip $GITHUB_WORKSPACE
-          echo "{artifact_name}=${VERSION}.zip" >> $GITHUB_OUTPUT
+          cd $GITHUB_WORKSPACE
+          zip -r /home/runner/work/release/${FILE_NAME}.zip ./* > /dev/null
+          tar -czvf /home/runner/work/release/${FILE_NAME}.tar.gz ./* > /dev/null
         shell: bash
 
-      - name: Upload Release Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ steps.create_artifact.outputs.artifact_name }}
-          path: /home/runner/work/release/${{ steps.create_artifact.outputs.artifact_name }}
+      - name: Upload Release Asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} /home/runner/work/release/*
+
+      - name: Remove .git directory
+        run: rm -rf .git/ -R
 
       - name: Copy the files directory with the Git repository to a new subversion tag
         env:
