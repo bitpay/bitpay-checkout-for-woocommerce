@@ -173,14 +173,14 @@ class BitPayIpnProcess {
 	}
 
 	private function process_completed( Invoice $bitpay_invoice, WC_Order $order ): void {
-		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'completed' ) );
+		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'complete' ) );
 
 		$invoice_id             = $bitpay_invoice->getId();
 		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_complete_status'];
 		if ( WcGatewayBitpay::IGNORE_STATUS_VALUE === $wordpress_order_status ) {
 			$order->add_order_note(
 				$this->get_start_order_note( $invoice_id )
-				. 'has changed to Completed.  The order status has not been updated due to your settings.'
+				. 'has changed to Complete.  The order status has not been updated due to your settings.'
 			);
 			return;
 		}
