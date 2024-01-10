@@ -205,7 +205,7 @@ class BitPayIpnProcess {
 
 	private function clear_cart(): void {
 		$cart = WC()->cart;
-		if (!$cart) {
+		if ( ! $cart ) {
 			return;
 		}
 		$cart->empty_cart();
