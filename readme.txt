@@ -112,8 +112,8 @@ You can contact our support team via the following form https://bitpay.com/reque
 == Changelog ==
 
 = 5.3.2 =
-* fix typo "completed" for BitPay available statuses
-* checking if there is a card before triggering empty_cart() method
+* Fix typo "completed" for BitPay available statuses
+* Checking if there is a cart before triggering empty_cart() method
 
 = 5.3.1 =
 * Deploy to WooCommerce WordPress.org when released
