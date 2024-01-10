@@ -13,7 +13,7 @@ use WP_REST_Request;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.3.1
+ * Version: 5.3.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -204,7 +204,11 @@ class BitPayIpnProcess {
 	}
 
 	private function clear_cart(): void {
-		WC()->cart->empty_cart();
+		$cart = WC()->cart;
+		if (!$cart) {
+			return;
+		}
+		$cart->empty_cart();
 	}
 
 	private function process_failed( Invoice $bitpay_invoice, WC_Order $order ): void {

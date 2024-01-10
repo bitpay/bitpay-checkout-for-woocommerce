@@ -5,7 +5,7 @@ Requires at least: 6.0
 Tested up to: 6.2.2
 Requires PHP: 8.0
 Recommended PHP: 8.0
-Stable tag: 5.3.1
+Stable tag: 5.3.2
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -110,6 +110,10 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+= 5.3.2 =
+* fix typo "completed" for BitPay available statuses
+* checking if there is a card before triggering empty_cart() method
 
 = 5.3.1 =
 * Deploy to WooCommerce WordPress.org when released
