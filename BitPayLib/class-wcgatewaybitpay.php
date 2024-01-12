@@ -212,6 +212,16 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'description' => __( 'Insert your custom message for the <b>Error</b> page, so the customer knows that there is some issue in paying the invoice', 'woocommerce' ),
 				'default'     => 'Transaction Cancelled',
 			),
+			'bitpay_checkout_order_process_paid_status' => array(
+				'title'       => __( 'BitPay Paid Invoice Status', 'woocommerce' ),
+				'type'        => 'select',
+				'description' => __(
+					'Map the BitPay <b>paid</b> invoice status to one of the available WooCommerce order states.<br>All WooCommerce status options are listed here for your convenience.<br><br><br><em>Click <a href = "https://bitpay.com/docs/invoice-states" target = "_blank">here</a> for more information about BitPay invoice statuses.</em>', // phpcs:ignore
+					'woocommerce',
+				),
+				'options'     => $wc_statuses_arr,
+				'default'     => 'wc-processing',
+			),
 			'bitpay_checkout_order_process_confirmed_status' => array(
 				'title'       => __( 'BitPay Confirmed Invoice Status', 'woocommerce' ),
 				'type'        => 'select',
