@@ -56,14 +56,14 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 		$wc_statuses_arr[ self::IGNORE_STATUS_VALUE ] = 'Do not change status'; // add an ignore option.
 
 		$this->form_fields = array(
-			'enabled'                              => array(
+			'enabled'                                   => array(
 				'title'       => __( 'Enable/Disable', 'woocommerce' ),
 				'label'       => __( 'Enable BitPay', 'woocommerce' ),
 				'type'        => 'checkbox',
 				'description' => '',
 				'default'     => 'no',
 			),
-			'bitpay_logo'                          => array(
+			'bitpay_logo'                               => array(
 				'title'       => __( 'BitPay Logo', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => '',
@@ -84,34 +84,34 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => 'BitPay-Accepted-CardGroup',
 			),
-			'bitpay_logo_image_white'              => array(
+			'bitpay_logo_image_white'                   => array(
 				'id'          => 'bitpay_logo',
 				'description' => '<img src="' . $settings->get_payment_logo_url()
 					. '" style="background-color: white;"/>',
 				'type'        => 'title',
 			),
-			'bitpay_logo_image_dark'               => array(
+			'bitpay_logo_image_dark'                    => array(
 				'id'          => 'bitpay_logo',
 				'description' => '<img src="' . $settings->get_payment_logo_url()
 					. '" style="background-color: black;"/>',
 				'type'        => 'title',
 			),
-			'bitpay_checkout_info'                 => array(
+			'bitpay_checkout_info'                      => array(
 				'description' => __( 'You should not ship any products until BitPay has finalized your transaction.<br>The order will stay in a <b>Hold</b> and/or <b>Processing</b> state, and will automatically change to <b>Completed</b> after the payment has been confirmed.', 'woocommerce' ),
 				'type'        => 'title',
 			),
 
-			'bitpay_checkout_merchant_info'        => array(
+			'bitpay_checkout_merchant_info'             => array(
 				'description' => __( 'If you have not created a BitPay Merchant Token, you can create one on your BitPay Dashboard.<br><a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Test)</a>  or <a href= "https://www.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">(Production)</a> </p>', 'woocommerce' ),
 				'type'        => 'title',
 			),
 
-			'bitpay_checkout_tier_info'            => array(
+			'bitpay_checkout_tier_info'                 => array(
 				'description' => __( '<em><b>*** </b>If you are having trouble creating BitPay invoices, verify your Tier settings on your <a href = "https://support.bitpay.com/hc/en-us/articles/206003676-How-do-I-raise-my-approved-processing-volume-tier-limit-" target = "_blank">BitPay Dashboard</a>.</em>', 'woocommerce' ),
 				'type'        => 'title',
 			),
 
-			'description'                          => array(
+			'description'                               => array(
 				'title'       => __( 'Description', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'This is the message box that will appear on the <b>checkout page</b> when they select BitPay.', 'woocommerce' ),
@@ -119,7 +119,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 			),
 
-			'bitpay_checkout_token_dev'            => array(
+			'bitpay_checkout_token_dev'                 => array(
 				'title'       => __( 'Development Token', 'woocommerce' ),
 				'label'       => __( 'Development Token', 'woocommerce' ),
 				'type'        => 'text',
@@ -127,7 +127,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'default'     => '',
 
 			),
-			'bitpay_checkout_token_prod'           => array(
+			'bitpay_checkout_token_prod'                => array(
 				'title'       => __( 'Production Token', 'woocommerce' ),
 				'label'       => __( 'Production Token', 'woocommerce' ),
 				'type'        => 'text',
@@ -136,7 +136,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 			),
 
-			'bitpay_checkout_endpoint'             => array(
+			'bitpay_checkout_endpoint'                  => array(
 				'title'       => __( 'Endpoint', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'Select <b>Test</b> for testing the plugin, <b>Production</b> when you are ready to go live.' ),
@@ -147,7 +147,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'default'     => 'test',
 			),
 
-			'bitpay_checkout_flow'                 => array(
+			'bitpay_checkout_flow'                      => array(
 				'title'       => __( 'Checkout Flow', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'If this is set to <b>Redirect</b>, then the customer will be redirected to <b>BitPay</b> to checkout, and return to the checkout page once the payment is made.<br>If this is set to <b>Modal</b>, the user will stay on <b>' . get_bloginfo( 'name', null ) . '</b> and complete the transaction.', 'woocommerce' ), // phpcs:ignore
@@ -157,22 +157,22 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => '2',
 			),
-			'bitpay_checkout_slug'                 => array(
+			'bitpay_checkout_slug'                      => array(
 				'title'       => __( 'Checkout Page', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'If you have a different custom checkout page, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce' ), // phpcs:ignore
 			),
-			'bitpay_custom_redirect'               => array(
+			'bitpay_custom_redirect'                    => array(
 				'title'       => __( 'Custom Redirect Page', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce' ),
 			),
-			'bitpay_close_url'                     => array(
+			'bitpay_close_url'                          => array(
 				'title'       => __( 'Close URL', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'Set the close url <br /><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce' ),
 			),
-			'bitpay_checkout_mini'                 => array(
+			'bitpay_checkout_mini'                      => array(
 				'title'       => __( 'Show in mini cart ', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'Set to YES if you would like to show BitPay as an immediate checkout option in the mini cart', 'woocommerce' ),
@@ -183,7 +183,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'default'     => '2',
 			),
 
-			'bitpay_checkout_capture_email'        => array(
+			'bitpay_checkout_capture_email'             => array(
 				'title'       => __( 'Auto-Capture Email', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'Should BitPay try to auto-add the client\'s email address?  If <b>Yes</b>, the client will not be able to change the email address on the BitPay invoice.  If <b>No</b>, they will be able to add their own email address when paying the invoice.', 'woocommerce' ),
@@ -194,19 +194,19 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => '1',
 			),
-			'bitpay_checkout_checkout_message'     => array(
+			'bitpay_checkout_checkout_message'          => array(
 				'title'       => __( 'Checkout Message', 'woocommerce' ),
 				'type'        => 'textarea',
 				'description' => __( 'Insert your custom message for the <b>Order Received</b> page, so the customer knows that the order will not be completed until BitPay releases the funds.', 'woocommerce' ),
 				'default'     => 'Thank you.  We will notify you when BitPay has processed your transaction.',
 			),
-			'bitpay_checkout_error'                => array(
+			'bitpay_checkout_error'                     => array(
 				'title'       => __( 'Error handling', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'If there is an error with creating the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce' ), // phpcs:ignore
 
 			),
-			'bitpay_checkout_error_message'        => array(
+			'bitpay_checkout_error_message'             => array(
 				'title'       => __( 'Error Message', 'woocommerce' ),
 				'type'        => 'textarea',
 				'description' => __( 'Insert your custom message for the <b>Error</b> page, so the customer knows that there is some issue in paying the invoice', 'woocommerce' ),
@@ -250,7 +250,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'options'     => $wc_statuses_arr,
 				'default'     => 'wc-processing',
 			),
-			'bitpay_checkout_order_expired_status' => array(
+			'bitpay_checkout_order_expired_status'      => array(
 				'title'       => __( 'BitPay Expired Status', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'If set to <b>Yes</b>,  automatically set the order to canceled when the invoice has expired and has been notified by the BitPay IPN.', 'woocommerce' ),
@@ -262,7 +262,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'default'     => '0',
 			),
 
-			'bitpay_log_mode'                      => array(
+			'bitpay_log_mode'                           => array(
 				'title'       => __( 'Developer Logging', 'woocommerce' ),
 				'type'        => 'select',
 				'description' => __( 'Errors will be logged to the plugin <b>log</b> directory automatically.  Set to <b>Enabled</b> to also log transactions, ie invoices and IPN updates', 'woocommerce' ),
