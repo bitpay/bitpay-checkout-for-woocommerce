@@ -26,7 +26,7 @@ Visit the [Releases](https://github.com/bitpay/bitpay-checkout-for-woocommerce/r
 
 **BitPay Support:**
 
-* Last Cart Version Tested: Wordpress 6.2.2
+* Last Cart Version Tested: Wordpress 6.4.2
 * [GitHub Issues](https://github.com/bitpay/bitpay-checkout-for-woocommerce/issues)
 * [Support](https://support.bitpay.com/hc/en-us)
 

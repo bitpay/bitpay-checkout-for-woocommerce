@@ -8,17 +8,20 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.3.2
+ * Version: 5.4.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 	public const IGNORE_STATUS_VALUE = 'bitpay-ignore';
+	public const GATEWAY_NAME        = 'bitpay_checkout_gateway';
+	public const TITLE               = 'BitPay';
+
 	private string $instructions;
 
 	public function __construct() {
-		$this->id   = 'bitpay_checkout_gateway';
+		$this->id   = self::GATEWAY_NAME;
 		$this->icon = $this->get_icon_on_payment_page();
 
 		$this->has_fields         = true;
@@ -33,16 +36,23 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 		$this->init_form_fields();
 		$this->init_settings();
 
-		$this->title        = 'BitPay';
+		$this->title        = self::TITLE;
 		$this->description  = $this->get_option( 'description' ) . '<br>';
 		$this->instructions = $this->get_option( 'instructions', $this->description );
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_email_before_order_table', array( $this, 'email_instructions' ), 10, 3 );
-		wp_enqueue_script( 'bitpay_wc_gateway', plugins_url( '../../js/wc_gateway_bitpay.js', __FILE__ ), null, 1, false );
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script(
+			'bitpay_wc_gateway',
+			plugins_url( '../../js/wc_gateway_bitpay.js', __FILE__ ),
+			null,
+			1,
+			false
+		);
 	}
 	public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-		if ( $this->instructions && ! $sent_to_admin && 'bitpay_checkout_gateway' === $order->get_payment_method() && $order->has_status( 'processing' ) ) {
+		if ( $this->instructions && ! $sent_to_admin && self::GATEWAY_NAME === $order->get_payment_method() && $order->has_status( 'processing' ) ) {
 			echo wp_kses_post( wpautop( wptexturize( $this->instructions ) ) . PHP_EOL );
 		}
 	}

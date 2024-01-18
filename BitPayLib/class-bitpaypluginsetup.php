@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
+use BitPayLib\Blocks\BitPayPaymentsBlocks;
 use WP_REST_Request;
 
 /**
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.3.2
+ * Version: 5.4.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayPluginSetup {
+
+	public const VERSION = '5.4.0';
 
 	private BitPayIpnProcess $bitpay_ipn_process;
 	private BitPayCancelOrder $bitpay_cancel_order;
@@ -51,6 +54,7 @@ class BitPayPluginSetup {
 		add_action( 'woocommerce_thankyou', array( $this, 'bitpay_checkout_custom_message' ) );
 		add_filter( 'woocommerce_payment_gateways', array( $this, 'wc_bitpay_checkout_add_to_gateways' ) );
 		add_filter( 'woocommerce_order_button_html', array( $this, 'bitpay_checkout_replace_order_button_html' ), 10, 2 );
+		add_action( 'woocommerce_blocks_loaded', array( $this, 'register_payment_block' ) );
 
 		// http://<host>/wp-json/bitpay/ipn/status url.
 		// http://<host>/wp-json/bitpay/cartfix/restore url.
@@ -193,5 +197,32 @@ class BitPayPluginSetup {
 		}
 
 		return array();
+	}
+
+	public function register_payment_block(): void {
+		add_action(
+			'woocommerce_blocks_payment_method_type_registration',
+			function ( \Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
+				$container = \Automattic\WooCommerce\Blocks\Package::container();
+
+				$container->register(
+					BitPayPaymentsBlocks::class,
+					function () {
+						return new BitPayPaymentsBlocks();
+					}
+				);
+				$payment_method_registry->register(
+					$container->get( BitPayPaymentsBlocks::class )
+				);
+			},
+			5
+		);
+
+		add_action(
+			'woocommerce_blocks_payment_method_type_registration',
+			function ( $registry ) {
+				$registry->register( new BitPayPaymentsBlocks() );
+			}
+		);
 	}
 }
