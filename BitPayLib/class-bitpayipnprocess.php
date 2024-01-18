@@ -262,8 +262,14 @@ class BitPayIpnProcess {
 
 	private function process_processing( Invoice $bitpay_invoice, WC_Order $order ): void {
 		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'paid' ) );
+		$order->add_order_note( $this->get_start_order_note( $bitpay_invoice->getId() ) . 'is paid and awaiting confirmation.' );
 
-		$order->add_order_note( $this->get_start_order_note( $bitpay_invoice->getId() ) . 'is processing.' );
-		$order->update_status( 'processing', __( 'BitPay payment processing', 'woocommerce' ) );
+		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_paid_status'];
+		if ( WcGatewayBitpay::IGNORE_STATUS_VALUE === $wordpress_order_status ) {
+			return;
+		}
+
+		$new_status = $this->get_wc_order_statuses()[ $wordpress_order_status ] ?? 'processing';
+		$order->update_status( $new_status, __( 'BitPay payment processing', 'woocommerce' ) );
 	}
 }
