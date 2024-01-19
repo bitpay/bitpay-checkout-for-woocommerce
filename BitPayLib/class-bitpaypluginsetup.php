@@ -188,7 +188,7 @@ class BitPayPluginSetup {
 
 	private function validate_woo_commerce(): array {
 		global $woocommerce;
-		if ( true === empty( $woocommerce ) ) {
+		if ( null === $woocommerce ) {
 			return array( 'The WooCommerce plugin for WordPress needs to be installed and activated. Please contact your web server administrator for assistance.' );
 		}
 
@@ -216,13 +216,6 @@ class BitPayPluginSetup {
 				);
 			},
 			5
-		);
-
-		add_action(
-			'woocommerce_blocks_payment_method_type_registration',
-			function ( $registry ) {
-				$registry->register( new BitPayPaymentsBlocks() );
-			}
 		);
 	}
 }
