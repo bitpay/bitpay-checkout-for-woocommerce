@@ -26,7 +26,6 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 
 		$this->has_fields         = true;
 		$this->method_title       = __( $this->get_bitpay_version_info(), 'wc-bitpay' ); // phpcs:ignore
-		$this->method_label       = __( 'BitPay', 'wc-bitpay' );
 		$this->method_description = __( 'Expand your payment options by accepting cryptocurrency payments (BTC, BCH, ETH, and Stable Coins) without risk or price fluctuations.', 'wc-bitpay' );
 
 		if ( empty( $_GET['woo-bitpay-return'] ) ) { // phpcs:ignore
