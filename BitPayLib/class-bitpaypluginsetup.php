@@ -11,13 +11,13 @@ use WP_REST_Request;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.4.0
+ * Version: 5.4.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayPluginSetup {
 
-	public const VERSION = '5.4.0';
+	public const VERSION = '5.4.1';
 
 	private BitPayIpnProcess $bitpay_ipn_process;
 	private BitPayCancelOrder $bitpay_cancel_order;

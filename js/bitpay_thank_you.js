@@ -46,7 +46,7 @@ function showBitPayInvoice(testMode, invoiceID, orderId, cartUrl, restoreUrl) {
 			}
 		);
 
-	if ( testMode === true ) {
+	if ( testMode === "1" ) {
 		bitpay.enableTestMode();
 	}
 
