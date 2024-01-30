@@ -5,7 +5,7 @@ Requires at least: 6.0
 Tested up to: 6.4.2
 Requires PHP: 8.0
 Recommended PHP: 8.0
-Stable tag: 5.4.1
+Stable tag: 5.4.0
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -111,11 +111,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
-= 5.4.1 =
-* Fixed Checkout Flow (BitPay Modal)
-
 = 5.4.0 =
 * Added compatibility with Checkout Blocks
+* Fixed Checkout Flow (BitPay Modal)
 * Tested compatibility with WordPress 6.4.2
 
 = 5.3.2 =
