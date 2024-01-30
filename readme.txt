@@ -114,11 +114,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 = 6.0.0 =
 * Fixed a bug when the IPN/webhook is received with "complete" status
 
-= 5.4.1 =
-* Fixed Checkout Flow (BitPay Modal)
-
 = 5.4.0 =
 * Added compatibility with Checkout Blocks
+* Fixed Checkout Flow (BitPay Modal)
 * Tested compatibility with WordPress 6.4.2
 
 = 5.3.2 =
