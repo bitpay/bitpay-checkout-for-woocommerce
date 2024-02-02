@@ -209,7 +209,7 @@ class BitPayIpnProcess {
 			return;
 		}
 
-		if ( !$this->should_process_completed_action( $wc_order_status, $wordpress_order_status ) ) {
+		if ( ! $this->should_process_completed_action( $wc_order_status, $wordpress_order_status ) ) {
 			return;
 		}
 
@@ -318,15 +318,14 @@ class BitPayIpnProcess {
 	 * @param string|null $wordpress_order_status_from_settings status to event from BitPay settings.
 	 * @return bool
 	 */
-	private function should_process_completed_action(string $wc_order_status, ?string $wordpress_order_status_from_settings ): bool
-	{
-		if ( $wc_order_status !== 'wc-completed' ) {
+	private function should_process_completed_action( string $wc_order_status, ?string $wordpress_order_status_from_settings ): bool {
+		if ( 'wc-completed' !== $wc_order_status ) {
 			return true;
 		}
 
-		if ( $wordpress_order_status_from_settings === 'wc-pending' || $wordpress_order_status_from_settings === 'wc-processing' ) {
+		if ( 'wc-pending' === $wordpress_order_status_from_settings || 'wc-processing' === $wordpress_order_status_from_settings ) {
 			return false;
-		 }
+		}
 
 		return true;
 	}
