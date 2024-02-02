@@ -38,8 +38,8 @@ class BitPayPages {
 
 		$invoice_id = $_COOKIE['bitpay-invoice-id'] ?? null; // phpcs:ignore
 
-		wp_enqueue_script( 'remote-bitpay-js', $js_script, null, null, false ); // phpcs:ignore
-		wp_enqueue_script( 'bitpay_thank_you', plugins_url( '../../js/bitpay_thank_you.js', __FILE__ ), null, 1, false );
+		wp_enqueue_script( 'remote-bitpay-js', $js_script, null, BitPayPluginSetup::VERSION, false ); // phpcs:ignore
+		wp_enqueue_script( 'bitpay_thank_you', plugins_url( '../../js/bitpay_thank_you.js', __FILE__ ), null, BitPayPluginSetup::VERSION, false ); // phpcs:ignore
 		?>
 		<script type="text/javascript">
 			const testMode = '<?php echo esc_js( $test_mode ); ?>';
