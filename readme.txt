@@ -113,6 +113,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 = 5.4.0 =
 * Added compatibility with Checkout Blocks
+* Fixed Checkout Flow (BitPay Modal)
 * Tested compatibility with WordPress 6.4.2
 
 = 5.3.2 =

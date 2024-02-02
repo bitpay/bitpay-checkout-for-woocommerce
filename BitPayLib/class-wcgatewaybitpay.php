@@ -46,7 +46,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 			'bitpay_wc_gateway',
 			plugins_url( '../../js/wc_gateway_bitpay.js', __FILE__ ),
 			null,
-			1,
+			BitPayPluginSetup::VERSION,
 			false
 		);
 	}
