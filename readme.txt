@@ -2,10 +2,10 @@
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 6.0
-Tested up to: 6.2.2
+Tested up to: 6.4.2
 Requires PHP: 8.0
 Recommended PHP: 8.0
-Stable tag: 5.3.2
+Stable tag: 6.0.0
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -110,6 +110,14 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+= 6.0.0 =
+* Fixed a bug when the IPN/webhook is received with "complete" status
+
+= 5.4.0 =
+* Added compatibility with Checkout Blocks
+* Fixed Checkout Flow (BitPay Modal)
+* Tested compatibility with WordPress 6.4.2
 
 = 5.3.2 =
 * Fix typo "completed" for BitPay available statuses

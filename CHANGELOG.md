@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 6.0.0
+* Fixed a bug when the IPN/webhook is received with "complete" status
+
+# 5.4.0
+* Added compatibility with Checkout Blocks
+* Fixed Checkout Flow (BitPay Modal)
+* Tested compatibility with WordPress 6.4.2
+
 # 5.3.2
 * Fix typo "completed" for BitPay available statuses
 * Checking if there is a cart before triggering empty_cart() method
