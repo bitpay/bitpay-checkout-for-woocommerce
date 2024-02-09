@@ -22,7 +22,7 @@ class BitPayIpnProcess {
 
 	use WpDbHelper;
 
-	private const FINAL_WC_ORDER_STATUSES = array( 'wc-refunded', 'wc-cancelled', 'wc-failed' );
+	private const FINAL_WC_ORDER_STATUSES = array( 'refunded', 'cancelled', 'failed' );
 
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
 	private BitPayLogger $logger;
@@ -40,8 +40,7 @@ class BitPayIpnProcess {
 	}
 
 	public function execute( WP_REST_Request $request ): void {
-		$data = $request->get_body();
-
+		$data                = $request->get_body();
 		$data                = json_decode( $data, true, 512, JSON_THROW_ON_ERROR );
 		$event               = $data['event'] ?? null;
 		$data                = $data['data'] ?? null;
@@ -180,13 +179,13 @@ class BitPayIpnProcess {
 		$new_status = $this->get_wc_order_statuses()[ $wordpress_order_status ] ?? null;
 		if ( ! $new_status ) {
 			$new_status             = 'Processing';
-			$wordpress_order_status = 'wc-pending';
+			$wordpress_order_status = 'pending';
 		}
 
 		$order->add_order_note(
 			$this->get_start_order_note( $invoice_id ) . ' has changed to ' . $new_status . '.'
 		);
-		if ( 'wc-completed' === $wordpress_order_status ) {
+		if ( 'wc-completed' === $wordpress_order_status ) { // statuses with 'wc' prefix.
 			$order->payment_complete();
 			$order->add_order_note( 'Payment Completed' );
 		} else {
@@ -217,11 +216,11 @@ class BitPayIpnProcess {
 		$new_status = apply_filters( 'bitpay_checkout_order_process_complete_status', $new_status, $wordpress_order_status );
 		if ( ! $new_status ) {
 			$new_status             = 'Processing';
-			$wordpress_order_status = 'wc-pending';
+			$wordpress_order_status = 'pending';
 		}
 
 		$order->add_order_note( $this->get_start_order_note( $invoice_id ) . 'has changed to ' . $new_status . '.' );
-		if ( 'wc-completed' === $wordpress_order_status ) {
+		if ( 'wc-completed' === $wordpress_order_status ) { // statuses with 'wc' prefix.
 			$order->payment_complete();
 			$order->add_order_note( 'Payment Completed' );
 		} else {
@@ -276,7 +275,7 @@ class BitPayIpnProcess {
 			return;
 		}
 
-		$order_status = 'wc-cancelled';
+		$order_status = 'cancelled';
 		$order->add_order_note( $this->get_start_order_note( $invoice_id ) . 'has expired.' );
 
 		if ( 1 === (int) $wordpress_order_status ) {
@@ -319,11 +318,11 @@ class BitPayIpnProcess {
 	 * @return bool
 	 */
 	private function should_process_completed_action( string $wc_order_status, ?string $wordpress_order_status_from_settings ): bool {
-		if ( 'wc-completed' !== $wc_order_status ) {
+		if ( 'completed' !== $wc_order_status ) {
 			return true;
 		}
 
-		if ( 'wc-pending' === $wordpress_order_status_from_settings || 'wc-processing' === $wordpress_order_status_from_settings ) {
+		if ( 'pending' === $wordpress_order_status_from_settings || 'processing' === $wordpress_order_status_from_settings ) {
 			return false;
 		}
 
