@@ -259,6 +259,16 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'options'     => $wc_statuses_arr,
 				'default'     => 'wc-processing',
 			),
+			'bitpay_checkout_order_process_refund'      => array(
+				'title'       => __( 'BitPay Process Refund Status', 'woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'If set to <b>Yes</b>, automatically set the order to "refunded" when the invoice has a "refund_success" status, as notified by the BitPay IPN.', 'woocommerce' ),
+				'options'     => array(
+					'0' => 'No',
+					'1' => 'Yes',
+				),
+				'default'     => '1',
+			),
 			'bitpay_checkout_order_expired_status'      => array(
 				'title'       => __( 'BitPay Expired Status', 'woocommerce' ),
 				'type'        => 'select',

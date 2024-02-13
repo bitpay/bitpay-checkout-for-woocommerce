@@ -270,8 +270,7 @@ class BitPayIpnProcess {
 
 		$invoice_id = $bitpay_invoice->getId();
 		if ( $underpaid_amount ) {
-			$order->add_order_note( $this->get_start_order_note( $invoice_id ) . $underpaid_amount . ' has been refunded.' );
-			$order->update_status( 'refunded', __( 'BitPay payment refunded', 'woocommerce' ) );
+			$this->process_refunded( $bitpay_invoice, $order );
 			return;
 		}
 
@@ -284,6 +283,14 @@ class BitPayIpnProcess {
 	}
 
 	private function process_refunded( Invoice $bitpay_invoice, WC_Order $order ): void {
+		if ( ! $this->should_process_refund() ) {
+			$order->add_order_note(
+				$this->get_start_order_note( $bitpay_invoice->getId() )
+				. 'has changed to Refunded. The order status has not been updated due to your settings.'
+			);
+			return;
+		}
+
 		$order->add_order_note( $this->get_start_order_note( $bitpay_invoice->getId() ) . 'has been refunded.' );
 		$order->update_status( 'refunded', __( 'BitPay payment refunded', 'woocommerce' ) );
 	}
@@ -327,5 +334,10 @@ class BitPayIpnProcess {
 		}
 
 		return true;
+	}
+
+	private function should_process_refund(): bool {
+		$should_process_refund_status = $this->get_wc_order_statuses()['bitpay_checkout_order_process_refund'] ?? '1';
+		return '1' === $should_process_refund_status;
 	}
 }
