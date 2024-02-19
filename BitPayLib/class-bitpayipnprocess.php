@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
+use BitPayLib\Exception\BitPayInvalidOrder;
 use BitPaySDK\Model\Facade;
 use BitPaySDK\Model\Invoice\Invoice;
 use WC_Order;
@@ -19,21 +20,21 @@ use WP_REST_Request;
  */
 class BitPayIpnProcess {
 
-	use WpDbHelper;
-
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
 	private BitPayLogger $logger;
-	private array $gateway_settings = array();
 	private BitPayClientFactory $factory;
+	private BitPayWordpressHelper $bitpay_wordpress_helper;
 
 	public function __construct(
 		BitPayCheckoutTransactions $bitpay_checkout_transactions,
 		BitPayClientFactory $factory,
+		BitPayWordpressHelper $bitpay_wordpress_helper,
 		BitPayLogger $logger
 	) {
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
 		$this->logger                       = $logger;
 		$this->factory                      = $factory;
+		$this->bitpay_wordpress_helper      = $bitpay_wordpress_helper;
 	}
 
 	public function execute( WP_REST_Request $request ): void {
@@ -47,35 +48,42 @@ class BitPayIpnProcess {
 		$this->logger->execute( $data, 'INCOMING IPN', true );
 		if ( ! $event || ! $data || ! $invoice_id ) {
 			$this->logger->execute( 'Wrong IPN request', 'INCOMING IPN ERROR', false, true );
+			return;
 		}
 
 		try {
 			$bitpay_invoice = $this->factory->create()->getInvoice( $invoice_id, Facade::POS, false );
-			$order          = new WC_Order( $bitpay_invoice->getOrderId() );
+			do_action( 'bitpay_checkout_woocoomerce_after_get_invoice', $bitpay_invoice );
+			$order = $this->bitpay_wordpress_helper->get_order( $bitpay_invoice->getOrderId() );
 			$this->validate_order( $order, $invoice_id );
 			$this->process( $bitpay_invoice, $order, $event['name'] );
+		} catch ( BitPayInvalidOrder $e ) { // phpcs:ignore
+			// do nothing.
 		} catch ( \Exception $e ) {
 			$this->logger->execute( $e->getMessage(), 'INCOMING IPN ERROR', false, true );
 		}
 	}
 
 	private function validate_order( WC_Order $order, string $invoice_id ): void {
+		do_action( 'bitpay_checkout_woocoomerce_validate_wc_order', $order, $invoice_id );
 		if ( $order->get_payment_method() !== 'bitpay_checkout_gateway' ) {
 			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
 				. '. Current payment method = ' . $order->get_payment_method();
 			$this->logger->execute( $message, 'Ignore IPN', true );
-			die();
+			throw new BitPayInvalidOrder();
 		}
 
 		if ( $this->bitpay_checkout_transactions->count_transaction_id( $invoice_id ) !== 1 ) {
 			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
 				. '. Wrong transaction id ' . $invoice_id;
 			$this->logger->execute( $message, 'Ignore IPN', true );
-			die();
+			throw new BitPayInvalidOrder();
 		}
 	}
 
 	private function process( Invoice $bitpay_invoice, WC_Order $order, string $event_name ): void {
+		do_action( 'bitpay_checkout_woocoomerce_before_process', $bitpay_invoice, $order, $event_name );
+
 		switch ( $event_name ) {
 			case 'invoice_completed':
 				$this->process_completed( $bitpay_invoice, $order );
@@ -100,17 +108,11 @@ class BitPayIpnProcess {
 				break;
 		}
 
+		do_action( 'bitpay_checkout_woocoomerce_after_process', $bitpay_invoice, $order, $event_name );
+
 		$this->bitpay_checkout_transactions->update_transaction_status( $bitpay_invoice );
 
 		http_response_code( 200 );
-	}
-
-	private function get_gateway_settings(): array {
-		if ( ! $this->gateway_settings ) {
-			$this->gateway_settings = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
-		}
-
-		return $this->gateway_settings;
 	}
 
 	private function validate_bitpay_status_in_available_statuses( Invoice $bitpay_invoice, array $available_statuses ): void {
@@ -127,7 +129,7 @@ class BitPayIpnProcess {
 	}
 
 	private function get_bitpay_dashboard_link( string $invoice_id ): string {
-		$env = $this->get_gateway_settings()['bitpay_checkout_endpoint'];
+		$env = $this->bitpay_wordpress_helper->get_bitpay_gateway_option( 'bitpay_checkout_endpoint' );
 		if ( 'production' === $env ) {
 			return '//bitpay.com/dashboard/payments/' . $invoice_id;
 		}
@@ -143,10 +145,11 @@ class BitPayIpnProcess {
 		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'confirmed' ) );
 
 		$invoice_id             = $bitpay_invoice->getId();
-		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_confirmed_status'];
+		$wordpress_order_status = $this->bitpay_wordpress_helper
+			->get_bitpay_gateway_option( 'bitpay_checkout_order_process_confirmed_status' );
 		if ( WcGatewayBitpay::IGNORE_STATUS_VALUE === $wordpress_order_status ) {
 			$order->add_order_note(
-				$this->get_start_order_note( $invoice_id ) . ' has changed to Confirmed.  The order status has not been updated due to your settings.'
+				$this->get_start_order_note( $invoice_id ) . 'has changed to Confirmed.  The order status has not been updated due to your settings.'
 			);
 			return;
 		}
@@ -158,7 +161,7 @@ class BitPayIpnProcess {
 		}
 
 		$order->add_order_note(
-			$this->get_start_order_note( $invoice_id ) . ' has changed to ' . $new_status . '.'
+			$this->get_start_order_note( $invoice_id ) . 'has changed to ' . $new_status . '.'
 		);
 		if ( 'wc-completed' === $wordpress_order_status ) {
 			$order->payment_complete();
@@ -173,7 +176,8 @@ class BitPayIpnProcess {
 		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'complete' ) );
 
 		$invoice_id             = $bitpay_invoice->getId();
-		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_complete_status'];
+		$wordpress_order_status = $this->bitpay_wordpress_helper
+			->get_bitpay_gateway_option( 'bitpay_checkout_order_process_complete_status' );
 		if ( WcGatewayBitpay::IGNORE_STATUS_VALUE === $wordpress_order_status ) {
 			$order->add_order_note(
 				$this->get_start_order_note( $invoice_id )
@@ -214,7 +218,7 @@ class BitPayIpnProcess {
 		$invoice_id = $bitpay_invoice->getId();
 		$order->add_order_note(
 			$this->get_start_order_note( $invoice_id )
-			. 'has become invalid because of network congestion.  Order will automatically update when the status changes.'
+			. 'has become invalid because of network congestion. Order will automatically update when the status changes.'
 		);
 		$order->update_status( 'failed', __( 'BitPay payment invalid', 'woocommerce' ) );
 	}
@@ -235,7 +239,8 @@ class BitPayIpnProcess {
 	private function process_abandoned( Invoice $bitpay_invoice, WC_Order $order ): void {
 		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'expired' ) );
 		$underpaid_amount       = $bitpay_invoice->getUnderpaidAmount();
-		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_expired_status'];
+		$wordpress_order_status = $this->bitpay_wordpress_helper
+			->get_bitpay_gateway_option( 'bitpay_checkout_order_expired_status' );
 
 		$invoice_id = $bitpay_invoice->getId();
 		if ( $underpaid_amount ) {
@@ -244,7 +249,7 @@ class BitPayIpnProcess {
 			return;
 		}
 
-		$order_status = 'wc-cancelled';
+		$order_status = 'cancelled';
 		$order->add_order_note( $this->get_start_order_note( $invoice_id ) . 'has expired.' );
 
 		if ( 1 === (int) $wordpress_order_status ) {
@@ -262,7 +267,8 @@ class BitPayIpnProcess {
 		$invoice_id = $bitpay_invoice->getId();
 		$order->add_order_note( $this->get_start_order_note( $invoice_id ) . 'is paid and awaiting confirmation.' );
 
-		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_paid_status'];
+		$wordpress_order_status = $this->bitpay_wordpress_helper
+			->get_bitpay_gateway_option( 'bitpay_checkout_order_process_paid_status' );
 		if ( WcGatewayBitpay::IGNORE_STATUS_VALUE === $wordpress_order_status ) {
 			$order->add_order_note(
 				$this->get_start_order_note( $invoice_id )

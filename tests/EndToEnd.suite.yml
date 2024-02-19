@@ -1,0 +1,31 @@
+# Integration suite configuration
+#
+# Run integration and "WordPress unit" tests.
+
+actor: EndToEndTester
+bootstrap: _bootstrap.php
+namespace: BitPayLib\Tests\EndToEnd
+modules:
+    enabled:
+        - lucatume\WPBrowser\Module\WPWebDriver
+    config:
+        lucatume\WPBrowser\Module\WPWebDriver:
+            url: '%WORDPRESS_URL%'
+            adminUsername: '%WORDPRESS_ADMIN_USER%'
+            adminPassword: '%WORDPRESS_ADMIN_PASSWORD%'
+            adminPath: '/wp-admin'
+            browser: chrome
+            host: '%CHROMEDRIVER_HOST%'
+            port: '%CHROMEDRIVER_PORT%'
+            path: '/wd/hub'
+            window_size: 1200x1000
+            capabilities:
+              "goog:chromeOptions":
+                args:
+                  - "--headless"
+                  - "--disable-gpu"
+                  - "--disable-dev-shm-usage"
+                  - "--proxy-server='direct://'"
+                  - "--proxy-bypass-list=*"
+                  - "--no-sandbox"
+            

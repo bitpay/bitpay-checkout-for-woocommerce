@@ -19,39 +19,40 @@ use BitPaySDK\Model\Invoice\Invoice;
  */
 class BitPayInvoiceCreate {
 
-	private const COOKIE_INVOICE_ID_NAME = 'bitpay-invoice-id';
-
 	private BitPayClientFactory $client_factory;
 	private BitPayLogger $bitpay_logger;
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
-	private BitPayPaymentSettings $bitpay_payment_settings;
+	private BitPayWordpressHelper $wordpress_helper;
+	private BitPayInvoiceFactory $bitpay_invoice_factory;
 
 	public function __construct(
 		BitPayClientFactory $client_factory,
+		BitPayInvoiceFactory $bitpay_invoice_factory,
 		BitPayCheckoutTransactions $bitpay_checkout_transactions,
-		BitPayPaymentSettings $bitpay_payment_settings,
+		BitPayWordpressHelper $wordpress_helper,
 		BitPayLogger $bitpay_logger
 	) {
 		$this->client_factory               = $client_factory;
+		$this->bitpay_invoice_factory       = $bitpay_invoice_factory;
 		$this->bitpay_checkout_transactions = $bitpay_checkout_transactions;
-		$this->bitpay_payment_settings      = $bitpay_payment_settings;
+		$this->wordpress_helper             = $wordpress_helper;
 		$this->bitpay_logger                = $bitpay_logger;
 	}
 
 	public function execute(): void {
-		global $wp;
 		$bitpay_checkout_options = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
 
-		if ( ! is_checkout() || empty( $wp->query_vars['order-received'] ) ) {
+		$order_id = $this->wordpress_helper->get_query_var( 'order-received' );
+
+		if ( ! $order_id || ! is_checkout() ) {
 			return;
 		}
 
-		$order_id = $wp->query_vars['order-received'];
-
 		try {
-			$order = new \WC_Order( $order_id );
+			$order = $this->wordpress_helper->get_order( $order_id );
 
-			if ( isset( $_GET['redirect'] ) && $_GET['redirect'] === 'false' ) { // phpcs:ignore
+			$redirect = $this->wordpress_helper->get_url_parameter( 'redirect' );
+			if ( $redirect === 'false' ) { // phpcs:ignore
 				$this->clear_invoice_id_cookie();
 				return;
 			}
@@ -59,17 +60,7 @@ class BitPayInvoiceCreate {
 			if ( $order->get_payment_method() !== 'bitpay_checkout_gateway' ) {
 				return;
 			}
-
-			$bitpay_invoice = new Invoice();
-			$bitpay_invoice->setPrice( (float) $order->get_total() );
-			$bitpay_invoice->setCurrency( $order->get_currency() );
-			$bitpay_invoice->setOrderId( $order->get_order_number() );
-			$bitpay_invoice->setAcceptanceWindow( 1200000 );
-			$bitpay_invoice->setNotificationURL( get_home_url() . '/wp-json/bitpay/ipn/status' );
-			$bitpay_invoice->setExtendedNotifications( true );
-			$this->add_buyer_to_invoice( $bitpay_invoice );
-			$this->add_redirect_url( $order, $bitpay_invoice );
-
+			$bitpay_invoice = $this->bitpay_invoice_factory->create_by_wc_order( $order );
 			$bitpay_invoice = $this->client_factory->create()->createInvoice( $bitpay_invoice, Facade::POS, false );
 
 			$this->bitpay_logger->execute( $bitpay_invoice->toArray(), 'NEW BITPAY INVOICE', true );
@@ -91,7 +82,7 @@ class BitPayInvoiceCreate {
 		} catch ( BitPayException $e ) {
 			$this->bitpay_logger->execute( $e->getMessage(), 'NEW BITPAY INVOICE', false, true );
 			$error_url = get_home_url() . '/' . $bitpay_checkout_options['bitpay_checkout_error'];
-			$order     = new \WC_Order( $order_id );
+			$order     = $this->wordpress_helper->get_order( $order_id );
 			$items     = $order->get_items();
 			$order->update_status( 'wc-cancelled', __( $e->getMessage() . '.', 'woocommerce' ) ); // phpcs:ignore
 
@@ -123,54 +114,18 @@ class BitPayInvoiceCreate {
 			return;
 		}
 
-		$order = new \WC_Order( $order_id );
+		$order = $this->wordpress_helper->get_order( $order_id );
 		$order->set_transaction_id( $transaction_id );
 		$order->save();
 	}
 
 	private function clear_invoice_id_cookie(): void {
-		setcookie( self::COOKIE_INVOICE_ID_NAME, '', time() - 3600 );
-	}
-
-	private function add_buyer_to_invoice( Invoice $bitpay_invoice ): void {
-		if ( ! $this->bitpay_payment_settings->should_capture_email() ) {
-			return;
-		}
-
-		/** @var \WP_User $current_user */ // phpcs:ignore
-		$current_user = wp_get_current_user();
-
-		if ( $current_user->user_email ) {
-			$buyer = new Buyer();
-			$buyer->setName( $current_user->display_name );
-			$buyer->setEmail( $current_user->user_email );
-			$bitpay_invoice->setBuyer( $buyer );
-		}
-	}
-
-	private function add_redirect_url( \WC_Order $order, Invoice $bitpay_invoice ): void {
-		$bitpay_invoice->setRedirectURL( $this->get_redirect_url( $order ) );
+		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600 );
 	}
 
 	private function set_cookie_for_redirects_and_updating_order_status( ?string $invoice_id ): void {
-		$cookie_name  = self::COOKIE_INVOICE_ID_NAME;
+		$cookie_name  = BitPayPluginSetup::COOKIE_INVOICE_ID_NAME;
 		$cookie_value = $invoice_id;
 		setcookie( $cookie_name, $cookie_value, time() + ( 86400 * 30 ), '/' );
-	}
-
-	private function get_redirect_url( \WC_Order $order ): string {
-		$custom_redirect_page = $this->bitpay_payment_settings->get_custom_redirect_page();
-		if ( $custom_redirect_page ) {
-			return $custom_redirect_page . '?custompage=true';
-		}
-
-		$url_suffix    = '?key=' . $order->get_order_key() . '&redirect=false';
-		$checkout_slug = $this->bitpay_payment_settings->get_checkout_slug();
-		if ( $checkout_slug ) {
-			return get_home_url() . DIRECTORY_SEPARATOR . $checkout_slug . '/order-received/'
-				. $order->get_id() . DIRECTORY_SEPARATOR . $url_suffix;
-		}
-
-		return wc_get_endpoint_url( 'order-received', $order->get_id(), wc_get_checkout_url() ) . $url_suffix;
 	}
 }

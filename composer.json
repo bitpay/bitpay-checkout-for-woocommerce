@@ -8,14 +8,23 @@
     }
   ],
   "require": {
-    "php": "^8",
+    "php": "^8.1",
     "bitpay/sdk": "^8.0.0"
   },
   "require-dev": {
-    "wp-coding-standards/wpcs": "dev-develop"
+    "wp-coding-standards/wpcs": "dev-develop",
+    "phpunit/phpunit": "^9.6",
+    "lucatume/wp-browser": "^4.0",
+    "wp-phpunit/wp-phpunit": "^6.4",
+    "yoast/phpunit-polyfills": "^2.0"
   },
   "autoload": {
     "classmap": ["BitPayLib"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BitPayLib\\Tests\\": "tests/"
+    }
   },
   "scripts": {
     "add-prefix": [

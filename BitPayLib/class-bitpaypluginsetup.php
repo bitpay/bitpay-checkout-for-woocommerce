@@ -17,7 +17,8 @@ use WP_REST_Request;
  */
 class BitPayPluginSetup {
 
-	public const VERSION = '6.0.0';
+	public const VERSION                = '6.0.0';
+	public const COOKIE_INVOICE_ID_NAME = 'bitpay-invoice-id';
 
 	private BitPayIpnProcess $bitpay_ipn_process;
 	private BitPayCancelOrder $bitpay_cancel_order;
@@ -30,13 +31,15 @@ class BitPayPluginSetup {
 		$factory                            = new BitPayClientFactory( $this->bitpay_payment_settings );
 		$cart                               = new BitPayCart();
 		$logger                             = new BitPayLogger();
-		$this->bitpay_checkout_transactions = new BitPayCheckoutTransactions();
-		$this->bitpay_ipn_process           = new BitPayIpnProcess( $this->bitpay_checkout_transactions, $factory, $logger );
+		$wordpress_helper                   = new BitPayWordpressHelper();
+		$this->bitpay_checkout_transactions = new BitPayCheckoutTransactions( $wordpress_helper );
+		$this->bitpay_ipn_process           = new BitPayIpnProcess( $this->bitpay_checkout_transactions, $factory, $wordpress_helper, $logger );
 		$this->bitpay_cancel_order          = new BitPayCancelOrder( $cart, $this->bitpay_checkout_transactions, $logger );
 		$this->bitpay_invoice_create        = new BitPayInvoiceCreate(
 			$factory,
+			new BitPayInvoiceFactory( $this->bitpay_payment_settings, $wordpress_helper ),
 			$this->bitpay_checkout_transactions,
-			$this->bitpay_payment_settings,
+			$wordpress_helper,
 			$logger
 		);
 	}
