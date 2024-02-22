@@ -115,6 +115,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 = 6.0.0 =
 * Fixed a bug when the IPN/webhook is received with "complete" status
+* * Add Unit & End2End tests
 
 = 5.4.0 =
 * Added compatibility with Checkout Blocks
