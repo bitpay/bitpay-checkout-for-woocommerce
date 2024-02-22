@@ -1,7 +1,7 @@
 namespace: Tests
 support_namespace: Support
 paths:
-    tests: tests/EndToEnd
+    tests: tests
     output: tests/EndToEnd/_output
     data: tests/EndToEnd/Support/Data
     support: tests/EndToEnd/Support
