@@ -164,9 +164,8 @@ class BitPayPaymentSettings {
 		return get_option( 'woocommerce_bitpay_checkout_gateway_settings', array() );
 	}
 
-	private function get_bitpay_checkout_endpoint(): string
-	{
+	private function get_bitpay_checkout_endpoint(): string {
 		// 'test' as default when we don't store options yet (before save configuration)
-		return $this->get_bitpay_gateway_setting('bitpay_checkout_endpoint') ?? 'test';
+		return $this->get_bitpay_gateway_setting( 'bitpay_checkout_endpoint' ) ?? 'test';
 	}
 }
