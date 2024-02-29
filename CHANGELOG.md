@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Added compatibility with Checkout Blocks
 * Fixed Checkout Flow (BitPay Modal)
 * Tested compatibility with WordPress 6.4.2
+* Fixed issue with exception for missing DB data for plugin in admin panel
 
 # 5.3.2
 * Fix typo "completed" for BitPay available statuses
