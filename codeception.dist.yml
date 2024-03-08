@@ -1,0 +1,17 @@
+namespace: Tests
+support_namespace: Support
+paths:
+    tests: tests
+    output: tests/EndToEnd/_output
+    data: tests/EndToEnd/Support/Data
+    support: tests/EndToEnd/Support
+    envs: tests/EndToEnd/_envs
+actor_suffix: Tester
+params:
+    - tests/.env
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+    commands:
+        - lucatume\WPBrowser\Command\RunOriginal
+        - lucatume\WPBrowser\Command\RunAll

@@ -1,5 +1,6 @@
 .DS_Store
 BitPayLib/.DS_Store
+codeception.yml
 logs/*.*
 /.idea/
 /vendor

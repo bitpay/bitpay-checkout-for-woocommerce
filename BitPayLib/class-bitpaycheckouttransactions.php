@@ -19,6 +19,12 @@ class BitPayCheckoutTransactions {
 
 	private const TABLE_NAME = '_bitpay_checkout_transactions';
 
+	private BitPayWordpressHelper $bitpay_wordpress;
+
+	public function __construct( BitPayWordpressHelper $bitpay_wordpress ) {
+		$this->bitpay_wordpress = $bitpay_wordpress;
+	}
+
 	public function create_table(): void {
 		$table_name = '_bitpay_checkout_transactions';
 
@@ -34,11 +40,6 @@ class BitPayCheckoutTransactions {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
-	}
-
-	private function get_wpdb(): wpdb {
-		global $wpdb;
-		return $wpdb;
 	}
 
 	public function create_transaction(
@@ -116,5 +117,9 @@ class BitPayCheckoutTransactions {
 				'transaction_id' => $invoice->getId(),
 			)
 		);
+	}
+
+	private function get_wpdb(): wpdb {
+		return $this->bitpay_wordpress->get_wpdb();
 	}
 }
