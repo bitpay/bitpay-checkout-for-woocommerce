@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Added compatibility with Checkout Blocks
 * Fixed Checkout Flow (BitPay Modal)
 * Tested compatibility with WordPress 6.4.2
+* Fixed issue with exception for missing DB data for plugin in admin panel
 * Improved logging IPN requests
 * Improved webhook handling to prevent an issue where Order IPN's could update a refunded Order's status to a processable Order status
 

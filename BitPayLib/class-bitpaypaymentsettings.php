@@ -88,7 +88,7 @@ class BitPayPaymentSettings {
 		}
 
 		$bitpay_checkout_token    = $this->get_bitpay_token();
-		$bitpay_checkout_endpoint = $this->get_bitpay_gateway_setting( 'bitpay_checkout_endpoint' );
+		$bitpay_checkout_endpoint = $this->get_bitpay_checkout_endpoint();
 
 		if ( ! $bitpay_checkout_token ) {
 			$message = 'There is no token set for your ' . strtoupper( $bitpay_checkout_endpoint ) . ' environment. BitPay will not function if this is not set.';
@@ -162,5 +162,10 @@ class BitPayPaymentSettings {
 
 	private function get_bitpay_gateway_settings(): array {
 		return get_option( 'woocommerce_bitpay_checkout_gateway_settings', array() );
+	}
+
+	private function get_bitpay_checkout_endpoint(): string {
+		// 'test' as default when we don't store options yet (before save configuration)
+		return $this->get_bitpay_gateway_setting( 'bitpay_checkout_endpoint' ) ?? 'test';
 	}
 }
