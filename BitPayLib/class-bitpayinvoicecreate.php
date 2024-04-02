@@ -63,6 +63,8 @@ class BitPayInvoiceCreate {
 			$bitpay_invoice = $this->bitpay_invoice_factory->create_by_wc_order( $order );
 			$bitpay_invoice = $this->client_factory->create()->createInvoice( $bitpay_invoice, Facade::POS, false );
 
+			WC()->cart->empty_cart();
+
 			$this->bitpay_logger->execute( $bitpay_invoice->toArray(), 'NEW BITPAY INVOICE', true );
 
 			$invoice_id = $bitpay_invoice->getId();
