@@ -111,6 +111,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+= 5.4.1 =
+* Improved webhook validation to improve timing issues
+
 = 5.4.0 =
 * Added compatibility with Checkout Blocks
 * Fixed Checkout Flow (BitPay Modal)
