@@ -14,7 +14,7 @@ use WP_REST_Request;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.4.0
+ * Version: 5.4.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -165,7 +165,7 @@ class BitPayIpnProcess {
 	}
 
 	private function process_confirmed( Invoice $bitpay_invoice, WC_Order $order ): void {
-		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'confirmed' ) );
+		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'confirmed', 'complete' ) );
 
 		$invoice_id             = $bitpay_invoice->getId();
 		$wordpress_order_status = $this->get_gateway_settings()['bitpay_checkout_order_process_confirmed_status'];
@@ -296,7 +296,7 @@ class BitPayIpnProcess {
 	}
 
 	private function process_processing( Invoice $bitpay_invoice, WC_Order $order ): void {
-		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'paid' ) );
+		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'paid', 'confirmed', 'complete' ) );
 		$invoice_id = $bitpay_invoice->getId();
 		$order->add_order_note( $this->get_start_order_note( $invoice_id ) . 'is paid and awaiting confirmation.' );
 

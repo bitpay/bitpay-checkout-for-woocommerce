@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.4.1
+* Improved webhook validation to improve timing issues
+
 # 5.4.0
 * Added compatibility with Checkout Blocks
 * Fixed Checkout Flow (BitPay Modal)
