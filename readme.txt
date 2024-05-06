@@ -112,7 +112,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 == Changelog ==
 
 = 5.5.0 =
-* Tested compatibility with WordPress 6.4.2
+* Tested compatibility with WordPress 6.5.2
 
 = 5.4.1 =
 * Improved webhook validation to improve timing issues
