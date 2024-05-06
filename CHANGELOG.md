@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 5.5.0
+* Tested compatibility with WordPress 6.5.2
+
 # 5.4.1
 * Improved webhook validation to improve timing issues
 
