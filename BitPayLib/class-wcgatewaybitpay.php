@@ -309,7 +309,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 	private function get_icon_on_payment_page(): string {
 		$settings = new BitPayPaymentSettings();
 
-		return add_query_arg('id', 'bitpay_logo', $settings->get_payment_logo_url());
+		return add_query_arg( 'id', 'bitpay_logo', $settings->get_payment_logo_url() );
 	}
 
 	private function get_processing_link(): string {
