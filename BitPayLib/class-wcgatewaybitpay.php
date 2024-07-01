@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.5.0
+ * Version: 5.5.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -309,7 +309,7 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 	private function get_icon_on_payment_page(): string {
 		$settings = new BitPayPaymentSettings();
 
-		return $settings->get_payment_logo_url() . '" id="bitpay_logo';
+		return add_query_arg('id', 'bitpay_logo', $settings->get_payment_logo_url());
 	}
 
 	private function get_processing_link(): string {
