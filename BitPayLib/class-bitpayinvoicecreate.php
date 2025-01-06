@@ -70,16 +70,9 @@ class BitPayInvoiceCreate {
 			$invoice_id = $bitpay_invoice->getId();
 			$this->set_cookie_for_redirects_and_updating_order_status( $invoice_id );
 
-			$use_modal = (int) $bitpay_checkout_options['bitpay_checkout_flow'];
-
 			$this->bitpay_checkout_insert_order_note( $order_id, $invoice_id );
 
-			if ( 2 === $use_modal ) {
-				wp_redirect( $bitpay_invoice->getUrl() ); // phpcs:ignore
-				exit();
-			}
-
-			wp_redirect( $bitpay_invoice->getRedirectURL() ); // phpcs:ignore
+			wp_redirect( $bitpay_invoice->getUrl() ); // phpcs:ignore
 			exit();
 		} catch ( BitPayException $e ) {
 			$this->bitpay_logger->execute( $e->getMessage(), 'NEW BITPAY INVOICE', false, true );

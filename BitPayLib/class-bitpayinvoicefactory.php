@@ -68,12 +68,7 @@ class BitPayInvoiceFactory {
 			return $custom_redirect_page . '?custompage=true';
 		}
 
-		$url_suffix    = '?key=' . $order->get_order_key() . '&redirect=false';
-		$checkout_slug = $this->bitpay_payment_settings->get_checkout_slug();
-		if ( $checkout_slug ) {
-			return get_home_url() . DIRECTORY_SEPARATOR . $checkout_slug . '/order-received/'
-				. $order->get_id() . DIRECTORY_SEPARATOR . $url_suffix;
-		}
+		$url_suffix = '?key=' . $order->get_order_key() . '&redirect=false';
 
 		return $this->wordpress_helper->get_endpoint_url(
 			'order-received',
