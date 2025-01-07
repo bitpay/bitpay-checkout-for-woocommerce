@@ -40,6 +40,9 @@
     ],
     "phpcbf": [
       "./vendor/bin/phpcbf BitPayLib"
+    ],
+    "test:codeception": [
+      "./vendor/bin/codecept run"
     ]
   },
   "config": {

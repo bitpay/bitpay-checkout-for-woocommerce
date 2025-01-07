@@ -63,7 +63,6 @@ class BitPayPluginSetup {
 		add_action( 'template_redirect', array( $this, 'create_bitpay_invoice' ) );
 		add_action( 'admin_notices', array( $this, 'update_db' ) );
 		add_action( 'admin_notices', array( $this, 'bitpay_checkout_check_token' ) );
-		add_action( 'woocommerce_thankyou', array( $this, 'bitpay_checkout_thankyou_page' ), 10, 1 );
 		add_action( 'woocommerce_thankyou', array( $this, 'bitpay_checkout_custom_message' ) );
 		add_filter( 'woocommerce_payment_gateways', array( $this, 'wc_bitpay_checkout_add_to_gateways' ) );
 		add_filter( 'woocommerce_order_button_html', array( $this, 'bitpay_checkout_replace_order_button_html' ), 10, 2 );
@@ -187,11 +186,6 @@ class BitPayPluginSetup {
 
 	public function cancel_order( WP_REST_Request $request ): void {
 		$this->bitpay_cancel_order->execute( $request );
-	}
-
-	public function bitpay_checkout_thankyou_page( $order_id ): void {
-		$page = new BitPayPages( $this->bitpay_payment_settings );
-		$page->checkout_thank_you( (int) $order_id );
 	}
 
 	public function bitpay_checkout_custom_message( $order_id ): void {
