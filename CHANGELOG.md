@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 # 6.0.0
 * Fixed a bug when the IPN/webhook is received with "complete" status
 * Add Unit & End2End tests
+* Updated SDK
+* Added Platform Info
+* Verifies Webhooks
 
 # 5.5.1
 * Fixed issue with payment logo url
