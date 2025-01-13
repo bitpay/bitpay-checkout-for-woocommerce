@@ -2,7 +2,7 @@
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 6.0
-Tested up to: 6.7.2
+Tested up to: 6.7.1
 WC requires at least: 8.0.0
 WC tested up to: 9.5.2
 Requires PHP: 8.1
@@ -119,6 +119,7 @@ You can contact our support team via the following form https://bitpay.com/reque
 * Updated SDK
 * Added Platform Info
 * Verifies Webhooks
+* Tested compatibility with WordPress 6.7.1
 
 = 5.5.1 =
 * Fixed issue with payment logo url
