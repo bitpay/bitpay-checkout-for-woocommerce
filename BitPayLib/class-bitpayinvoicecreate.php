@@ -72,7 +72,12 @@ class BitPayInvoiceCreate {
 
 			$this->bitpay_checkout_insert_order_note( $order_id, $invoice_id );
 
-			wp_redirect( $bitpay_invoice->getUrl() ); // phpcs:ignore
+			$invoice_url = $bitpay_invoice->getUrl();
+			if ( isset( $bitpay_checkout_options['bitpay_checkout_mobile_transfer'] ) && 1 === (int) $bitpay_checkout_options['bitpay_checkout_mobile_transfer'] ) {
+				$invoice_url .= '&context=mt';
+			}
+
+			wp_redirect( $invoice_url ); // phpcs:ignore
 			exit();
 		} catch ( BitPayException $e ) {
 			$this->bitpay_logger->execute( $e->getMessage(), 'NEW BITPAY INVOICE', false, true );

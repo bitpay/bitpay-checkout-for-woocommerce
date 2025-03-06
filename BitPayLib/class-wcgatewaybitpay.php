@@ -188,6 +188,17 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				'default'     => '1',
 			),
 
+			'bitpay_checkout_mobile_transfer'           => array(
+				'title'       => __( 'Enable Mobile Transfer', 'woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Set to YES if you would like to show a QR code instead of the wallet, so customers can scan and use their phone.', 'woocommerce' ),
+				'options'     => array(
+					'0' => 'No',
+					'1' => 'Yes',
+				),
+				'default'     => '0',
+			),
+
 			'bitpay_checkout_error'                     => array(
 				'title'       => __( 'Error handling', 'woocommerce' ),
 				'type'        => 'text',
