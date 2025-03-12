@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 6.1.0
+* Added Mobile Transfer option
+
 # 6.0.0
 * Fixed a bug when the IPN/webhook is received with "complete" status
 * Add Unit & End2End tests

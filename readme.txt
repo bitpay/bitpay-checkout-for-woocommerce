@@ -2,12 +2,12 @@
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 6.0
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 WC requires at least: 8.0.0
 WC tested up to: 9.5.2
 Requires PHP: 8.1
 Recommended PHP: 8.3
-Stable tag: 6.0.0
+Stable tag: 6.1.0
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+= 6.1.0 =
+* Added Mobile Transfer option
 
 = 6.0.0 =
 * Fixed a bug when the IPN/webhook is received with "complete" status
