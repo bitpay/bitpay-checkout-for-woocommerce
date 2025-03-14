@@ -7,7 +7,7 @@ WC requires at least: 8.0.0
 WC tested up to: 9.5.2
 Requires PHP: 8.1
 Recommended PHP: 8.3
-Stable tag: 6.1.0
+Stable tag: 6.1.1
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+# 6.1.1
+* Added testing to Pipeline
 
 = 6.1.0 =
 * Added Mobile Transfer option
