@@ -1,0 +1,47 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [8.1, 8.2, 8.3]
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bitpay-wordpress-test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Install WordPress with WooCommerce
+        run: |
+          cd ..
+          rm -fr wordpress
+          mkdir wordpress
+          cd wordpress
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          php wp-cli.phar core download
+          php wp-cli.phar config create --dbname=bitpay-wordpress-test --dbuser=root --dbpass=root --dbhost=127.0.0.1
+          php wp-cli.phar core install --url=bitpay-wordpress.test --title=Example --admin_user=admin --admin_password=admin --admin_email=admin@example.com
+          php wp-cli.phar plugin install --activate woocommerce
+          cp -R ../bitpay-checkout-for-woocommerce wp-content/plugins/bitpay-checkout-for-woocommerce
+          cp ../bitpay-checkout-for-woocommerce/tests/Unit/wp-config.dist.php wp-content/plugins/bitpay-checkout-for-woocommerce/tests/Unit/wp-config.php
+          cp ../bitpay-checkout-for-woocommerce/tests/Unit/index.tests.php wp-content/plugins/bitpay-checkout-for-woocommerce/index.php
+          php wp-cli.phar plugin activate bitpay-checkout-for-woocommerce
+      - name: Run tests
+        run: |
+          cd ../wordpress/wp-content/plugins/bitpay-checkout-for-woocommerce
+          ./vendor/bin/phpunit -c phpunit.xml.dist
