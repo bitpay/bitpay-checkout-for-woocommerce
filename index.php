@@ -17,5 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! defined( 'BITPAY_CHECKOUT_FOR_WC_PLUGIN_FILE' ) ) {
+	define( 'BITPAY_CHECKOUT_FOR_WC_PLUGIN_FILE', __FILE__ );
+}
+
 $bitpay_plugin_setup = new BitPayPluginSetup();
 $bitpay_plugin_setup->execute();
