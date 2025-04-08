@@ -55,8 +55,8 @@ class BitPayPluginSetup {
 	}
 
 	public function execute(): void {
-		register_activation_hook( __FILE__, array( $this, 'setup_plugin' ) );
-		register_activation_hook( __FILE__, array( $this, 'add_error_page' ) );
+		register_activation_hook( BITPAY_CHECKOUT_FOR_WC_PLUGIN_FILE, array( $this, 'setup_plugin' ) );
+		register_activation_hook( BITPAY_CHECKOUT_FOR_WC_PLUGIN_FILE, array( $this, 'add_error_page' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'validate_wc_payment_gateway' ), 11 );
 		add_action( 'woocommerce_widget_shopping_cart_buttons', array( $this, 'bitpay_mini_checkout' ), 20 );
