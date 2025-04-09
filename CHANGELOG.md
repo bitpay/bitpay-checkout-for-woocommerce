@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 6.1.2
+* Resolved an issue where order status would not update from IPN
+
 # 6.1.1
 * Added testing to Pipeline
 

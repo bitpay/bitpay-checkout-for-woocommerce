@@ -113,6 +113,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 
 == Changelog ==
 
+# 6.1.2
+* Resolved an issue where order status would not updated from IPN
+
 # 6.1.1
 * Added testing to Pipeline
 
