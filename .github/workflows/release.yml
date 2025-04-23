@@ -44,5 +44,7 @@ jobs:
           SLUG: bitpay-checkout-for-woocommerce
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        run: $GITHUB_WORKSPACE/.github/workflows/release.sh
+        run: |
+          apt-get install subversion -y
+          $GITHUB_WORKSPACE/.github/workflows/release.sh
         shell: bash
