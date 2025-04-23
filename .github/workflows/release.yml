@@ -45,6 +45,6 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
         run: |
-          apt-get install subversion -y
+          sudo apt-get install subversion -y
           $GITHUB_WORKSPACE/.github/workflows/release.sh
         shell: bash
