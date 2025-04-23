@@ -11,13 +11,13 @@ use WP_REST_Request;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 6.1.1
+ * Version: 6.1.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayPluginSetup {
 
-	public const VERSION                = '6.1.1';
+	public const VERSION                = '6.1.2';
 	public const COOKIE_INVOICE_ID_NAME = 'bitpay-invoice-id';
 
 	private BitPayIpnProcess $bitpay_ipn_process;
