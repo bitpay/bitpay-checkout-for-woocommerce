@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 6.1.3
+* Tested compatability with Wordpress 6.8 and WooCommerce 9.8.2
+
 # 6.1.2
 * Resolved an issue where DB table may not be created as expected on activation
 
