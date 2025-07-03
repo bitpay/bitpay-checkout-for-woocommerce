@@ -8,7 +8,7 @@ namespace BitPayLib\Exception;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 6.1.4
+ * Version: 7.0.0
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
