@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 7.0.1
+* Tested compatability with Wordpress 6.8.2
+
 # 7.0.0
 * Tested compatability with Wordpress 6.8.1 and WooCommerce 9.9.5
 
