@@ -7,7 +7,7 @@ WC requires at least: 9.8.0
 WC tested up to: 9.9.5
 Requires PHP: 8.1
 Recommended PHP: 8.3
-Stable tag: 7.0.0
+Stable tag: 7.0.1
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+
+# 7.0.1
+* Tested compatability with Wordpress 6.8.2
 
 # 7.0.0
 * Tested compatability with Wordpress 6.8.1 and WooCommerce 9.9.5
