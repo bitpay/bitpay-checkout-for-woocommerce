@@ -13,7 +13,7 @@ use BitPaySDK\PosClient;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 7.0.1
+ * Version: 7.0.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -35,7 +35,7 @@ class BitPayClientFactory {
 		return new PosClient(
 			$token,
 			$this->get_environment(),
-			'BitPay_WooCommerce_v7.0.1'
+			'BitPay_WooCommerce_v7.0.2'
 		);
 	}
 
