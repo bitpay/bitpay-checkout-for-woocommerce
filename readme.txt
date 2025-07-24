@@ -2,9 +2,9 @@
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
 Requires at least: 6.0
-Tested up to: 6.8.1
+Tested up to: 6.8.2
 WC requires at least: 9.8.0
-WC tested up to: 9.9.5
+WC tested up to: 10.0.3
 Requires PHP: 8.1
 Recommended PHP: 8.3
 Stable tag: 7.0.2
