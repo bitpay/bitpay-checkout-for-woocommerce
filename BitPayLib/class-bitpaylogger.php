@@ -31,23 +31,21 @@ class BitPayLogger {
 			$msg = print_r( $msg, true ); // phpcs:ignore
 		}
 
-		if ( $error ) {
-			$type = 'error';
-		}
-
-		$valid_levels = array( 'emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug' );
-		if ( ! in_array( $type, $valid_levels, true ) ) {
-			$type = 'info';
-		}
+		$header = PHP_EOL . '======================' . $type . '===========================' . PHP_EOL;
+		$footer = PHP_EOL . '=================================================' . PHP_EOL;
 
 		if ( $error ) {
-			$this->get_logger()->log( $type, $msg, array( 'source' => 'bitpay_error' ) );
+			$this->get_logger()->error( $header, array( 'source' => 'bitpay_error' ) );
+			$this->get_logger()->error( $msg, array( 'source' => 'bitpay_error' ) );
+			$this->get_logger()->error( $footer, array( 'source' => 'bitpay_error' ) );
 			return;
 		}
 
 		// Log to `bitpay_transactions` only if `bitpay_log_mode` is set to 1.
 		if ( 1 === (int) $bitpay_checkout_options['bitpay_log_mode'] ) {
-			$this->get_logger()->log( $type, $msg, array( 'source' => 'bitpay_transactions' ) );
+			$this->get_logger()->info( $header, array( 'source' => 'bitpay_transactions' ) );
+			$this->get_logger()->info( $msg, array( 'source' => 'bitpay_transactions' ) );
+			$this->get_logger()->info( $footer, array( 'source' => 'bitpay_transactions' ) );
 		}
 	}
 }
