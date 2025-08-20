@@ -18,7 +18,7 @@ class BitPayLogger {
 	private ?WC_Logger_Interface $logger = null;
 
 	private function get_logger(): WC_Logger_Interface {
-		if ( $this->logger === null ) {
+		if ( null === $this->logger ) {
 			$this->logger = wc_get_logger();
 		}
 		return $this->logger;
@@ -28,7 +28,7 @@ class BitPayLogger {
 		$bitpay_checkout_options = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
 
 		if ( $is_array ) {
-			$msg = print_r( $msg, true ); // Replace with proper logging if needed.
+			$msg = print_r( $msg, true ); // phpcs:ignore
 		}
 
 		if ( $error ) {
