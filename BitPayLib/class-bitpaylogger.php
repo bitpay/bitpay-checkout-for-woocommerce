@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
+use WC_Logger_Interface;
+
 /**
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
@@ -13,42 +15,39 @@ namespace BitPayLib;
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayLogger {
+    private ?WC_Logger_Interface $logger = null;
 
-	public function execute( $msg, string $type, bool $is_array = false, $error = false ): void {
-		$bitpay_checkout_options = get_option( 'woocommerce_bitpay_checkout_gateway_settings' );
-		$log_directory           = $this->get_log_directory();
-		if ( ! file_exists( $log_directory ) && ! mkdir( $log_directory ) && ! is_dir( $log_directory ) ) {
-			throw new \RuntimeException( sprintf( 'Directory "%s" was not created', esc_html( $log_directory ) ) );
-		}
+    private function get_logger(): WC_Logger_Interface {
+        if ($this->logger === null) {
+            $this->logger = wc_get_logger();
+        }
+        return $this->logger;
+    }
 
-		$transaction_log = $log_directory . date( 'Ymd' ) . '_transactions.log'; // phpcs:ignore
-		$error_log       = $log_directory . date( 'Ymd' ) . '_error.log';
+    public function execute($msg, string $type, bool $is_array = false, $error = false): void {
+        $bitpay_checkout_options = get_option('woocommerce_bitpay_checkout_gateway_settings');
 
-		$header = PHP_EOL . '======================' . $type . '===========================' . PHP_EOL;
-		$footer = PHP_EOL . '=================================================' . PHP_EOL;
+        if ($is_array) {
+            $msg = print_r($msg, true);
+        }
 
-		if ( $is_array ) {
-			$msg = print_r( $msg, true ); // phpcs:ignore
-		}
+        if ($error) {
+            $type = 'error';
+        }
 
-		// @codingStandardsIgnoreStart
-		if ( $error ) {
-			error_log( $header, 3, $error_log );
-			error_log( $msg, 3, $error_log );
-			error_log( $footer, 3, $error_log );
-			return;
-		}
+        $valid_levels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
+        if (!in_array($type, $valid_levels, true)) {
+            $type = 'info'; // Default to 'info' if the type is invalid.
+        }
 
-		if ( (int) $bitpay_checkout_options['bitpay_log_mode'] === 1 ) {
-			error_log( $header, 3, $transaction_log );
-			error_log( $msg, 3, $transaction_log );
-			error_log( $footer, 3, $transaction_log );
-		}
-		// @codingStandardsIgnoreEnd
-	}
+        if ($error) {
+            $this->get_logger()->log($type, $msg, ['source' => 'bitpay_error']);
+            return;
+        }
 
-	public function get_log_directory(): string {
-		return plugin_dir_path( __FILE__ ) . '..' . DIRECTORY_SEPARATOR . '..'
-			. DIRECTORY_SEPARATOR . 'logs/';
-	}
+        // Log to `bitpay_transactions` only if `bitpay_log_mode` is set to 1.
+        if ((int) $bitpay_checkout_options['bitpay_log_mode'] === 1) {
+            $this->get_logger()->log($type, $msg, ['source' => 'bitpay_transactions']);
+        }
+    }
 }
