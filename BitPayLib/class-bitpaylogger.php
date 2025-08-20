@@ -31,8 +31,8 @@ class BitPayLogger {
 			$msg = print_r( $msg, true ); // phpcs:ignore
 		}
 
-		$header = PHP_EOL . '======================' . $type . '===========================' . PHP_EOL;
-		$footer = PHP_EOL . '=================================================' . PHP_EOL;
+		$header = '======================' . $type . '===========================';
+		$footer = '=================================================';
 
 		if ( $error ) {
 			$this->get_logger()->error( $header, array( 'source' => 'bitpay_error' ) );
