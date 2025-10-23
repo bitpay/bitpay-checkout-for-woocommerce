@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace BitPayLib;
 
-use WC_Logger_Interface;
+use WC_Logger;
 
 /**
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 7.1.0
+ * Version: 7.1.1
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayLogger {
-	private ?WC_Logger_Interface $logger = null;
+	private ?WC_Logger $logger = null;
 
-	private function get_logger(): WC_Logger_Interface {
+	private function get_logger(): WC_Logger {
 		if ( null === $this->logger ) {
 			$this->logger = wc_get_logger();
 		}

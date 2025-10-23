@@ -35,6 +35,7 @@ return [
     ],
     'exclude-classes' => [
         'WC',
+        'WC_Logger',
         'WC_Payment_Gateway',
         'WP_User',
         'WC_Order',
