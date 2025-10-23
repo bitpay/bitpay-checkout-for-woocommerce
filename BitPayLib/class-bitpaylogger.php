@@ -15,7 +15,7 @@ use WC_Logger;
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
 class BitPayLogger {
-	private ?\WC_Logger_Interface $logger = null;
+	private ?WC_Logger $logger = null;
 
 	private function get_logger(): WC_Logger {
 		if ( null === $this->logger ) {
