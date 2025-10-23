@@ -4,7 +4,7 @@ Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurre
 Requires at least: 6.0
 Tested up to: 6.8.2
 WC requires at least: 9.8.0
-WC tested up to: 10.0.3
+WC tested up to: 10.2.2
 Requires PHP: 8.1
 Recommended PHP: 8.3
 Stable tag: 7.1.1
