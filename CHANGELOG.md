@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 7.1.2
+* Tested compatibility with WordPress up to 6.9.4 and WooCommerce up to 10.6.1.
+
 # 7.1.1
 * Fixed issue where logging could fail
 
