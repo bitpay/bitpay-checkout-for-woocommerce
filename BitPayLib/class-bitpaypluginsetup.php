@@ -90,7 +90,7 @@ class BitPayPluginSetup {
 					array(
 						'methods'             => 'POST,GET',
 						'callback'            => array( $this, 'cancel_order' ),
-						'permission_callback' => '__return_true',
+						'permission_callback' => array( $this, 'check_cancel_order_permissions' ),
 					)
 				);
 				register_rest_route(
@@ -186,6 +186,10 @@ class BitPayPluginSetup {
 
 	public function cancel_order( WP_REST_Request $request ): void {
 		$this->bitpay_cancel_order->execute( $request );
+	}
+
+	public function check_cancel_order_permissions( WP_REST_Request $request ): bool {
+		return $this->bitpay_cancel_order->can_execute( $request->get_param( 'invoiceid' ) );
 	}
 
 	public function bitpay_checkout_custom_message( $order_id ): void {
