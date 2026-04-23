@@ -28,7 +28,7 @@ class BitPayWordpressHelper {
 		return $wp;
 	}
 
-	public function get_order( string $order_id ): \WC_Order {
+	public function get_order( string|int $order_id ): \WC_Order {
 		return new \WC_Order( $order_id );
 	}
 
