@@ -68,7 +68,7 @@ class BitPayInvoiceCreate {
 			$this->bitpay_logger->execute( $bitpay_invoice->toArray(), 'NEW BITPAY INVOICE', true );
 
 			$invoice_id = $bitpay_invoice->getId();
-			$this->set_cookie_for_redirects_and_updating_order_status( $invoice_id );
+			$this->set_cookie_for_redirects_and_updating_order_status( $invoice_id, $order->get_id(), $order->get_billing_email() );
 
 			$this->bitpay_checkout_insert_order_note( $order_id, $invoice_id );
 
@@ -123,9 +123,9 @@ class BitPayInvoiceCreate {
 		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600 );
 	}
 
-	private function set_cookie_for_redirects_and_updating_order_status( ?string $invoice_id ): void {
+	private function set_cookie_for_redirects_and_updating_order_status( ?string $invoice_id, ?int $order_id = null, ?string $billing_email = null ): void {
 		$cookie_name  = BitPayPluginSetup::COOKIE_INVOICE_ID_NAME;
-		$cookie_value = $invoice_id;
+		$cookie_value = sha1( $invoice_id . ':' . $order_id . ':' . $billing_email );
 		setcookie( $cookie_name, $cookie_value, time() + ( 86400 * 30 ), '/' );
 	}
 }
