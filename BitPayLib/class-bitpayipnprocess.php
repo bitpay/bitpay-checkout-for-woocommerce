@@ -61,10 +61,17 @@ class BitPayIpnProcess {
 		}
 
 		try {
+			$order_id = $this->bitpay_checkout_transactions->get_order_id_by_invoice_id( $invoice_id );
+			if ( ! $order_id ) {
+				$message = 'Wrong invoice id in IPN request. Invoice id: ' . $invoice_id;
+				$this->logger->execute( $message, 'INCOMING IPN ERROR', false, true );
+				throw new BitPayInvalidOrder();
+			}
+
 			$bitpay_invoice = $this->factory->create()->getInvoice( $invoice_id, Facade::POS, false );
 			do_action( 'bitpay_checkout_woocoomerce_after_get_invoice', $bitpay_invoice );
-			$order = $this->bitpay_wordpress_helper->get_order( $bitpay_invoice->getOrderId() );
-			$this->validate_order( $order, $invoice_id );
+			$order = $this->bitpay_wordpress_helper->get_order( $order_id );
+			$this->validate_order( $order, $bitpay_invoice );
 			$this->validate_webhook( $x_signature, $request->get_body(), $order );
 
 			$this->process( $bitpay_invoice, $order, $event['name'] );
@@ -75,7 +82,8 @@ class BitPayIpnProcess {
 		}
 	}
 
-	private function validate_order( WC_Order $order, string $invoice_id ): void {
+	private function validate_order( WC_Order $order, Invoice $bitpay_invoice ): void {
+		$invoice_id = $bitpay_invoice->getId();
 		do_action( 'bitpay_checkout_woocoomerce_validate_wc_order', $order, $invoice_id );
 		if ( $order->get_payment_method() !== 'bitpay_checkout_gateway' ) {
 			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
@@ -87,6 +95,31 @@ class BitPayIpnProcess {
 		if ( $this->bitpay_checkout_transactions->count_transaction_id( $invoice_id ) !== 1 ) {
 			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
 				. '. Wrong transaction id ' . $invoice_id;
+			$this->logger->execute( $message, 'Ignore IPN', true );
+			throw new BitPayInvalidOrder();
+		}
+
+		if ( $bitpay_invoice->getOrderId() !== $order->get_order_number() ) {
+			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
+				. '. Invoice order id ' . $bitpay_invoice->getOrderId() . ' does not match WooCommerce order id.';
+			$this->logger->execute( $message, 'Ignore IPN', true );
+			throw new BitPayInvalidOrder();
+		}
+
+		$invoice_price = $bitpay_invoice->getPrice();
+		$order_total   = (float) $order->get_total();
+		if ( $invoice_price !== $order_total ) {
+			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
+				. '. Invoice price ' . $invoice_price . ' does not match order total ' . $order_total;
+			$this->logger->execute( $message, 'Ignore IPN', true );
+			throw new BitPayInvalidOrder();
+		}
+
+		$invoice_currency = $bitpay_invoice->getCurrency();
+		$order_currency   = $order->get_currency();
+		if ( $invoice_currency !== $order_currency ) {
+			$message = 'Order id = ' . $order->get_id() . ', BitPay invoice id = ' . $invoice_id
+				. '. Invoice currency ' . $invoice_currency . ' does not match order currency ' . $order_currency;
 			$this->logger->execute( $message, 'Ignore IPN', true );
 			throw new BitPayInvalidOrder();
 		}
@@ -331,10 +364,11 @@ class BitPayIpnProcess {
 
 	private function validate_webhook( string $x_signature, string $webhook_body, WC_Order $order ): void {
 		$order_bitpay_token = $order->get_meta( BitPayCreateOrder::BITPAY_TOKEN_ORDER_METADATA_KEY );
+		$bitpay_token       = $this->bitpay_payment_settings->get_bitpay_token();
 
-		if ( $order_bitpay_token &&
+		if ( ! $order_bitpay_token || $order_bitpay_token !== $bitpay_token ||
 			! $this->bitpay_webhook_verifier->verify(
-				$this->bitpay_payment_settings->get_bitpay_token(),
+				$bitpay_token,
 				$x_signature,
 				$webhook_body
 			)

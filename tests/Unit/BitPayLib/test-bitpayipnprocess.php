@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 
 class BitPayIpnProcessTest extends TestCase {
-	private const WC_ORDER_ID       = 'someWcId';
+	private const WC_ORDER_ID       = 1;
 	private const BITPAY_INVOICE_ID = 'someId';
 
 	/**
@@ -38,17 +38,22 @@ class BitPayIpnProcessTest extends TestCase {
 
 		$wc_order->method( 'get_payment_method' )->willReturn( 'invalidMethod' );
 		$wc_order->method( 'get_id' )->willReturn( self::WC_ORDER_ID );
+		$wc_order->method( 'get_total' )->willReturn( 100.00 );
+		$wc_order->method( 'get_currency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_paid_ipn_webhook.json' )
 			);
 		$request->expects(self::once())->method('get_header')->with('x-signature')->willReturn('x-signature-header-value');
+		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
 		$bitpay_invoice->method( 'getOrderId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$bitpay_client_factory->method( 'create' )->willReturn( $bitpay_client );
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
 
 		$testedClass = $this->getTestedClass(
@@ -68,7 +73,7 @@ class BitPayIpnProcessTest extends TestCase {
 						return true;
 					}
 
-					return $msg === 'Order id = someWcId, BitPay invoice id = someId. Current payment method = invalidMethod';
+					return $msg === 'Order id = 1, BitPay invoice id = someId. Current payment method = invalidMethod';
 				},
 			)
 		);
@@ -102,12 +107,15 @@ class BitPayIpnProcessTest extends TestCase {
 				file_get_contents( __DIR__ . '/json/bitpay_paid_ipn_webhook.json' )
 			);
 		$request->expects(self::once())->method('get_header')->with('x-signature')->willReturn('x-signature-header-value');
+		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
 		$bitpay_invoice->method( 'getOrderId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$bitpay_client_factory->method( 'create' )->willReturn( $bitpay_client );
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
 
 		$testedClass = $this->getTestedClass(
@@ -126,7 +134,7 @@ class BitPayIpnProcessTest extends TestCase {
 						return true;
 					}
 
-					return $msg === 'Order id = someWcId, BitPay invoice id = someId. Wrong transaction id someId';
+					return $msg === 'Order id = 1, BitPay invoice id = someId. Wrong transaction id someId';
 				},
 			)
 		);
@@ -139,7 +147,7 @@ class BitPayIpnProcessTest extends TestCase {
 	/**
 	 * @test
 	 */
-	public function it_should_process_ipn_request_without_verification_when_order_has_no_saved_token() {
+	public function it_should_not_process_failed_verification_ipn_request() {
 		// given
 		$webhook_verifier = $this->get_bitpay_webhook_verifier();
 		$webhook_verifier->expects(self::never())->method('verify');
@@ -153,82 +161,36 @@ class BitPayIpnProcessTest extends TestCase {
 		$logger = $this->get_bitpay_logger();
 		$bitpay_client_factory = $this->getMockBuilder(BitPayClientFactory::class)
 			->disableOriginalConstructor()->getMock();
-		$wc_order = $this->get_wc_order();
-
-		$transactions->method('count_transaction_id')->willReturn(1);
-		$bitpay_invoice->method('getStatus')->willReturn('paid');
-		$bitpay_invoice->method('getId')->willReturn(self::BITPAY_INVOICE_ID);
-		$request->method('get_body')
-			->willReturn(
-				file_get_contents(__DIR__ . '/json/bitpay_paid_ipn_webhook.json')
-			);
-		$request->expects(self::once())->method('get_header')->with('x-signature')->willReturn('x-signature-header-value');
-
-		$bitpay_invoice->method('getOrderId')->willReturn( self::BITPAY_INVOICE_ID );
-		$bitpay_client_factory->method('create')->willReturn( $bitpay_client );
-		$bitpay_client->method('getInvoice')->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
-			->willReturn($bitpay_invoice);
-		$wordpress_helper->method('get_order')
-			->with(self::BITPAY_INVOICE_ID)
-			->willReturn($wc_order);
-
-		$testedClass = $this->getTestedClass(
-			$wordpress_helper,
-			$bitpay_client_factory,
-			$transactions,
-			$logger,
-			$webhook_verifier,
-			$this->get_bitpay_payment_settings()
-		);
-
-		// then
-		$wc_order
-			->expects(self::once())
-			->method('add_order_note')
-			->with('BitPay Invoice ID: <a target = "_blank" href = "//test.bitpay.com/dashboard/payments/someId">someId</a> is paid and awaiting confirmation.');
-		$transactions->expects(self::once())->method('update_transaction_status');
-
-		// when
-		$testedClass->execute($request);
-	}
-
-	/**
-	 * @test
-	 */
-	public function it_should_not_process_failed_verification_ipn_request() {
-		// given
-		$webhook_verifier = $this->get_bitpay_webhook_verifier();
-		$webhook_verifier->expects(self::once())->method('verify')->willReturn(false);
-		$wordpress_helper = $this->get_wordpress_helper();
-		$request = $this->getMockBuilder(\WP_REST_Request::class)->getMock();
-		$transactions = $this->get_checkout_transactions();
-		$bitpay_invoice = $this->getMockBuilder(\BitPaySDK\Model\Invoice\Invoice::class)->getMock();
-		$bitpay_client = $this->getMockBuilder(\BitPaySDK\Client::class)
-			->disableOriginalConstructor()
-			->getMock();
-		$logger = $this->get_bitpay_logger();
-		$bitpay_client_factory = $this->getMockBuilder(BitPayClientFactory::class)
-			->disableOriginalConstructor()->getMock();
-		$wc_order = $this->get_wc_order();
-		$bitpay_payment_settings = $this->get_bitpay_payment_settings();
-
-		$transactions->method('count_transaction_id')->willReturn(1);
-		$bitpay_invoice->method('getStatus')->willReturn('paid');
-		$bitpay_invoice->method('getId')->willReturn(self::BITPAY_INVOICE_ID);
-		$request->method('get_body')
-			->willReturn(
-				file_get_contents(__DIR__ . '/json/bitpay_paid_ipn_webhook.json')
-			);
-		$request->expects(self::once())->method('get_header')->with('x-signature')->willReturn('x-signature-header-value');
-		$bitpay_invoice->method('getOrderId')->willReturn( self::BITPAY_INVOICE_ID );
-		$bitpay_client_factory->method('create')->willReturn( $bitpay_client );
-		$bitpay_client->method('getInvoice')->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
-			->willReturn($bitpay_invoice);
-		$wordpress_helper->method('get_order')
-			->with(self::BITPAY_INVOICE_ID)
-			->willReturn($wc_order);
+		
+		// Create custom mocks for this test instead of using helpers
+		$wc_order = $this->getMockBuilder(\WC_Order::class)->getMock();
+		$wc_order->method('get_payment_method')->willReturn('bitpay_checkout_gateway');
+		$wc_order->method('get_id')->willReturn(self::WC_ORDER_ID);
+		$wc_order->method('get_order_number')->willReturn(self::BITPAY_INVOICE_ID);
+		$wc_order->method('get_total')->willReturn('100.00');
+		$wc_order->method('get_currency')->willReturn('USD');
 		$wc_order->method('get_meta')->with(BitPayCreateOrder::BITPAY_TOKEN_ORDER_METADATA_KEY)->willReturn('secret_token');
-		$bitpay_payment_settings->expects(self::once())->method('get_bitpay_token')->willReturn('different_token');
+		
+		$bitpay_payment_settings = $this->getMockBuilder(BitPayPaymentSettings::class)->disableOriginalConstructor()->getMock();
+		$bitpay_payment_settings->method('get_bitpay_token')->willReturn('different_token');
+
+		$transactions->method('count_transaction_id')->willReturn(1);
+		$bitpay_invoice->method('getStatus')->willReturn('paid');
+		$bitpay_invoice->method('getId')->willReturn(self::BITPAY_INVOICE_ID);
+		$bitpay_invoice->method('getPrice')->willReturn(100.00);
+		$bitpay_invoice->method('getCurrency')->willReturn('USD');
+		$request->method('get_body')
+			->willReturn(
+				file_get_contents(__DIR__ . '/json/bitpay_paid_ipn_webhook.json')
+			);
+		$request->expects(self::once())->method('get_header')->with('x-signature')->willReturn('x-signature-header-value');
+		$bitpay_invoice->method('getOrderId')->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_client_factory->method('create')->willReturn( $bitpay_client );
+		$bitpay_client->method('getInvoice')->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
+			->willReturn($bitpay_invoice);
+		$wordpress_helper->method('get_order')
+			->with(self::WC_ORDER_ID)
+			->willReturn($wc_order);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
@@ -249,6 +211,9 @@ class BitPayIpnProcessTest extends TestCase {
 		$testedClass->execute($request);
 	}
 
+	/**
+	 * @test
+	 */
 	public function it_should_verify_order_with_saved_token_ipn_request_and_process_correctly_verified_ipn() {
 		// given
 		$wordpress_helper      = $this->get_wordpress_helper();
@@ -265,10 +230,14 @@ class BitPayIpnProcessTest extends TestCase {
 			->disableOriginalConstructor()->getMock();
 		$wc_order              = $this->get_wc_order();
 		$wc_order->method('get_meta')->with(BitPayCreateOrder::BITPAY_TOKEN_ORDER_METADATA_KEY)->willReturn('secret_token');
+		$bitpay_payment_settings = $this->get_bitpay_payment_settings();
+		$bitpay_payment_settings->method('get_bitpay_token')->willReturn('secret_token');
 
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'paid' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_paid_ipn_webhook.json' )
@@ -279,7 +248,7 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
 
 		$testedClass = $this->getTestedClass(
@@ -288,7 +257,7 @@ class BitPayIpnProcessTest extends TestCase {
 			$transactions,
 			$logger,
 			$webhook_verifier,
-			$this->get_bitpay_payment_settings()
+			$bitpay_payment_settings
 		);
 
 		// then
@@ -322,6 +291,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'confirmed' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_confirmed_ipn_webhook.json' )
@@ -332,15 +303,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -378,6 +352,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'complete' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$wc_order->method( 'get_status' )->willReturn( 'wc-pending' );
 		$request->method( 'get_body' )
 			->willReturn(
@@ -389,15 +365,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -435,6 +414,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'declined' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_declined_ipn_webhook.json' )
@@ -445,15 +426,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -488,6 +472,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'invalid' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_invalid_ipn_webhook.json' )
@@ -498,15 +484,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -541,6 +530,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'expired' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_expired_ipn_webhook.json' )
@@ -551,15 +542,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -593,6 +587,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'invalid' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$request->method( 'get_body' )
 			->willReturn(
 				file_get_contents( __DIR__ . '/json/bitpay_refunded_ipn_webhook.json' )
@@ -603,15 +599,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -646,6 +645,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'complete' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$wc_order->method( 'get_status' )->willReturn( 'wc-completed' );
 		$request->method( 'get_body' )
 			->willReturn(
@@ -657,15 +658,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -702,6 +706,8 @@ class BitPayIpnProcessTest extends TestCase {
 		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
 		$bitpay_invoice->method( 'getStatus' )->willReturn( 'complete' );
 		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
 		$wc_order = $this->get_wc_order();
 		$wc_order->method( 'get_status' )->willReturn( 'wc-processing' );
 		$request->method( 'get_body' )
@@ -714,15 +720,18 @@ class BitPayIpnProcessTest extends TestCase {
 		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
 			->willReturn( $bitpay_invoice );
 		$wordpress_helper->expects( self::once() )->method( 'get_order' )
-			->with( self::BITPAY_INVOICE_ID )
+			->with( self::WC_ORDER_ID )
 			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method('verify')->willReturn(true);
 
 		$testedClass = $this->getTestedClass(
 			$wordpress_helper,
 			$bitpay_client_factory,
 			$transactions,
 			$logger,
-			$this->get_bitpay_webhook_verifier(),
+			$webhook_verifier,
 			$this->get_bitpay_payment_settings()
 		);
 
@@ -758,15 +767,19 @@ class BitPayIpnProcessTest extends TestCase {
 	 * @return (BitPayPaymentSettings|\PHPUnit\Framework\MockObject\MockObject)
 	 */
 	private function get_bitpay_payment_settings() {
-		return $this->getMockBuilder(BitPayPaymentSettings::class)->disableOriginalConstructor()->getMock();
+		$settings = $this->getMockBuilder(BitPayPaymentSettings::class)->disableOriginalConstructor()->getMock();
+		$settings->method( 'get_bitpay_token' )->willReturn( 'test_token' );
+		return $settings;
 	}
 
 	/**
 	 * @return (BitPayCheckoutTransactions&\PHPUnit\Framework\MockObject\MockObject)
 	 */
 	private function get_checkout_transactions(): BitPayCheckoutTransactions|\PHPUnit\Framework\MockObject\MockObject {
-		return $this->getMockBuilder( BitPayCheckoutTransactions::class )
+		$transactions = $this->getMockBuilder( BitPayCheckoutTransactions::class )
 			->disableOriginalConstructor()->getMock();
+		$transactions->method( 'get_order_id_by_invoice_id' )->willReturn( self::WC_ORDER_ID );
+		return $transactions;
 	}
 
 	/**
@@ -776,6 +789,14 @@ class BitPayIpnProcessTest extends TestCase {
 		$wc_order = $this->getMockBuilder( \WC_Order::class )->getMock();
 		$wc_order->method( 'get_payment_method' )->willReturn( 'bitpay_checkout_gateway' );
 		$wc_order->method( 'get_id' )->willReturn( self::WC_ORDER_ID );
+		$wc_order->method( 'get_order_number' )->willReturn( self::BITPAY_INVOICE_ID );
+		$wc_order->method( 'get_total' )->willReturn( '100.00' );
+		$wc_order->method( 'get_currency' )->willReturn( 'USD' );
+		$wc_order->method( 'get_status' )->willReturn( 'pending' );
+		$wc_order->method( 'update_status' )->willReturn( true );
+		$wc_order->method( 'payment_complete' )->willReturn( true );
+		$wc_order->method( 'add_order_note' )->willReturn( null );
+		$wc_order->method( 'get_meta' )->willReturn( 'test_token' );
 
 		return $wc_order;
 	}
