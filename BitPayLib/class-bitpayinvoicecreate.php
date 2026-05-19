@@ -120,7 +120,7 @@ class BitPayInvoiceCreate {
 	}
 
 	private function clear_invoice_id_cookie(): void {
-		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600 );
+		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600, '/' );
 	}
 
 	private function set_cookie_for_redirects_and_updating_order_status( ?string $invoice_id, ?int $order_id = null, ?string $billing_email = null ): void {
