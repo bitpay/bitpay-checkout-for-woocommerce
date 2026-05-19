@@ -76,6 +76,6 @@ class BitPayCancelOrder {
 	}
 
 	private function clear_cookie_for_invoice_id(): void {
-		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600 );
+		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600, '/' );
 	}
 }
