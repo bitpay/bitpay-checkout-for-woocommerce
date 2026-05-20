@@ -1,7 +1,7 @@
 === BitPay Checkout for WooCommerce ===
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
-Requires at least: 6.0
+Requires at least: 6.6
 Tested up to: 6.9.4
 WC requires at least: 9.8.0
 WC tested up to: 10.6.1
