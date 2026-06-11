@@ -1,18 +1,147 @@
-name: Build
+name: Release
 
 on:
-  release:
-    types:
-      - created
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to release from"
+        required: true
+        default: "master"
+        type: string
+      version:
+        description: "Version number (e.g., 9.3.3)"
+        required: true
+        type: string
+      overview:
+        description: "Release overview (will be placed at top of notes)"
+        required: true
+        type: string
 
 jobs:
-  check-release:
+  release:
+    name: Release ${{ inputs.version }}
     runs-on: ubuntu-24.04
     permissions: write-all
+    outputs:
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.branch }}
+          fetch-depth: 0
+
+      - name: Validate version format
+        id: version
+        env:
+          VERSION_INPUT: ${{ inputs.version }}
+        run: |
+          if [[ ! "$VERSION_INPUT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Version must be in format X.Y.Z (e.g., 9.3.3)"
+            exit 1
+          fi
+          echo "version=$VERSION_INPUT" >> $GITHUB_OUTPUT
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Update version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Update version in all PHP files with "* Version:" comment
+          find . -name "*.php" -type f | while read file; do
+            sed -E "s/^( \* Version: )[0-9]+\.[0-9]+\.[0-9]+/ * Version: ${VERSION}/" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+          done
+          echo "Updated version to ${VERSION} in all PHP files"
+          
+          # Update Stable tag in readme.txt
+          sed -E "s/^(Stable tag: )[0-9]+\.[0-9]+\.[0-9]+/Stable tag: ${VERSION}/" readme.txt > readme.txt.tmp && mv readme.txt.tmp readme.txt
+          echo "Updated Stable tag to ${VERSION} in readme.txt"
+          
+          # Show updated files for verification
+          grep -r "^ \* Version: ${VERSION}" --include="*.php" . | head -n 5
+          grep "^Stable tag: ${VERSION}" readme.txt
+
+      - name: Commit version updates
+        env:
+          BRANCH: ${{ inputs.branch }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit - version already bumped"
+          else
+            git commit -m "Bump version to $VERSION"
+            git push origin "$BRANCH"
+          fi
+
+      - name: Create and push tag
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "Tag $VERSION already exists"
+          else
+            git tag "$VERSION"
+            git push origin "$VERSION"
+          fi
+      
+      - name: Get merged PR titles and format release notes
+        id: changelog
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OVERVIEW: ${{ inputs.overview }}
+          BRANCH: ${{ inputs.branch }}
+          REPOSITORY: ${{ github.repository }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git fetch --tags
+
+          # Get all tags sorted by creation date (newest first)
+          tags=($(git tag --sort=-creatordate))
+
+          # Find the current version tag and get the previous one
+          new_tag="$VERSION"
+          prev_tag=""
+          for i in "${!tags[@]}"; do
+            if [[ "${tags[$i]}" == "$VERSION" ]]; then
+              prev_tag="${tags[$((i+1))]}"
+              break
+            fi
+          done
+
+          if [ -z "$prev_tag" ]; then
+            echo "Warning: No previous tag found. Skipping full changelog link."
+            changelog=""
+          else
+            changelog="**Full Changelog**: https://github.com/$REPOSITORY/compare/$prev_tag...$new_tag"
+          fi
+
+          prs=$(gh pr list --state merged --base "$BRANCH" --json title,mergedAt --jq '[.[] | select(.mergedAt != null) | .title]')
+          joined=$(echo "$prs" | jq -r '.[]' | sed 's/^/* /')
+
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$OVERVIEW" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "## What's Changed" >> $GITHUB_ENV
+          echo "$joined" >> $GITHUB_ENV
+          echo "" >> $GITHUB_ENV
+          echo "$changelog" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTES: ${{ env.RELEASE_NOTES }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes "$NOTES"
 
       - name: Install dependencies
         run: |
@@ -34,7 +163,7 @@ jobs:
       - name: Upload Release Asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ steps.version.outputs.version }}
         run: gh release upload "$RELEASE_TAG" /home/runner/work/release/*
 
       - name: Remove .git directory
@@ -45,7 +174,58 @@ jobs:
           SLUG: bitpay-checkout-for-woocommerce
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           sudo apt-get install subversion -y
           $GITHUB_WORKSPACE/.github/workflows/release.sh
         shell: bash
+
+  readme-changelog:
+    name: Publish changelog to Readme
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Extract release data
+        id: release_data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.release.outputs.version }}
+        run: |
+          echo "title=$VERSION" >> $GITHUB_OUTPUT
+          body=$(gh release view "$VERSION" --json body --jq .body)
+          body_escaped=$(echo "$body" \
+            | sed 's/&/\&#38;/g' \
+            | sed 's/</\&#60;/g' \
+            | sed 's/>/\&#62;/g' \
+            | sed 's/{/\&#123;/g' \
+            | sed 's/}/\&#125;/g')
+          {
+            echo "body<<EOF"
+            echo "$body_escaped"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Publish changelog to Readme
+        env:
+          README_API_KEY: ${{ secrets.README_API_KEY }}
+          RELEASE_TITLE: ${{ steps.release_data.outputs.title }}
+          RELEASE_BODY: ${{ steps.release_data.outputs.body }}
+        run: |
+          jq -n --arg title "BitPay Checkout for WooCommerce v$RELEASE_TITLE" \
+                --arg body "$RELEASE_BODY" \
+                '{
+                  title: $title,
+                  content: {
+                    body: $body
+                  },
+                  privacy: { view: "public" }
+                }' > payload.json
+
+          curl --location 'https://api.readme.com/v2/changelogs' \
+            --header "Authorization: Bearer $README_API_KEY" \
+            --header 'Content-Type: application/json' \
+            --data @payload.json
