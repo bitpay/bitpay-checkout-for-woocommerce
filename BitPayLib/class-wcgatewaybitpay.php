@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.5.1
+ * Version: 7.1.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -155,31 +155,15 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => 'test',
 			),
-
-			'bitpay_checkout_flow'                      => array(
-				'title'       => __( 'Checkout Flow', 'woocommerce' ),
-				'type'        => 'select',
-				'description' => __( 'If this is set to <b>Redirect</b>, then the customer will be redirected to <b>BitPay</b> to checkout, and return to the checkout page once the payment is made.<br>If this is set to <b>Modal</b>, the user will stay on <b>' . get_bloginfo( 'name', null ) . '</b> and complete the transaction.', 'woocommerce' ), // phpcs:ignore
-				'options'     => array(
-					'1' => 'Modal',
-					'2' => 'Redirect',
-				),
-				'default'     => '2',
-			),
-			'bitpay_checkout_slug'                      => array(
-				'title'       => __( 'Checkout Page', 'woocommerce' ),
-				'type'        => 'text',
-				'description' => __( 'If you have a different custom checkout page, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>checkout</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>, your current checkout page should have <b>Checkout Page</b> next to the title.<br><br>Click the "quick edit" and copy and paste a custom slug here if needed.', 'woocommerce' ), // phpcs:ignore
-			),
 			'bitpay_custom_redirect'                    => array(
 				'title'       => __( 'Custom Redirect Page', 'woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing theh purchase.  <b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce' ),
+				'description' => __( 'Set the full url  (ie. <i>https://yoursite.com/custompage</i>) if you would like the customer to be redirected to a custom page after completing their purchase.', 'woocommerce' ),
 			),
 			'bitpay_close_url'                          => array(
 				'title'       => __( 'Close URL', 'woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Set the close url <br /><b>Note: this will only work if the REDIRECT mode is used</b> ', 'woocommerce' ),
+				'description' => __( 'Set the close url <br />', 'woocommerce' ),
 			),
 			'bitpay_checkout_mini'                      => array(
 				'title'       => __( 'Show in mini cart ', 'woocommerce' ),
@@ -203,18 +187,25 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 				),
 				'default'     => '1',
 			),
-			'bitpay_checkout_checkout_message'          => array(
-				'title'       => __( 'Checkout Message', 'woocommerce' ),
-				'type'        => 'textarea',
-				'description' => __( 'Insert your custom message for the <b>Order Received</b> page, so the customer knows that the order will not be completed until BitPay releases the funds.', 'woocommerce' ),
-				'default'     => 'Thank you.  We will notify you when BitPay has processed your transaction.',
+
+			'bitpay_checkout_mobile_transfer'           => array(
+				'title'       => __( 'Enable Mobile Transfer', 'woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Set to YES if you would like to show a QR code instead of the wallet, so customers can scan and use their phone.', 'woocommerce' ),
+				'options'     => array(
+					'0' => 'No',
+					'1' => 'Yes',
+				),
+				'default'     => '0',
 			),
+
 			'bitpay_checkout_error'                     => array(
 				'title'       => __( 'Error handling', 'woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'If there is an error with creating the invoice, enter the <b>page slug</b>. <br>ie. ' . get_home_url() . '/<b>error</b><br><br>View your pages <a target = "_blank" href  = "/wp-admin/edit.php?post_type=page">here</a>,.<br><br>Click the "quick edit" and copy and paste a custom slug here.', 'woocommerce' ), // phpcs:ignore
 
 			),
+
 			'bitpay_checkout_error_message'             => array(
 				'title'       => __( 'Error Message', 'woocommerce' ),
 				'type'        => 'textarea',
@@ -343,5 +334,25 @@ class WcGatewayBitpay extends \WC_Payment_Gateway {
 		$plugin_name = $plugin_data['Plugin_Name'];
 
 		return $plugin_name . ' ' . $plugin_data['Version'];
+	}
+
+	public function admin_options(): void {
+		parent::admin_options();
+		$this->add_support_package_download_button();
+	}
+
+	private function add_support_package_download_button() {
+		?>
+			<div style="display: flex; align-items: center">
+				<div style="padding-right: 24px;">
+					<p style="color: #1d2327; font-weight: 600; font-size: 14px; padding: 20px 10px 20px 0; width: 200px">Support Package </p>
+				</div>
+				<div style="padding: 15px 0; margin-top: 9px;">
+					<button type="button" style="height: 36px;" class="button button-secondary" id="download_support_package">Download</button>
+					<p style="margin-top: 2px; margin-bottom: 0;">Select to download a package of files that can be used for technical support. No personal
+						information will be captured.</p>
+				</div>
+			</div>
+		<?php
 	}
 }

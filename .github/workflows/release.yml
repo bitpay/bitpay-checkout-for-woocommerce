@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-release:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     permissions: write-all
 
     steps:
@@ -34,7 +34,8 @@ jobs:
       - name: Upload Release Asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} /home/runner/work/release/*
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$RELEASE_TAG" /home/runner/work/release/*
 
       - name: Remove .git directory
         run: rm -rf .git/ -R
@@ -44,5 +45,7 @@ jobs:
           SLUG: bitpay-checkout-for-woocommerce
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        run: $GITHUB_WORKSPACE/.github/workflows/release.sh
+        run: |
+          sudo apt-get install subversion -y
+          $GITHUB_WORKSPACE/.github/workflows/release.sh
         shell: bash

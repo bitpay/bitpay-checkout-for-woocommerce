@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.5.1
+ * Version: 7.1.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -55,7 +55,27 @@ class BitPayCancelOrder {
 		$this->clear_cookie_for_invoice_id();
 	}
 
+	public function can_execute( ?string $invoice_id ): bool {
+		if ( ! isset( $_COOKIE[ BitPayPluginSetup::COOKIE_INVOICE_ID_NAME ] ) ) {
+			return false;
+		}
+
+		$cookie_value = sanitize_text_field( wp_unslash( $_COOKIE[ BitPayPluginSetup::COOKIE_INVOICE_ID_NAME ] ) );
+		if ( ! $invoice_id ) {
+			return false;
+		}
+
+		$order_id = $this->transactions->get_order_id_by_invoice_id( $invoice_id );
+		if ( ! $order_id ) {
+			return false;
+		}
+
+		$order = new \WC_Order( $order_id );
+
+		return sha1( $invoice_id . ':' . $order->get_id() . ':' . $order->get_billing_email() ) === $cookie_value;
+	}
+
 	private function clear_cookie_for_invoice_id(): void {
-		setcookie( 'bitpay-invoice-id', '', time() - 3600 );
+		setcookie( BitPayPluginSetup::COOKIE_INVOICE_ID_NAME, '', time() - 3600, '/' );
 	}
 }

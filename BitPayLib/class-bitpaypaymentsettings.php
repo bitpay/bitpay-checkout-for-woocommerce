@@ -8,7 +8,7 @@ namespace BitPayLib;
  * Plugin Name: BitPay Checkout for WooCommerce
  * Plugin URI: https://www.bitpay.com
  * Description: BitPay Checkout Plugin
- * Version: 5.5.1
+ * Version: 7.1.2
  * Author: BitPay
  * Author URI: mailto:integrations@bitpay.com?subject=BitPay Checkout for WooCommerce
  */
@@ -62,7 +62,6 @@ class BitPayPaymentSettings {
 			return;
 		}
 
-		$checkout_message = $this->get_checkout_message();
 		if ( $order->get_status() === 'pending' ) {
 			$close_url = $this->get_close_url();
 
@@ -70,10 +69,6 @@ class BitPayPaymentSettings {
 				wp_redirect( $close_url ); // phpcs:ignore
 				die();
 			}
-		}
-
-		if ( '' !== $checkout_message ) {
-			echo '<hr><b>' . $checkout_message . '</b><br><br><hr>'; // phpcs:ignore
 		}
 	}
 
@@ -114,16 +109,6 @@ class BitPayPaymentSettings {
 		return $this->get_bitpay_gateway_setting( 'bitpay_checkout_token_' . $suffix, null );
 	}
 
-	public function should_use_modal(): bool {
-		$option = $this->get_bitpay_gateway_setting( 'bitpay_checkout_flow' );
-
-		return 1 === (int) $option;
-	}
-
-	public function get_checkout_message(): string {
-		return $this->get_bitpay_gateway_setting( 'bitpay_checkout_checkout_message', '' );
-	}
-
 	public function get_close_url(): ?string {
 		return $this->get_bitpay_gateway_setting( 'bitpay_close_url', null );
 	}
@@ -139,15 +124,6 @@ class BitPayPaymentSettings {
 		}
 
 		return $custom_redirect_page;
-	}
-
-	public function get_checkout_slug(): ?string {
-		$slug = $this->get_bitpay_gateway_setting( 'bitpay_checkout_slug', null );
-		if ( '' === $slug ) {
-			return null;
-		}
-
-		return $slug;
 	}
 
 	public function get_payment_logo_url(): string {

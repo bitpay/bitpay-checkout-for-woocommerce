@@ -1,6 +1,10 @@
 .DS_Store
 BitPayLib/.DS_Store
+codeception.yml
 logs/*.*
 /.idea/
 /vendor
 /build
+.phpunit.result.cache
+tests/.env
+tests/Unit/wp-config.php

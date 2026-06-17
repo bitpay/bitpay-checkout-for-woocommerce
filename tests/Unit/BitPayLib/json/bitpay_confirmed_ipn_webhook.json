@@ -1,0 +1,50 @@
+{
+  "event": {
+    "code": 1004,
+    "name": "invoice_confirmed"
+  },
+  "data": {
+    "id": "someId",
+    "url": "https://test.bitpay.com/invoice?id=someId",
+    "posData": "{\"store\":\"store-1\",\"register\":\"2\",\"reg_transaction_no\":\"87678\",\"price\":\"76.70\"}",
+    "status": "confirmed",
+    "price": 76.7,
+    "currency": "USD",
+    "invoiceTime": 1678714659517,
+    "expirationTime": 1678715559517,
+    "currentTime": 1678715642261,
+    "exceptionStatus": false,
+    "buyerFields": {},
+    "paymentSubtotals": {
+      "BTC": 342800,
+      "BCH": 62648000,
+      "ETH": 48312000000000000,
+      "GUSD": 7670,
+      "PAX": 76700000000000000000,
+      "BUSD": 76700000000000000000,
+      "USDC": 76700000,
+      "DOGE": 111086650500,
+      "LTC": 101107300,
+      "MATIC": 69057493000000000000,
+      "USDC_m": 76700000,
+      "USDT": 76500000
+    },
+    "paymentTotals": {
+      "BTC": 347100,
+      "BCH": 62648000,
+      "ETH": 48312000000000000,
+      "GUSD": 7670,
+      "PAX": 76700000000000000000,
+      "BUSD": 76700000000000000000,
+      "USDC": 76700000,
+      "DOGE": 111086650500,
+      "LTC": 101107300,
+      "MATIC": 69057493000000000000,
+      "USDC_m": 76700000,
+      "USDT": 76500000
+    },
+    "exchangeRates": {},
+    "amountPaid": 0,
+    "orderId": "6404564e58f8.40716035"
+  }
+}

@@ -1,11 +1,13 @@
 === BitPay Checkout for WooCommerce ===
 Contributors: bitpay
 Tags: bitcoin, ether, ripple, bitcoin cash, ERC20, payments, bitpay, cryptocurrency, payment gateway
-Requires at least: 6.0
-Tested up to: 6.5.2
-Requires PHP: 8.0
-Recommended PHP: 8.0
-Stable tag: 5.5.1
+Requires at least: 6.6
+Tested up to: 6.9.4
+WC requires at least: 9.8.0
+WC tested up to: 10.6.1
+Requires PHP: 8.1
+Recommended PHP: 8.3
+Stable tag: 7.1.2
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
@@ -110,6 +112,49 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+# 7.1.2
+* Tested compatibility with WordPress up to 6.9.4 and WooCommerce up to 10.6.1.
+
+# 7.1.1
+* Fixed issue where logging could fail
+
+# 7.1.0
+* Improved logging for BitPay plugin
+
+# 7.0.2
+* Tested compatability with WooCommerce 10.0.3 and Wordpress 6.8.2
+
+# 7.0.1
+* Tested compatability with Wordpress 6.8.2
+
+# 7.0.0
+* Tested compatability with Wordpress 6.8.1 and WooCommerce 9.9.5
+
+# 6.1.4
+* Tested compatability with Wordpress 6.8.1 and WooCommerce 9.8.5
+
+# 6.1.3
+* Tested compatability with Wordpress 6.8 and WooCommerce 9.8.2
+
+# 6.1.2
+* Resolved an issue where order status would not updated from IPN
+
+# 6.1.1
+* Added testing to Pipeline
+
+= 6.1.0 =
+* Added Mobile Transfer option
+
+= 6.0.0 =
+* Fixed a bug when the IPN/webhook is received with "complete" status
+* Add Unit & End2End tests
+* Updated SDK
+* Added Platform Info
+* Verifies Webhooks
+* Tested compatibility with WordPress 6.7.1
+
+= 5.5.1 =
+* Fixed issue with payment logo url
 
 = 5.5.0 =
 * Tested compatibility with WordPress 6.5.2

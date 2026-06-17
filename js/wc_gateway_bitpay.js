@@ -17,5 +17,30 @@ jQuery( document ).ready(
 				dark.html( '<img src="' + url + '" style="background-color: black"/>' );
 			}
 		)
+
+		function downloadZipFile(blob, name) {
+			const a    = document.createElement( 'a' );
+			a.href     = URL.createObjectURL( blob );
+			a.download = name;
+			a.click();
+		}
+
+		document.getElementById( 'download_support_package' ).addEventListener(
+			'click',
+			async function () {
+				const nonce = document.getElementById( '_wpnonce' );
+				wp.apiFetch.use( wp.apiFetch.createNonceMiddleware( nonce ) );
+
+				const response = await wp.apiFetch(
+					{
+						path: '/bitpay/site/health-status',
+						parse: false
+					}
+				);
+				const blob     = await response.blob();
+
+				downloadZipFile( blob, 'bitpay-support-package.zip' );
+			}
+		);
 	}
 );

@@ -1,0 +1,9 @@
+{
+  "event": {
+    "code": 1004,
+    "name": "invoice_refundComplete"
+  },
+  "data": {
+    "id": "someId"
+  }
+}
