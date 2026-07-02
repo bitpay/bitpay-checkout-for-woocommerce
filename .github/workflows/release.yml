@@ -135,6 +135,11 @@ jobs:
           fi
           joined=$(echo "$prs" | jq -r '.[]' | sed 's/^/* /')
 
+          # Fallback: if no PRs found, list commits
+          if [ -z "$joined" ]; then
+            joined=$(git log "$commit_range" --oneline --pretty=format:'* %s' | grep -v '^* Merge')
+          fi
+
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$OVERVIEW" >> $GITHUB_ENV
           echo "" >> $GITHUB_ENV
