@@ -122,11 +122,17 @@ jobs:
           if [ -z "$prev_tag" ]; then
             echo "Warning: No previous tag found. Skipping full changelog link."
             changelog=""
+            commit_range="$new_tag"
+            # Get all merged PRs
+            prs=$(gh pr list --state merged --base "$BRANCH" --json title,mergedAt | jq '[.[] | select(.mergedAt != null) | .title]')
           else
             changelog="**Full Changelog**: https://github.com/$REPOSITORY/compare/$prev_tag...$new_tag"
+            commit_range="$prev_tag..$new_tag"
+            # Get date of previous tag
+            prev_tag_date=$(git log -1 --format=%aI "$prev_tag")
+            # Get PRs merged since the previous tag
+            prs=$(gh pr list --state merged --base "$BRANCH" --json title,mergedAt | jq --arg date "$prev_tag_date" '[.[] | select(.mergedAt != null and .mergedAt > $date) | .title]')
           fi
-
-          prs=$(gh pr list --state merged --base "$BRANCH" --json title,mergedAt --jq '[.[] | select(.mergedAt != null) | .title]')
           joined=$(echo "$prs" | jq -r '.[]' | sed 's/^/* /')
 
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
