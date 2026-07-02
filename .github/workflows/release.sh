@@ -10,7 +10,10 @@ if [[ -z "$SVN_PASSWORD" ]]; then
   exit 1
 fi
 
-# VERSION=${GITHUB_REF#refs/tags/} # refs/tags/1.0.0 -> v1.0.0
+if [[ -z "$VERSION" ]]; then
+  echo "VERSION not set"
+  exit 1
+fi
 
 SVN_URL="https://plugins.svn.wordpress.org/${SLUG}/"
 SVN_DIR="${HOME}/svn-${SLUG}"
