@@ -243,4 +243,5 @@ jobs:
           curl --location 'https://api.readme.com/v2/changelogs' \
             --header "Authorization: Bearer $README_API_KEY" \
             --header 'Content-Type: application/json' \
-            --data @payload.json
+            --data @payload.json \
+            --fail
