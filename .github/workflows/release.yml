@@ -71,7 +71,12 @@ jobs:
           BRANCH: ${{ inputs.branch }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          git add .
+          # Stage only the files we modified
+          find ./BitPayLib -name "*.php" -type f -exec git add {} +
+          [ -f "./index.php" ] && git add ./index.php
+          [ -f "./tests/Unit/index.tests.php" ] && git add ./tests/Unit/index.tests.php
+          git add readme.txt
+          
           if git diff --cached --quiet; then
             echo "No changes to commit - version already bumped"
           else
