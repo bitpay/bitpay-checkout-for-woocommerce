@@ -53,8 +53,8 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           # Update version in all PHP files with "* Version:" comment
-          find . -name "*.php" -type f | while read file; do
-            sed -E "s/^( \* Version: )[0-9]+\.[0-9]+\.[0-9]+/ * Version: ${VERSION}/" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+          { find ./BitPayLib -name "*.php" -type f; [ -f "./index.php" ] && echo "./index.php"; [ -f "./tests/Unit/index.tests.php" ] && echo "./tests/Unit/index.tests.php"; } | while read file; do
+            [ -n "$file" ] && sed -E "s/^( \* Version: )[0-9]+\.[0-9]+\.[0-9]+/ * Version: ${VERSION}/" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
           done
           echo "Updated version to ${VERSION} in all PHP files"
           
