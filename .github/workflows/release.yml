@@ -150,9 +150,13 @@ jobs:
           NOTES: ${{ env.RELEASE_NOTES }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          gh release create "$VERSION" \
-            --title "$VERSION" \
-            --notes "$NOTES"
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "Release $VERSION already exists"
+          else
+            gh release create "$VERSION" \
+              --title "$VERSION" \
+              --notes "$NOTES"
+          fi
 
       - name: Install dependencies
         run: |
