@@ -158,13 +158,6 @@ jobs:
             echo "$changelog"
             echo "$DELIM"
           } >> "$GITHUB_ENV"
-          echo "$OVERVIEW" >> $GITHUB_ENV
-          echo "" >> $GITHUB_ENV
-          echo "## What's Changed" >> $GITHUB_ENV
-          echo "$joined" >> $GITHUB_ENV
-          echo "" >> $GITHUB_ENV
-          echo "$changelog" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         env:
