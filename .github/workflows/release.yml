@@ -233,10 +233,11 @@ jobs:
             | sed 's/>/\&#62;/g' \
             | sed 's/{/\&#123;/g' \
             | sed 's/}/\&#125;/g')
+          DELIM="EOF_$(openssl rand -hex 8)"
           {
-            echo "body<<EOF"
+            echo "body<<$DELIM"
             echo "$body_escaped"
-            echo "EOF"
+            echo "$DELIM"
           } >> $GITHUB_OUTPUT
 
       - name: Publish changelog to Readme
