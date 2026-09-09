@@ -60,6 +60,17 @@ class BitPayInvoiceCreate {
 			if ( $order->get_payment_method() !== 'bitpay_checkout_gateway' ) {
 				return;
 			}
+
+			if ( ! $order->needs_payment() ) {
+				$this->bitpay_logger->execute(
+					'Order ' . $order->get_id() . ' does not need payment (status: '
+						. $order->get_status() . '). Skipping invoice creation.',
+					'NEW BITPAY INVOICE',
+					true
+				);
+				return;
+			}
+
 			$bitpay_invoice = $this->bitpay_invoice_factory->create_by_wc_order( $order );
 			$bitpay_invoice = $this->client_factory->create()->createInvoice( $bitpay_invoice, Facade::POS, false );
 
@@ -84,7 +95,10 @@ class BitPayInvoiceCreate {
 			$error_url = get_home_url() . '/' . $bitpay_checkout_options['bitpay_checkout_error'];
 			$order     = $this->wordpress_helper->get_order( $order_id );
 			$items     = $order->get_items();
-			$order->update_status( 'wc-cancelled', __( $e->getMessage() . '.', 'woocommerce' ) ); // phpcs:ignore
+
+			if ( ! $order->is_paid() ) {
+				$order->update_status( 'wc-cancelled', __( $e->getMessage() . '.', 'woocommerce' ) ); // phpcs:ignore
+			}
 
 			// clear the cart first so things dont double up.
 			WC()->cart->empty_cart();
