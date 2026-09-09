@@ -569,6 +569,74 @@ class BitPayIpnProcessTest extends TestCase {
 	}
 
 	/**
+	 * A spurious invoice generated for an order that was already paid must not
+	 * cancel that order when it expires. See issue #153.
+	 *
+	 * @test
+	 */
+	public function it_should_not_cancel_an_already_paid_order_when_an_invoice_expires(): void {
+		// given
+		$wordpress_helper      = $this->get_wordpress_helper();
+		$request               = $this->getMockBuilder( \WP_REST_Request::class )->getMock();
+		$transactions          = $this->get_checkout_transactions();
+		$bitpay_invoice        = $this->getMockBuilder( \BitPaySDK\Model\Invoice\Invoice::class )->getMock();
+		$bitpay_client         = $this->getMockBuilder( \BitPaySDK\Client::class )
+			->disableOriginalConstructor()
+			->getMock();
+		$logger                = $this->get_bitpay_logger();
+		$bitpay_client_factory = $this->getMockBuilder( BitPayClientFactory::class )
+			->disableOriginalConstructor()->getMock();
+		$wc_order              = $this->get_wc_order();
+
+		// the order has already been paid.
+		$wc_order->method( 'is_paid' )->willReturn( true );
+
+		$transactions->method( 'count_transaction_id' )->willReturn( 1 );
+		$bitpay_invoice->method( 'getStatus' )->willReturn( 'expired' );
+		$bitpay_invoice->method( 'getId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$bitpay_invoice->method( 'getPrice' )->willReturn( 100.00 );
+		$bitpay_invoice->method( 'getCurrency' )->willReturn( 'USD' );
+		$bitpay_invoice->method( 'getOrderId' )->willReturn( self::BITPAY_INVOICE_ID );
+		$request->method( 'get_body' )
+			->willReturn(
+				file_get_contents( __DIR__ . '/json/bitpay_expired_ipn_webhook.json' )
+			);
+		$request->expects( self::once() )->method( 'get_header' )->with( 'x-signature' )
+			->willReturn( 'x-signature-header-value' );
+		$bitpay_client_factory->method( 'create' )->willReturn( $bitpay_client );
+		$bitpay_client->method( 'getInvoice' )->with( self::BITPAY_INVOICE_ID, \BitPaySDK\Model\Facade::POS, false )
+			->willReturn( $bitpay_invoice );
+		$wordpress_helper->expects( self::once() )->method( 'get_order' )
+			->with( self::WC_ORDER_ID )
+			->willReturn( $wc_order );
+
+		$webhook_verifier = $this->get_bitpay_webhook_verifier();
+		$webhook_verifier->method( 'verify' )->willReturn( true );
+
+		$testedClass = $this->getTestedClass(
+			$wordpress_helper,
+			$bitpay_client_factory,
+			$transactions,
+			$logger,
+			$webhook_verifier,
+			$this->get_bitpay_payment_settings()
+		);
+
+		// then
+		$wc_order->expects( self::never() )->method( 'update_status' );
+		$wc_order
+			->expects( self::once() )
+			->method( 'add_order_note' )
+			->with(
+				'BitPay Invoice ID: <a target = "_blank" href = "//test.bitpay.com/dashboard/payments/someId">someId</a>'
+				. ' has expired. The order status has not been updated because the order is already paid.'
+			);
+
+		// when
+		$testedClass->execute( $request );
+	}
+
+	/**
 	 * @test
 	 */
 	public function it_should_refund_order(): void {
