@@ -288,6 +288,15 @@ class BitPayIpnProcess {
 
 	private function process_abandoned( Invoice $bitpay_invoice, WC_Order $order ): void {
 		$this->validate_bitpay_status_in_available_statuses( $bitpay_invoice, array( 'expired' ) );
+
+		if ( ! $this->should_downgrade_order( $order ) ) {
+			$order->add_order_note(
+				$this->get_start_order_note( $bitpay_invoice->getId() )
+				. 'has expired. The order status has not been updated because the order is already paid.'
+			);
+			return;
+		}
+
 		$underpaid_amount       = $bitpay_invoice->getUnderpaidAmount();
 		$wordpress_order_status = $this->bitpay_wordpress_helper
 			->get_bitpay_gateway_option( 'bitpay_checkout_order_expired_status' );
@@ -355,6 +364,20 @@ class BitPayIpnProcess {
 		}
 
 		return true;
+	}
+
+	/**
+	 * We don't want to downgrade an order that has already been paid.
+	 *
+	 * A spurious or late invoice event must never move a paid order back to a
+	 * non-paid status. Same intent as should_process_completed_action(), applied
+	 * to the handlers that lower the order status.
+	 *
+	 * @param WC_Order $order WC order.
+	 * @return bool
+	 */
+	private function should_downgrade_order( WC_Order $order ): bool {
+		return ! $order->is_paid();
 	}
 
 	private function should_process_refund(): bool {
