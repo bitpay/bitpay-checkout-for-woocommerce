@@ -7,7 +7,7 @@ WC requires at least: 9.8.0
 WC tested up to: 10.6.1
 Requires PHP: 8.1
 Recommended PHP: 8.3
-Stable tag: 7.1.2
+Stable tag: 7.1.3
 License: MIT License (MIT)
 License URI: https://github.com/bitpay/bitpay-checkout-for-woocommerce/blob/master/LICENSE
 
