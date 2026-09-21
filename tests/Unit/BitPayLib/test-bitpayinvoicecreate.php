@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class BitPayInvoiceCreateTest extends TestCase {
 
-	private const WC_ORDER_ID = '1';
+	private const WC_ORDER_ID = 1;
 
 	/**
 	 * execute() runs on template_redirect and bails early unless is_checkout()
@@ -63,7 +63,7 @@ class BitPayInvoiceCreateTest extends TestCase {
 
 		$wordpress_helper = $this->getMockBuilder( BitPayWordpressHelper::class )->getMock();
 		$wordpress_helper->method( 'get_query_var' )->with( 'order-received' )
-			->willReturn( self::WC_ORDER_ID );
+			->willReturn( (string) self::WC_ORDER_ID );
 		$wordpress_helper->method( 'get_url_parameter' )->with( 'redirect' )
 			->willReturn( null );
 		$wordpress_helper->method( 'get_order' )->willReturn( $wc_order );
