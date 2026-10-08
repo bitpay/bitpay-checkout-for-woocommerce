@@ -17,11 +17,9 @@ use WP_REST_Request;
  */
 class BitPayPluginSetup {
 
-	public const VERSION                = '7.1.2';
-	public const COOKIE_INVOICE_ID_NAME = 'bitpay-invoice-id';
+	public const VERSION = '7.1.2';
 
 	private BitPayIpnProcess $bitpay_ipn_process;
-	private BitPayCancelOrder $bitpay_cancel_order;
 	private BitPayPaymentSettings $bitpay_payment_settings;
 	private BitPayInvoiceCreate $bitpay_invoice_create;
 	private BitPayCheckoutTransactions $bitpay_checkout_transactions;
@@ -31,13 +29,11 @@ class BitPayPluginSetup {
 	public function __construct() {
 		$this->bitpay_payment_settings      = new BitPayPaymentSettings();
 		$factory                            = new BitPayClientFactory( $this->bitpay_payment_settings );
-		$cart                               = new BitPayCart();
 		$logger                             = new BitPayLogger();
 		$wordpress_helper                   = new BitPayWordpressHelper();
 		$webhook_verifier                   = new BitPayWebhookVerifier();
 		$this->bitpay_checkout_transactions = new BitPayCheckoutTransactions( $wordpress_helper );
 		$this->bitpay_ipn_process           = new BitPayIpnProcess( $this->bitpay_checkout_transactions, $factory, $wordpress_helper, $logger, $webhook_verifier, $this->bitpay_payment_settings );
-		$this->bitpay_cancel_order          = new BitPayCancelOrder( $cart, $this->bitpay_checkout_transactions, $logger );
 		$this->bitpay_invoice_create        = new BitPayInvoiceCreate(
 			$factory,
 			new BitPayInvoiceFactory( $this->bitpay_payment_settings, $wordpress_helper ),
@@ -71,7 +67,6 @@ class BitPayPluginSetup {
 		add_action( 'woocommerce_update_order', array( $this, 'bitpay_create_order' ) );
 
 		// http://<host>/wp-json/bitpay/ipn/status url.
-		// http://<host>/wp-json/bitpay/cartfix/restore url.
 		add_action(
 			'rest_api_init',
 			function () {
@@ -82,15 +77,6 @@ class BitPayPluginSetup {
 						'methods'             => 'POST,GET',
 						'callback'            => array( $this, 'process_ipn' ),
 						'permission_callback' => '__return_true',
-					)
-				);
-				register_rest_route(
-					'bitpay/cartfix',
-					'/restore',
-					array(
-						'methods'             => 'POST,GET',
-						'callback'            => array( $this, 'cancel_order' ),
-						'permission_callback' => array( $this, 'check_cancel_order_permissions' ),
 					)
 				);
 				register_rest_route(
@@ -182,14 +168,6 @@ class BitPayPluginSetup {
 
 	public function process_ipn( WP_REST_Request $request ): void {
 		$this->bitpay_ipn_process->execute( $request );
-	}
-
-	public function cancel_order( WP_REST_Request $request ): void {
-		$this->bitpay_cancel_order->execute( $request );
-	}
-
-	public function check_cancel_order_permissions( WP_REST_Request $request ): bool {
-		return $this->bitpay_cancel_order->can_execute( $request->get_param( 'invoiceid' ) );
 	}
 
 	public function bitpay_checkout_custom_message( $order_id ): void {
