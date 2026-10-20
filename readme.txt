@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+# 7.1.4
+* Removed an unused order cancellation endpoint (security hardening)
+
 # 7.1.3
 * Fixed issue where paid or cancelled orders could receive new invoices and be cancelled when those invoices expired
 
