@@ -112,6 +112,9 @@ You can contact our support team via the following form https://bitpay.com/reque
 13. BitPay merchant dashboard - detailed invoice view
 
 == Changelog ==
+# 7.1.5
+* Security fix: the order-received page now checks the order key before it creates a BitPay invoice
+
 # 7.1.4
 * Removed an unused order cancellation endpoint (security hardening)
 
