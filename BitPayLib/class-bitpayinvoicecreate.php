@@ -60,6 +60,14 @@ class BitPayInvoiceCreate {
 				return;
 			}
 
+			// The order-received URL that WooCommerce gives the buyer carries the
+			// order key. Without this check, anyone who knows or guesses an order id
+			// could create invoices for that order.
+			$order_key = $this->wordpress_helper->get_url_parameter( 'key' );
+			if ( ! $order_key || ! $order->key_is_valid( $order_key ) ) {
+				return;
+			}
+
 			if ( ! $order->needs_payment() ) {
 				$this->bitpay_logger->execute(
 					'Order ' . $order->get_id() . ' does not need payment (status: '

@@ -16,6 +16,6 @@ class BitPayWebhookVerifier {
 			)
 		);
 
-		return $sig_header === $hmac;
+		return hash_equals( $hmac, $sig_header );
 	}
 }
